@@ -5,6 +5,6 @@ const bodyParser = require('body-parser')
 const app = express()
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, '../public')))
-app.use('/', router)
+app.use('/api/v1/', router)
 
 module.exports = app
