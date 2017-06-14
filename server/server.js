@@ -1,7 +1,11 @@
-var path = require('path')
-var express = require('express')
-var server = express()
 
-server.use(express.static(path.join(__dirname, '../public')))
+const express = require('express')
+const router = require('./router')
+const path = require('path')
+const bodyParser = require('body-parser')
+const app = express()
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static(path.join(__dirname, '../public')))
+app.use('/', router)
 
-module.exports = server
+module.exports = app
