@@ -7,7 +7,6 @@ import Book from './Book'
 const App = () => (
   <Router>
     <div className='app'>
-      <h1>Hello World</h1>
       {/* <Switch> */}
         <Route path='/calendar' component={Calendar} />
         <Route path='/book' component={Book} />

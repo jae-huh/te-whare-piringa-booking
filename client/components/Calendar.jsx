@@ -3,8 +3,6 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import {Redirect} from 'react-router'
 
-import Book from './Book'
-
 BigCalendar.momentLocalizer(moment)
 const events = [
   {

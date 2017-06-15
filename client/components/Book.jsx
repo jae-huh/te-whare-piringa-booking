@@ -1,5 +1,6 @@
 import React from 'react'
 import TimePicker from 'material-ui/TimePicker'
+import DatePicker from 'material-ui/DatePicker'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -11,12 +12,7 @@ class Book extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      value24: null,
       value12: null}
-  }
-
-  handleChangeTimePicker24 (event, date) {
-    this.setState({value24: date})
   }
 
   handleChangeTimePicker12 (event, date) {
@@ -28,23 +24,27 @@ class Book extends React.Component {
     return (
       <div>
         <input type="email" placeholder="Email"/>
+        <br />
         <input type="tel" placeholder="Contact number" />
         <MuiThemeProvider muiTheme={getMuiTheme()}>
           <div>
+            <DatePicker hintText="Date" />
             <TimePicker
               format="ampm"
-              hintText="12hr Format"
+              hintText="Start"
               value={this.state.value12}
               onChange={this.handleChangeTimePicker12}
             />
             <TimePicker
               format="ampm"
-              hintText="12hr Format"
+              hintText="End"
               value={this.state.value12}
               onChange={this.handleChangeTimePicker12}
             />
           </div>
         </MuiThemeProvider>
+        {/* <button>Book</button> */}
+        <input type='submit' value='Book' />
       </div>
     )
   }
