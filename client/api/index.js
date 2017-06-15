@@ -10,7 +10,6 @@ export function login (method = 'get', endpoint, data = {}) {
     Accept: 'application/json'
   }
   headers['Authorization'] = `Bearer ${token}`
-  console.log(baseUrl + endpoint)
   return request[method](baseUrl + endpoint)
     .set(headers)[dataMethod](data)
     .then(res => {
