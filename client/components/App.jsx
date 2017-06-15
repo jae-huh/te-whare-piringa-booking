@@ -1,9 +1,11 @@
 import React from 'react'
 import {Route, BrowserRouter} from 'react-router-dom'
-import Login from './Login'
-import Callback from './Callback'
+
 import Auth from '../auth'
+import Calendar from './Calendar'
+import Callback from './Callback'
 import history from '../auth/history'
+import Login from './Login'
 
 const auth = new Auth()
 
@@ -18,10 +20,10 @@ const App = () => (
     <div>
       <Route path="/" render={() => <Login auth={auth} />} />
       <Route path="/callback" render={props => {
-        console.log('hi')
         handleAuthentication(props)
         return <Callback {...props} />
       }}/>
+      <Calendar />
     </div>
   </BrowserRouter>
   )
