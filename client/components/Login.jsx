@@ -4,6 +4,9 @@ class Login extends Component {
   login () {
     this.props.auth.login()
   }
+  logout () {
+    this.props.auth.logout()
+  }
   render () {
     const {isAuthenticated} = this.props.auth
     return (
@@ -11,7 +14,12 @@ class Login extends Component {
         {
           isAuthenticated() && (
               <h4>
-                You are logged in!
+                You are logged in! 
+                <a 
+                  style={{cursor: 'pointer'}}
+                  onClick={this.logout.bind(this)}>
+                  Log out
+                </a>
               </h4>
             )
         }
@@ -22,8 +30,7 @@ class Login extends Component {
                 <a
                   style={{cursor: 'pointer'}}
                   onClick={this.login.bind(this)}
-                >
-                  Log In
+                >  Log In
                 </a>
                 {' '}to continue.
               </h4>
