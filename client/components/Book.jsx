@@ -4,47 +4,88 @@ import DatePicker from 'material-ui/DatePicker'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import moment from 'moment'
 
 injectTapEventPlugin()
 
 class Book extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = {
-      value12: null}
+      email: null,
+      contactNum: null,
+      date: null,
+      eventStart: null,
+      eventEnd: null
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleChangeDate = this.handleChangeDate.bind(this)
+    this.handleChangeEventStart = this.handleChangeEventStart.bind(this)
+    this.handleChangeEventEnd = this.handleChangeEventEnd.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChangeTimePicker12 (event, date) {
-    this.setState({value12: date})
+  handleChange (evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
+
+  handleChangeDate (evt, date) {
+    this.setState({
+      date: moment(date).format('DD/MM/YYYY')
+    })
+  }
+
+  handleChangeEventStart (evt, date) {
+    this.setState({
+      eventStart: moment(date).format('h:mmA')
+    })
+  }
+
+  handleChangeEventEnd (evt, date) {
+    this.setState({
+      eventEnd: moment(date).format('h:mmA')
+    })
+  }
+
+  handleSubmit (evt) {
+    evt.preventDefault()
+    // this.props.dispatch(saveNewCaption(this.state, (newCaptionId) => {
+    //   this.props.routerProps.history.push(`/images/${this.state.imageId}/${newCaptionId}`)
+    // }))
+    console.log(this.state)
   }
 
   render () {
-    console.log(this.props.eventStart, this.props.eventEnd)
     return (
       <div>
-        <input type="email" placeholder="Email"/>
-        <br />
-        <input type="tel" placeholder="Contact number" />
-        <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <div>
-            <DatePicker hintText="Date" />
-            <TimePicker
-              format="ampm"
-              hintText="Start"
-              value={this.state.value12}
-              onChange={this.handleChangeTimePicker12}
-            />
-            <TimePicker
-              format="ampm"
-              hintText="End"
-              value={this.state.value12}
-              onChange={this.handleChangeTimePicker12}
-            />
-          </div>
-        </MuiThemeProvider>
-        {/* <button>Book</button> */}
-        <input type='submit' value='Book' />
+        <form onSubmit={this.handleSubmit}>
+          <input type="email" name="email" placeholder="Email" onChange={this.handleChange} />
+          <br />
+          <input type="tel" name="contactNum" placeholder="Contact number" onChange={this.handleChange} />
+          <MuiThemeProvider muiTheme={getMuiTheme()}>
+            <div>
+              <DatePicker
+                hintText="Date"
+                onChange={this.handleChangeDate}
+              />
+              <TimePicker
+                format="ampm"
+                hintText="Start"
+                value={this.state.eventStart}
+                onChange={this.handleChangeEventStart}
+              />
+              <TimePicker
+                format="ampm"
+                hintText="End"
+                value={this.state.eventEnd}
+                onChange={this.handleChangeEventEnd}
+              />
+            </div>
+          </MuiThemeProvider>
+          <input type='submit' value='Book' />
+        </form>
       </div>
     )
   }

@@ -116,6 +116,12 @@ class Calendar extends React.Component {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    bookings: state.bookings
+  }
+}
+
 function mapDispatchToProps (dispatch) {
   return {
     fetchBookingss: () => {
@@ -124,4 +130,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Calendar)
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar)
