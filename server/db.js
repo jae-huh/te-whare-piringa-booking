@@ -71,6 +71,21 @@ function filterUnconfirmed (data, cb) {
   cb(arr)
 }
 
+function checkUsersForExisting (id, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('users').find().toArray((err, results) => {
+      if (err) return cb(err)
+      for (let i = 0; i < results.length; i++) {
+        if (results[i].authId === id) {
+          return cb(null, true)
+        }
+      }
+      cb(null, false)
+    })
+  })
+}
+
 function getDatabase (callback) {
   MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     if (err) return callback(err)
@@ -88,5 +103,6 @@ module.exports = {
   userAddBooking,
   confirmBooking,
   addUser,
-  filterUnconfirmed
+  filterUnconfirmed,
+  checkUsersForExisting
 }

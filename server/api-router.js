@@ -76,9 +76,7 @@ router.get('/admin/getunconfirmed', (req, res) => {
     })
   })
 })
-router.get('/user/checkuser/:id', (req, res) => {
 
-})
 router.post('/user/addbooking', (req, res) => {
   db.userAddBooking(req, res, (err, result) => {
     if (err) return res.json({error: err})
@@ -95,7 +93,12 @@ router.put('/admin/confirm/:id', (req, res) => {
 
 router.post('/user/adduser', (req, res) => {
   const decoded = jwt.decode(req.body.token, {complete: true})
-  console.log(decoded)
+  db.checkUsersForExisting(decoded, (err, value) => {
+    if (err) return res.json({error: err.message})
+    if (value === true) {
+      return res.redirect('/user/profile')
+    }
+  })
   db.addUser(req, res, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
