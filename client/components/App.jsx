@@ -3,6 +3,7 @@ import {Route, BrowserRouter} from 'react-router-dom'
 
 import Auth from '../auth'
 import Calendar from './Calendar'
+import Book from './Book'
 import Callback from './Callback'
 import history from '../auth/history'
 import Login from './Login'
@@ -23,6 +24,7 @@ const App = () => (
         handleAuthentication(props)
         return <Callback {...props} />
       }}/>
+      <Route path="/book" component={Book} />
       <Calendar />
     </div>
   </BrowserRouter>
