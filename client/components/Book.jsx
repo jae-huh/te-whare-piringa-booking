@@ -6,17 +6,20 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import moment from 'moment'
 
+import {postNewBooking} from '../api'
+
 injectTapEventPlugin()
 
 class Book extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      fullName: null,
       email: null,
       contactNum: null,
-      date: null,
       eventStart: null,
-      eventEnd: null
+      eventEnd: null,
+      purpose: null
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)
@@ -32,13 +35,14 @@ class Book extends React.Component {
 
   handleChangeDate (evt, date) {
     this.setState({
-      date: moment(date).format('DD/MM/YYYY')
+      eventStart: moment(date).format('YYYY/MM/DD'),
+      eventEnd: moment(date).format('YYYY/MM/DD')
     })
   }
 
   handleChangeEvent (date, key) {
     this.setState({
-      [key]: moment(date).format('h:mmA')
+      [key]: this.state[key].concat(moment(date).format(' h:mmA'))
     })
   }
 
@@ -47,6 +51,13 @@ class Book extends React.Component {
     // this.props.dispatch(saveNewCaption(this.state, (newCaptionId) => {
     //   this.props.routerProps.history.push(`/images/${this.state.imageId}/${newCaptionId}`)
     // }))
+    postNewBooking(this.state, (err, res) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(res)
+      }
+    })
     console.log(this.state)
   }
 
@@ -54,29 +65,30 @@ class Book extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="email" name="email" placeholder="Email" onChange={this.handleChange} />
+          <input name='fullName' placeholder='Full name' onChange={this.handleChange} />
           <br />
-          <input type="tel" name="contactNum" placeholder="Contact number" onChange={this.handleChange} />
+          <input type='email' name='email' placeholder='Email' onChange={this.handleChange} />
+          <br />
+          <input type='tel' name='contactNum' placeholder='Contact number' onChange={this.handleChange} />
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <div>
               <DatePicker
-                hintText="Date"
+                hintText='Date'
                 onChange={this.handleChangeDate}
               />
               <TimePicker
-                format="ampm"
-                hintText="Start"
-                value={this.state.eventStart}
+                  format='ampm'
+                hintText='Start'
                 onChange={(e, date) => this.handleChangeEvent(date, 'eventStart')}
               />
               <TimePicker
-                format="ampm"
-                hintText="End"
-                value={this.state.eventEnd}
+                format='ampm'
+                hintText='End'
                 onChange={(e, date) => this.handleChangeEvent(date, 'eventEnd')}
               />
             </div>
           </MuiThemeProvider>
+          <textarea name='purpose' placeholder='Short description of event' onChange={this.handleChange} />
           <input type='submit' value='Book' />
         </form>
       </div>
