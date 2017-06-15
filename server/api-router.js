@@ -26,6 +26,13 @@ const jwksRsa = require('jwks-rsa')
 
 router.use(bodyParser.json())
 
+router.get('/getbookings', (req, res) => {
+  db.getAllBookings(req, res, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
+
 const checkJwt = jwt({
   // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
   secret: jwksRsa.expressJwtSecret({
@@ -41,17 +48,6 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 })
 
-router.get('/authorized', function (req, res) {
-  res.send('Secured Resource')
-})
-
-router.get('/getbookings', (req, res) => {
-  db.getAllBookings(req, res, (err, result) => {
-    if (err) return res.json({error: err})
-    res.json(result)
-  })
-})
-
 router.get('/testing', (req, res) => {
   console.log(req.headers.token)
   const decoded = jsonwt.decode(req.headers.token, {complete: true})
@@ -59,7 +55,19 @@ router.get('/testing', (req, res) => {
   res.send(decoded.payload.sub)
 })
 
+function getUserIdFromToken (req) {
+  const token = req.headers.authorization.substr(7)
+  const decodedToken = jsonwt.decode(token, {complete: true})
+  return decodedToken.payload.sub
+}
+
 // router.use(checkJwt)
+
+router.get('/checklogin', (req, res) => {
+  const userId = getUserIdFromToken(req)
+  console.log('user id', userId)
+  res.send("hi")
+})
 
 router.get('/admin/getbookings', (req, res) => {
   db.adminGetAllBookings(req, res, (err, result) => {
