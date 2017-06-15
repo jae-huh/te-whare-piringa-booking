@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient
 const router = express.Router()
+const nodemailer = require('nodemailer')
 
 router.use(bodyParser.json())
 let db
@@ -21,8 +22,7 @@ MongoClient.connect('mongodb://localhost:27017', (err, database) => {
           filtered.push({anonBooking: {
             startDate: results[i].startDate,
             endDate: results[i].endDate,
-            confirmed: results[i].confirmed
-          }
+            confirmed: results[i].confirmed}
           })
         }
         res.json({
@@ -73,6 +73,35 @@ MongoClient.connect('mongodb://localhost:27017', (err, database) => {
         res.json({id: result.ops[0]._id})
       })
     })
+  })
+})
+
+router.post('/sendemail', (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASS
+    }
+  })
+
+  let subject = 'test email'
+  let reciever = 'daffron92@gmail.com'
+  let sender = 'user@gmail.com'
+
+  let mailOptions = {
+    from: sender,
+    to: reciever,
+    subject: subject,
+    html: '<b>Hello world</b>'
+  }
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.json({message: error})
+    } else {
+      res.json({message: info.response})
+    }
   })
 })
 module.exports = router
