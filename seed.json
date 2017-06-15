@@ -1,0 +1,21 @@
+{"data":[
+    {
+      "userid": 123456,
+      "startDate": "16/06/17",
+      "endDate": "17/06/17",
+      "confirmed": false
+    },
+    {
+      "userid": 123336,
+      "startDate": "17/06/17",
+      "endDate": "18/06/17",
+      "confirmed": false
+    },
+    {
+      "userid": 123446,
+      "startDate": "19/06/17",
+      "endDate": "20/06/17",
+      "confirmed": false
+    }
+  ]
+  }
