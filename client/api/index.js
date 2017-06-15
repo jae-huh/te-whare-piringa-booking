@@ -20,3 +20,11 @@ export function login (method = 'get', endpoint, data = {}) {
       throw err
     })
 }
+
+export function getUnconfirmed (cb) {
+  request.get('/api/v1/admin/getunconfirmed')
+  .end((err, data) => {
+    if (err) return cb(err)
+    cb(null, data.body)
+  })
+}

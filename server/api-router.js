@@ -20,10 +20,9 @@ const bodyParser = require('body-parser')
 const db = require('./db')
 const router = express.Router()
 const nodemailer = require('nodemailer')
-
+const jsonwt = require('jsonwebtoken')
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
-require('dotenv').config()
 
 router.use(bodyParser.json())
 
@@ -55,6 +54,18 @@ router.get('/checklogin', (req, res) => {
   res.send("hi")
 })
 
+<<<<<<< HEAD
+=======
+router.get('/testing', (req, res) => {
+  console.log(req.headers.token)
+  const decoded = jsonwt.decode(req.headers.token, {complete: true})
+  console.log(decoded)
+  res.send(decoded.payload.sub)
+})
+
+// router.use(checkJwt)
+
+>>>>>>> 6ac53e97891e8ed475bc7e8240002ee69550b8df
 router.get('/admin/getbookings', (req, res) => {
   db.adminGetAllBookings(req, res, (err, result) => {
     if (err) return res.json({error: err})
@@ -62,6 +73,17 @@ router.get('/admin/getbookings', (req, res) => {
   })
 })
 
+router.get('/admin/getunconfirmed', (req, res) => {
+  db.adminGetAllBookings(req, res, (err, result) => {
+    if (err) return res.json({error: err})
+    db.filterUnconfirmed(result, filtered => {
+      res.json(filtered)
+    })
+  })
+})
+router.get('/user/checkuser/:id', (req, res) => {
+
+})
 router.post('/user/addbooking', (req, res) => {
   db.userAddBooking(req, res, (err, result) => {
     if (err) return res.json({error: err})
@@ -77,6 +99,8 @@ router.put('/admin/confirm/:id', (req, res) => {
 })
 
 router.post('/user/adduser', (req, res) => {
+  const decoded = jwt.decode(req.body.token, {complete: true})
+  console.log(decoded)
   db.addUser(req, res, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
