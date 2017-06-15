@@ -20,12 +20,18 @@ const bodyParser = require('body-parser')
 const db = require('./db')
 const router = express.Router()
 const nodemailer = require('nodemailer')
-
+const jsonwt = require('jsonwebtoken')
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
-require('dotenv').config()
 
 router.use(bodyParser.json())
+
+router.get('/getbookings', (req, res) => {
+  db.getAllBookings(req, res, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
 
 const checkJwt = jwt({
   // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
@@ -42,18 +48,26 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 })
 
-router.get('/authorized', function (req, res) {
-  res.send('Secured Resource')
+router.get('/testing', (req, res) => {
+  console.log(req.headers.token)
+  const decoded = jsonwt.decode(req.headers.token, {complete: true})
+  console.log(decoded)
+  res.send(decoded.payload.sub)
 })
 
-router.get('/getbookings', (req, res) => {
-  db.getAllBookings(req, res, (err, result) => {
-    if (err) return res.json({error: err})
-    res.json(result)
-  })
-})
+function getUserIdFromToken (req) {
+  const token = req.headers.authorization.substr(7)
+  const decodedToken = jsonwt.decode(token, {complete: true})
+  return decodedToken.payload.sub
+}
 
 // router.use(checkJwt)
+
+router.get('/checklogin', (req, res) => {
+  const userId = getUserIdFromToken(req)
+  console.log('user id', userId)
+  res.send("hi")
+})
 
 router.get('/admin/getbookings', (req, res) => {
   db.adminGetAllBookings(req, res, (err, result) => {
@@ -62,6 +76,17 @@ router.get('/admin/getbookings', (req, res) => {
   })
 })
 
+router.get('/admin/getunconfirmed', (req, res) => {
+  db.adminGetAllBookings(req, res, (err, result) => {
+    if (err) return res.json({error: err})
+    db.filterUnconfirmed(result, filtered => {
+      res.json(filtered)
+    })
+  })
+})
+router.get('/user/checkuser/:id', (req, res) => {
+
+})
 router.post('/user/addbooking', (req, res) => {
   db.userAddBooking(req, res, (err, result) => {
     if (err) return res.json({error: err})
@@ -77,6 +102,8 @@ router.put('/admin/confirm/:id', (req, res) => {
 })
 
 router.post('/user/adduser', (req, res) => {
+  const decoded = jwt.decode(req.body.token, {complete: true})
+  console.log(decoded)
   db.addUser(req, res, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)

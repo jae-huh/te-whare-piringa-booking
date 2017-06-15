@@ -1,5 +1,7 @@
 import React from 'react'
-import {Route, BrowserRouter} from 'react-router-dom'
+
+import {Route, BrowserRouter, Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 import Auth from '../auth'
 import Calendar from './Calendar'
@@ -7,27 +9,38 @@ import Book from './Book'
 import Callback from './Callback'
 import history from '../auth/history'
 import Login from './Login'
+import AdminPortal from './AdminPortal'
 
-const auth = new Auth()
+import {checkLogin} from '../actions/auth'
 
-const handleAuthentication = (nextState, replace) => {
-  if (/access_token|id_token|error/.test(nextState.location.hash)) {
-    auth.handleAuthentication()
-  }
+function handleAuthentication (nextState, replace) {
+  const auth = new Auth()
+  // if (/access_token|id_token|error/.test(nextState.location.hash)) {
+  auth.handleAuthentication()
+  // }
 }
 
-const App = () => (
+const App = props => (
   <BrowserRouter history={history} component={App}>
     <div>
-      <Route path="/" render={() => <Login auth={auth} />} />
-      <Route path="/callback" render={props => {
-        handleAuthentication(props)
-        return <Callback {...props} />
-      }}/>
+      <Route path="/" render={() => <Login />} />
+        <Route path="/callback" render={() => {
+          handleAuthentication()
+          props.checkLogin()
+        }} />
+      <Link to="/calender">Bookings</Link>
+      <Link to="/admin">Admin</Link>
+      <Route path='/admin' component={AdminPortal} />
+      <Route path='/calender' component={Calendar} />
       <Route path="/book" component={Book} />
-      <Calendar />
     </div>
   </BrowserRouter>
   )
 
-export default App
+function mapDispatchToProps (dispatch) {
+  return {
+    checkLogin: () => dispatch(checkLogin())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)

@@ -14,11 +14,11 @@ class Book extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      fullName: null,
-      email: null,
-      contactNum: null,
-      eventStart: null,
-      eventEnd: null,
+      fullName: this.props.user.details.fullName,
+      email: this.props.user.details.email,
+      phoneNumber: this.props.user.details.phoneNumber,
+      startTime: null,
+      endTime: null,
       purpose: null
     }
     this.handleChange = this.handleChange.bind(this)
@@ -35,8 +35,8 @@ class Book extends React.Component {
 
   handleChangeDate (evt, date) {
     this.setState({
-      eventStart: moment(date).format('YYYY/MM/DD'),
-      eventEnd: moment(date).format('YYYY/MM/DD')
+      startTime: moment(date).format('YYYY/MM/DD'),
+      endTime: moment(date).format('YYYY/MM/DD')
     })
   }
 
@@ -69,7 +69,7 @@ class Book extends React.Component {
           <br />
           <input type='email' name='email' placeholder='Email' onChange={this.handleChange} />
           <br />
-          <input type='tel' name='contactNum' placeholder='Contact number' onChange={this.handleChange} />
+          <input type='tel' name='phoneNumber' placeholder='Contact number' onChange={this.handleChange} />
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <div>
               <DatePicker
@@ -79,12 +79,12 @@ class Book extends React.Component {
               <TimePicker
                   format='ampm'
                 hintText='Start'
-                onChange={(e, date) => this.handleChangeEvent(date, 'eventStart')}
+                onChange={(e, date) => this.handleChangeEvent(date, 'startTime')}
               />
               <TimePicker
                 format='ampm'
                 hintText='End'
-                onChange={(e, date) => this.handleChangeEvent(date, 'eventEnd')}
+                onChange={(e, date) => this.handleChangeEvent(date, 'endTime')}
               />
             </div>
           </MuiThemeProvider>
