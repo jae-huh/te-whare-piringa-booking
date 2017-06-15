@@ -1,11 +1,12 @@
 import React from 'react'
-import {Route, BrowserRouter} from 'react-router-dom'
+import {Route, BrowserRouter, Link} from 'react-router-dom'
 
 import Auth from '../auth'
 import Calendar from './Calendar'
 import Callback from './Callback'
 import history from '../auth/history'
 import Login from './Login'
+import AdminPortal from './AdminPortal'
 
 const auth = new Auth()
 
@@ -23,7 +24,10 @@ const App = () => (
         handleAuthentication(props)
         return <Callback {...props} />
       }}/>
-      <Calendar />
+      <Link to="/calender">Bookings</Link>
+      <Link to="/admin">Admin</Link>
+      <Route path='/admin' component={AdminPortal} />
+      <Route path='/calender' component={Calendar} />
     </div>
   </BrowserRouter>
   )

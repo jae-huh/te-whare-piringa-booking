@@ -62,6 +62,15 @@ router.get('/admin/getbookings', (req, res) => {
   })
 })
 
+router.get('/admin/getunconfirmed', (req, res) => {
+  db.adminGetAllBookings(req, res, (err, result) => {
+    if (err) return res.json({error: err})
+    db.filterUnconfirmed(result, filtered => {
+      res.json(filtered)
+    })
+  })
+})
+
 router.post('/user/addbooking', (req, res) => {
   db.userAddBooking(req, res, (err, result) => {
     if (err) return res.json({error: err})

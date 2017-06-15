@@ -61,6 +61,16 @@ function addUser (req, res, cb) {
   })
 }
 
+function filterUnconfirmed (data, cb) {
+  const arr = []
+  for (let i = 0; i < data.length; i++) {
+    if (!data[i].confirmed) {
+      arr.push(data[i])
+    }
+  }
+  cb(arr)
+}
+
 function getDatabase (callback) {
   MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     if (err) return callback(err)
@@ -77,5 +87,6 @@ module.exports = {
   adminGetAllBookings,
   userAddBooking,
   confirmBooking,
-  addUser
+  addUser,
+  filterUnconfirmed
 }
