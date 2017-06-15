@@ -20,8 +20,7 @@ class Book extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)
-    this.handleChangeEventStart = this.handleChangeEventStart.bind(this)
-    this.handleChangeEventEnd = this.handleChangeEventEnd.bind(this)
+    this.handleChangeEvent = this.handleChangeEvent.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -37,15 +36,9 @@ class Book extends React.Component {
     })
   }
 
-  handleChangeEventStart (evt, date) {
+  handleChangeEvent (date, key) {
     this.setState({
-      eventStart: moment(date).format('h:mmA')
-    })
-  }
-
-  handleChangeEventEnd (evt, date) {
-    this.setState({
-      eventEnd: moment(date).format('h:mmA')
+      [key]: moment(date).format('h:mmA')
     })
   }
 
@@ -74,13 +67,13 @@ class Book extends React.Component {
                 format="ampm"
                 hintText="Start"
                 value={this.state.eventStart}
-                onChange={this.handleChangeEventStart}
+                onChange={(e, date) => this.handleChangeEvent(date, 'eventStart')}
               />
               <TimePicker
                 format="ampm"
                 hintText="End"
                 value={this.state.eventEnd}
-                onChange={this.handleChangeEventEnd}
+                onChange={(e, date) => this.handleChangeEvent(date, 'eventEnd')}
               />
             </div>
           </MuiThemeProvider>
