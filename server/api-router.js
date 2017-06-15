@@ -64,9 +64,11 @@ function getUserIdFromToken (req) {
 // router.use(checkJwt)
 
 router.get('/checklogin', (req, res) => {
-  const userId = getUserIdFromToken(req)
-  console.log('user id', userId)
-  res.send("hi")
+  const authId = getUserIdFromToken(req)
+  db.getUserDetails(authId, (err, userDetails) => {
+    if (err) return res.json({error: err})
+    res.json({user: userDetails, hello: 'world'})
+  })
 })
 
 router.get('/admin/getbookings', (req, res) => {

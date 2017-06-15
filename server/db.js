@@ -107,6 +107,17 @@ function getDatabase (callback) {
   })
 }
 
+function getUserDetails (authId, callback) {
+  getDatabase((err, db) => {
+    if (err) return callback(err)
+    db.collection('users').find().toArray((err, results) => {
+      if (err) return callback(err)
+      const userDetails = results.find(user => user.authId === authId)
+      return callback(null, userDetails)
+    })
+  })
+}
+
 module.exports = {
   getAllBookings,
   adminGetAllBookings,
@@ -115,5 +126,6 @@ module.exports = {
   addUser,
   filterUnconfirmed,
   checkUsersForExisting,
-  getUsers
+  getUsers,
+  getUserDetails
 }
