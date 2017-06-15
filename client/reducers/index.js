@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 
-import initial from './initial'
+import auth0 from './auth0'
 
 export default combineReducers({
-  initial
+  auth0
 })

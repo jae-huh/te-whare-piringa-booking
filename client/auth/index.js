@@ -1,16 +1,19 @@
-import history from './history';
-import auth0 from 'auth0-js';
-import { AUTH_CONFIG } from './auth0-variables';
+import history from './history'
+import auth0 from 'auth0-js'
+
+const auth0Domain = 'luke-davison.au.auth0.com'
+const auth0ClientId = 'WCPEyjdLQW37sKZfBMFYNNisB6oyrGdD'
+const auth0CallbackUrl = 'http://localhost:3000/callback'
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
-    domain: AUTH_CONFIG.domain,
-    clientID: AUTH_CONFIG.clientId,
-    redirectUri: AUTH_CONFIG.callbackUrl,
-    audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+    domain: auth0Domain,
+    clientID: auth0ClientId,
+    redirectUri: auth0CallbackUrl,
+    audience: `https://${auth0Domain}/userinfo`,
     responseType: 'token id_token',
     scope: 'openid'
-  });
+  })
 
   constructor() {
     this.login = this.login.bind(this);

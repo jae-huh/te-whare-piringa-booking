@@ -1,31 +1,37 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {Route, BrowserRouter} from 'react-router-dom'
 
 import Auth from '../auth'
 import Calendar from './Calendar'
-import Callback from './Callback'
 import history from '../auth/history'
 import Login from './Login'
+import {checkLogin} from '../actions/auth'
 
-const auth = new Auth()
-
-const handleAuthentication = (nextState, replace) => {
+function handleAuthentication (nextState, replace) {
+  const auth = new Auth()
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
     auth.handleAuthentication()
   }
 }
 
-const App = () => (
-  <BrowserRouter history={history} component={App}>
-    <div>
-      <Route path="/" render={() => <Login auth={auth} />} />
-      <Route path="/callback" render={props => {
-        handleAuthentication(props)
-        return <Callback {...props} />
-      }}/>
-      <Calendar />
-    </div>
-  </BrowserRouter>
+function App (props) {
+  return (
+    <BrowserRouter history={history} component={App}>
+      <div>
+        <Route path="/" render={() => <Login />} />
+        <Route path="/callback" render={() => handleAuthentication(props.checkLogin)} />
+        }}/>
+        <Calendar />
+      </div>
+    </BrowserRouter>
   )
+}
 
-export default App
+function mapDispatchToProps (dispatch) {
+  return {
+    checkLogin: () => dispatch(checkLogin())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)
