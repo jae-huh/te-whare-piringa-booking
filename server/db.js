@@ -60,16 +60,9 @@ function addUser (req, res, cb) {
     })
   })
 }
-module.exports = {
-  getAllBookings,
-  adminGetAllBookings,
-  userAddBooking,
-  confirmBooking,
-  addUser
-}
 
 function getDatabase (callback) {
-  MongoClient.connect('mongodb://localhost:27017', (err, database) => {
+  MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     if (err) return callback(err)
     const db = database.db('admin') // To be changed before deployment to a database for production
     db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
@@ -77,4 +70,12 @@ function getDatabase (callback) {
       callback(null, db)
     })
   })
+}
+
+module.exports = {
+  getAllBookings,
+  adminGetAllBookings,
+  userAddBooking,
+  confirmBooking,
+  addUser
 }
