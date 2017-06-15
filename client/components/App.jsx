@@ -3,6 +3,7 @@ import {Route, BrowserRouter, Link} from 'react-router-dom'
 
 import Auth from '../auth'
 import Calendar from './Calendar'
+import Book from './Book'
 import Callback from './Callback'
 import history from '../auth/history'
 import Login from './Login'
@@ -24,10 +25,15 @@ const App = () => (
         handleAuthentication(props)
         return <Callback {...props} />
       }}/>
+<<<<<<< HEAD
       <Link to="/calender">Bookings</Link>
       <Link to="/admin">Admin</Link>
       <Route path='/admin' component={AdminPortal} />
       <Route path='/calender' component={Calendar} />
+=======
+      <Route path="/book" component={Book} />
+      <Calendar />
+>>>>>>> 460db19df16b96de5d6ac181860cb13129b68ad6
     </div>
   </BrowserRouter>
   )
