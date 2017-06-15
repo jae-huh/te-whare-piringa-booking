@@ -86,6 +86,16 @@ function checkUsersForExisting (id, cb) {
   })
 }
 
+function getUsers (id, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('users').find().toArray((err, results) => {
+      if (err) return cb(err)
+      cb(null, results)
+    })
+  })
+}
+
 function getDatabase (callback) {
   MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     if (err) return callback(err)
@@ -104,5 +114,6 @@ module.exports = {
   confirmBooking,
   addUser,
   filterUnconfirmed,
-  checkUsersForExisting
+  checkUsersForExisting,
+  getUsers
 }
