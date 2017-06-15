@@ -1,7 +1,10 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import {Redirect} from 'react-router'
+
+import {fetchBookings} from '../actions'
 
 BigCalendar.momentLocalizer(moment)
 const events = [
@@ -113,4 +116,12 @@ class Calendar extends React.Component {
   }
 }
 
-export default Calendar
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchBookingss: () => {
+      dispatch(fetchBookings())
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Calendar)
