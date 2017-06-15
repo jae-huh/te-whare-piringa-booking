@@ -87,7 +87,7 @@ router.post('/sendemail', (req, res) => {
 
   let subject = 'test email'
   let reciever = 'daffron92@gmail.com'
-  let sender = 'shit@gmail.com'
+  let sender = 'user@gmail.com'
 
   let mailOptions = {
     from: sender,
