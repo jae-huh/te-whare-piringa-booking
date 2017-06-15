@@ -12,9 +12,6 @@ export function login (method = 'get', endpoint, data = {}) {
   headers['Authorization'] = `Bearer ${token}`
   return request[method](baseUrl + endpoint)
     .set(headers)[dataMethod](data)
-    .then(res => {
-      return res
-    })
     .catch(err => {
       throw err
     })
