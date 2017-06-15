@@ -101,7 +101,7 @@ class Calendar extends React.Component {
           selectable
           views={['month', 'week']}
           events={events}
-          defaultView='week'
+          defaultView='month'
           scrollToTime={new Date(1970, 1, 1, 6)}
           defaultDate={new Date(2015, 3, 12)}
           onSelectEvent={event => alert(event.title)}
