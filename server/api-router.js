@@ -64,9 +64,11 @@ function getUserIdFromToken (req) {
 // router.use(checkJwt)
 
 router.get('/checklogin', (req, res) => {
-  const userId = getUserIdFromToken(req)
-  console.log('user id', userId)
-  res.send("hi")
+  const authId = getUserIdFromToken(req)
+  db.getUserDetails(authId, (err, userDetails) => {
+    if (err) return res.json({error: err})
+    res.json({user: userDetails, hello: 'world'})
+  })
 })
 
 router.get('/admin/getbookings', (req, res) => {
@@ -84,11 +86,9 @@ router.get('/admin/getunconfirmed', (req, res) => {
     })
   })
 })
-router.get('/user/checkuser/:id', (req, res) => {
 
-})
 router.post('/user/addbooking', (req, res) => {
-  db.userAddBooking(req, res, (err, result) => {
+  db.userAddBooking(getUserIdFromToken(req), (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
@@ -102,9 +102,20 @@ router.put('/admin/confirm/:id', (req, res) => {
 })
 
 router.post('/user/adduser', (req, res) => {
-  const decoded = jwt.decode(req.body.token, {complete: true})
-  console.log(decoded)
+  db.checkUsersForExisting(getUserIdFromToken(req), (err, value) => {
+    if (err) return res.json({error: err.message})
+    if (value === true) {
+      return res.redirect('/user/profile')
+    }
+  })
   db.addUser(req, res, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
+
+router.get('/user/profile', (req, res) => {
+  db.getUsers(req.params.id, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
