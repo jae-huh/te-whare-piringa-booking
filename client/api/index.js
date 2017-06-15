@@ -1,18 +1,16 @@
 import request from 'superagent'
-import {get} from '../auth/localstorage'
-import {isAuthenticated} from '../auth'
 
+const localStorage = global.window.localStorage
 const baseUrl = '/api/v1'
 
 export function login (method = 'get', endpoint, data = {}) {
   const dataMethod = method.toLowerCase() === 'get' && 'query' || 'send'
-  const token = get('id_token')
+  const token = localStorage.getItem('id_token')
   const headers = {
     Accept: 'application/json'
   }
-  if (isAuthenticated()) {
-    headers['Authorization'] = `Bearer ${token}`
-  }
+  headers['Authorization'] = `Bearer ${token}`
+  console.log(baseUrl + endpoint)
   return request[method](baseUrl + endpoint)
     .set(headers)[dataMethod](data)
     .then(res => {

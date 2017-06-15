@@ -27,6 +27,13 @@ require('dotenv').config()
 
 router.use(bodyParser.json())
 
+router.get('/getbookings', (req, res) => {
+  db.getAllBookings(req, res, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
+
 const checkJwt = jwt({
   // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
   secret: jwksRsa.expressJwtSecret({
@@ -42,18 +49,11 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 })
 
-router.get('/authorized', function (req, res) {
-  res.send('Secured Resource')
-})
+//router.use(checkJwt)
 
-router.get('/getbookings', (req, res) => {
-  db.getAllBookings(req, res, (err, result) => {
-    if (err) return res.json({error: err})
-    res.json(result)
-  })
+router.get('/checklogin', (req, res) => {
+  res.send("hi")
 })
-
-// router.use(checkJwt)
 
 router.get('/admin/getbookings', (req, res) => {
   db.adminGetAllBookings(req, res, (err, result) => {

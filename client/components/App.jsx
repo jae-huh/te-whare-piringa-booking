@@ -10,9 +10,9 @@ import {checkLogin} from '../actions/auth'
 
 function handleAuthentication (nextState, replace) {
   const auth = new Auth()
-  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+  //if (/access_token|id_token|error/.test(nextState.location.hash)) {
     auth.handleAuthentication()
-  }
+  //}
 }
 
 function App (props) {
@@ -20,8 +20,10 @@ function App (props) {
     <BrowserRouter history={history} component={App}>
       <div>
         <Route path="/" render={() => <Login />} />
-        <Route path="/callback" render={() => handleAuthentication(props.checkLogin)} />
-        }}/>
+        <Route path="/callback" render={() => {
+          handleAuthentication()
+          props.checkLogin()
+        }} />
         <Calendar />
       </div>
     </BrowserRouter>

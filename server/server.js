@@ -13,6 +13,7 @@ app.use('/api/v1/', router)
 app.use(cors())
 
 app.get('*', function (req, res) {
+  console.log('It hit this route')
   res.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
