@@ -1,6 +1,9 @@
 import React from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
+import {Redirect} from 'react-router'
+
+import Book from './Book'
 
 BigCalendar.momentLocalizer(moment)
 const events = [
@@ -75,6 +78,18 @@ const events = [
 ]
 
 class Calendar extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      redirectToBook: false
+    }
+  }
+  redirect () {
+    this.setState({
+      redirectToBook: true
+    })
+  }
+
   render () {
     return (
       <div>
@@ -82,15 +97,18 @@ class Calendar extends React.Component {
           Click an event to see more info, or
           drag the mouse over the calendar to select a date/time range.
         </h3>
+        {this.state.redirectToBook && <Redirect to='/book' />}
         <BigCalendar
           className="calendar"
           selectable
+          views={['month', 'week']}
           events={events}
           defaultView='week'
           scrollToTime={new Date(1970, 1, 1, 6)}
           defaultDate={new Date(2015, 3, 12)}
           onSelectEvent={event => alert(event.title)}
-          onSelectSlot={slotInfo => { alert(`selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` + `\nend: ${slotInfo.end.toLocaleString()}`) }}
+          // onSelectSlot={slotInfo => { alert(`selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` + `\nend: ${slotInfo.end.toLocaleString()}`) }}
+          onSelectSlot={this.redirect.bind(this)}
         />
       </div>
     )
