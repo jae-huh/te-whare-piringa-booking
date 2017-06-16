@@ -18,7 +18,7 @@ function getAllBookings (req, cb) {
     })
   })
 }
-function adminGetAllBookings (req, cb) {
+function adminGetAllBookings (req, res, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').find().toArray((err, results) => {
@@ -28,17 +28,15 @@ function adminGetAllBookings (req, cb) {
   })
 }
 
-function userAddBooking (id, req, res, cb) {
-  if (!validate(req.body)) {
-    return cb({error: 'imcomplete'})
-  }
+function userAddBooking (data, cb) {
+  // if (!validate(req.body)) {
+  //   return cb({error: 'imcomplete'})
+  // }
   getDatabase((err, db) => {
     if (err) return cb(err)
-    const data = req.body
-    data.id = id
     db.collection('bookings').save(data, (err, result) => {
       if (err) return cb(err)
-      cb(null, {id: result.ops[0]._id})
+      cb(null, result.ops[0])
     })
   })
 }

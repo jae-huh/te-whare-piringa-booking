@@ -1,4 +1,3 @@
-
 import {login} from '../api'
 
 const localStorage = global.window.localStorage
@@ -56,6 +55,7 @@ export function submitRegistration (registrationInfo) {
   }
 }
 
+
 function checkingRegistration () {
   return {
     type: 'SENDING_REGISTRATION'
@@ -83,3 +83,4 @@ function loggedOut () {
     type: 'LOGGED_OUT'
   }
 }
+
