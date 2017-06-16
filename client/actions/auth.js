@@ -1,4 +1,5 @@
 import {login} from '../api'
+import history from '../utils/history'
 
 export function checkLogin () {
   return dispatch => {
@@ -6,9 +7,11 @@ export function checkLogin () {
     login('get', '/checklogin')
       .then(res => {
         if (!res.body.user) {
-          return dispatch(noUserExists())
+          dispatch(noUserExists())
+          return history.replace('/register')
         }
-        return dispatch(loggedIn(user))
+        dispatch(loggedIn(user))
+        return history.replace('/')
       })
   }
 }
@@ -30,4 +33,8 @@ function loggedIn (user) {
     type: 'LOGGED_IN',
     user
   }
+}
+
+export function submitRegistration () {
+
 }

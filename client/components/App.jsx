@@ -7,9 +7,10 @@ import Auth from '../auth'
 import Calendar from './Calendar'
 import Book from './Book'
 import Callback from './Callback'
-import history from '../auth/history'
+import history from '../utils/history'
 import Login from './Login'
 import AdminPortal from './AdminPortal'
+import Registration from './Registration'
 
 import {checkLogin} from '../actions/auth'
 
@@ -33,6 +34,7 @@ const App = props => (
       <Route path='/admin' component={AdminPortal} />
       <Route path='/calender' component={Calendar} />
       <Route path="/book" component={Book} />
+      <Route path='/register' component={Registration} />
     </div>
   </BrowserRouter>
   )
