@@ -17,9 +17,6 @@ export function checkLogin () {
         })
     }
   }
-  return dispatch => {
-    dispatch({type: 'DO_NOTHING'})
-  }
 }
 
 function checkingLogin () {
