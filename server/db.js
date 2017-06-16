@@ -18,7 +18,7 @@ function getAllBookings (req, cb) {
     })
   })
 }
-function adminGetAllBookings (req, cb) {
+function adminGetAllBookings (req, res, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').find().toArray((err, results) => {
@@ -33,14 +33,9 @@ function userAddBooking (data, res, cb) {
   //   return cb({error: 'imcomplete'})
   // }
   getDatabase((err, db) => {
-<<<<<<< HEAD
-    if (err) return console.log("err:", err)
-  
-=======
     if (err) return cb(err)
     const data = req.body
     data.id = id
->>>>>>> 3bb2b07c27c5c999a8ab0171a9e5eb779b595239
     db.collection('bookings').save(data, (err, result) => {
       if (err) return cb(err)
       cb(null, {id: result.ops[0]._id})
@@ -129,7 +124,6 @@ module.exports = {
   confirmBooking,
   addUser,
   filterUnconfirmed,
-  checkUsersForExisting,
   getUsers,
   getUserDetails
 }
