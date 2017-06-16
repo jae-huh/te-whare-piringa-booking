@@ -1,4 +1,4 @@
-import {login} from '../api'
+import {login, newBooking} from '../api'
 
 export function postNewBooking (details, cb) {
   login('post', `${baseUrl}/user/addbooking`, details)

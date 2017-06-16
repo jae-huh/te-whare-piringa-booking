@@ -7,7 +7,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import moment from 'moment'
 import {connect} from 'react-redux'
 
-import {postNewBooking} from '../api'
+import {newBooking} from '../api'
 
 injectTapEventPlugin()
 
@@ -15,14 +15,16 @@ class Book extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      fullName: this.props.user.fullName,
-      email: this.props.user.email,
-      phoneNumber: this.props.user.phoneNumber,
+      authId: '',
+      fullName: '',
+      email: '',
+      phoneNumber: '',
       date: null,
       startTime: null,
       endTime: null,
       purpose: null,
       guestNumber: null
+      
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)
@@ -51,26 +53,41 @@ class Book extends React.Component {
 
   handleSubmit (evt) {
     evt.preventDefault()
-    // this.props.postNewBooking(this.state)
-    // postNewBooking(this.state, (err, res) => {
-    //   if (err) {
-    //     console.log(err)
-    //   } else {
-    //     console.log(res)
-    //   }
-    // })
-    console.log(this.state)
+    this.setState({
+      fullName: this.props.fullName,
+      email: this.props.emailAddress,
+      phoneNumber: this.props.phoneNumber,
+      authId: this.props.authId
+    }, () => {
+      const data = {
+        fullName: this.state.fullName,
+        emailAddress: this.state.email,
+
+        phoneNumber: this.state.phoneNumber,
+        authId: this.state.authId,
+        startDate: this.state.date + this.state.startTime,
+        endDate: this.state.date + this.state.endTime,
+        purpose: this.state.purpose,
+        guestNumber: this.state.guestNumber,
+        confirmed: false,
+        dateAdded: new Date().toLocaleDateString('en-GB').substring(0, 8)}
+
+      newBooking(data, (err, res) => {
+        if (err) return this.setState({error: err})
+        this.props.history.push('/calendar')
+      })
+    })
   }
 
   render () {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input name='fullName' placeholder='Full name' onChange={this.handleChange} required />
+          <input name='fullName' placeholder='Full name' value={this.props.fullName} onChange={this.handleChange} required />
           <br />
-          <input type='email' name='email' placeholder='Email' onChange={this.handleChange} required />
+          <input type='email' name='email' placeholder='Email' value={this.props.emailAddress} onChange={this.handleChange} required />
           <br />
-          <input type='tel' name='phoneNumber' placeholder='Contact number' onChange={this.handleChange} required />
+          <input type='tel' name='phoneNumber' placeholder='Contact number' value={this.props.phoneNumber} onChange={this.handleChange} required />
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <div>
               <DatePicker
@@ -120,16 +137,14 @@ function generateTimes (num) {
 }
 
 function mapStateToProps (state) {
-  return {
-    user: state.user
-  }
+  return state.user
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    postNewBooking: booking => {
-      dispatch(postNewBooking(booking))
-    }
+    // postNewBooking: booking => {
+    //   dispatch(postNewBooking(booking))
+    // }
   }
 }
 

@@ -24,3 +24,11 @@ export function getUnconfirmed (cb) {
     cb(null, data.body)
   })
 }
+
+export function newBooking (data, cb) {
+  request.post('api/v1/user/addbooking')
+  .send(data)
+  .then(res => {
+    cb(null, res)
+  })
+}

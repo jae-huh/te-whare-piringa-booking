@@ -65,7 +65,7 @@ function getUserIdFromToken (req) {
 
 router.get('/checklogin', (req, res) => {
   const authId = getUserIdFromToken(req)
-  return db.getUserDetails(authId, (err, userDetails) => {
+    db.getUserDetails(authId, (err, userDetails) => {
     if (err) return res.json({error: err})
     res.json({user: userDetails})
   })
@@ -101,7 +101,7 @@ router.get('/admin/getunconfirmed', (req, res) => {
 })
 
 router.post('/user/addbooking', (req, res) => {
-  db.userAddBooking(getUserIdFromToken(req), (err, result) => {
+  db.userAddBooking(req.body, res, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })

@@ -21,24 +21,34 @@ function handleAuthentication (nextState, replace) {
   // }
 }
 
-const App = props => (
+class App extends React.Component {
+
+  componentDidMount () {
+    this.props.checkLogin()
+  }
+
+  render () {
+    return (
   <BrowserRouter history={history} component={App}>
     <div>
       <Route path="/" render={() => <Login />} />
         <Route path="/callback" render={() => {
           handleAuthentication()
-          props.checkLogin()
+          this.props.checkLogin()
           return <Callback />
         }} />
       <Link to="/calender">Bookings</Link>
       <Link to="/admin">Admin</Link>
+      <Link to="/book">Book</Link>
       <Route path='/admin' component={AdminPortal} />
       <Route path='/calendar' component={Calendar} />
       <Route path="/book" component={Book} />
       <Route path='/register' component={Registration} />
     </div>
   </BrowserRouter>
-  )
+    )
+  }
+}
 
 function mapDispatchToProps (dispatch) {
   return {

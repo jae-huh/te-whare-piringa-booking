@@ -28,14 +28,13 @@ function adminGetAllBookings (req, res, cb) {
   })
 }
 
-function userAddBooking (id, req, res, cb) {
-  if (!validate(req.body)) {
-    return cb({error: 'imcomplete'})
-  }
+function userAddBooking (data, res, cb) {
+  // if (!validate(req.body)) {
+  //   return cb({error: 'imcomplete'})
+  // }
   getDatabase((err, db) => {
     if (err) return console.log("err:", err)
-    const data = req.body
-    data.id = id
+  
     db.collection('bookings').save(data, (err, result) => {
       if (err) return res.json({error: err})
       cb(null, {id: result.ops[0]._id})

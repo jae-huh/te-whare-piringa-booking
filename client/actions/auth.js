@@ -1,4 +1,3 @@
-
 import {login} from '../api'
 
 export function checkLogin () {
@@ -6,9 +5,8 @@ export function checkLogin () {
     dispatch(checkingLogin())
     login('get', '/checklogin')
       .then(res => {
-        if (res.body.error) {
-          console.log(res.body.error)
-          dispatch(noUserExists())
+        if (!res.body.user) {
+          return dispatch(noUserExists())
         }
         dispatch(loggedIn(res.body.user))
       })
@@ -50,6 +48,7 @@ export function submitRegistration (registrationInfo) {
       })
   }
 }
+
 
 function checkingRegistration () {
   return {
