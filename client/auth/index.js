@@ -32,10 +32,11 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        cb()
-      } else if (err) {
+      }
+      if (err) {
         console.log(err)
       }
+      return cb()
     })
   }
 
