@@ -55,7 +55,6 @@ export function submitRegistration (registrationInfo) {
   }
 }
 
-
 function checkingRegistration () {
   return {
     type: 'SENDING_REGISTRATION'

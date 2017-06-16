@@ -1,16 +1,17 @@
 import {login} from '../api/index'
 
-export const LOADING = 'LOADING'
+export const POSTING_BOOKING = 'POSTING_BOOKING'
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
 
-function loading () {
+function postingBooking () {
   return {
-    type: LOADING
+    type: POSTING_BOOKING
   }
 }
 
 export function newBooking (data) {
   return dispatch => {
+    dispatch(postingBooking())
     login('post', '/user/addbooking', data)
         .then(res => {
           dispatch(bookingPosted(res.body))
