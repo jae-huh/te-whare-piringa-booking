@@ -6,6 +6,7 @@ export function checkLogin () {
     login('get', '/checklogin')
       .then(res => {
         if (!res.body.user) {
+          res.body.error && console.log(res.body.error)
           return dispatch(noUserExists())
         }
         dispatch(loggedIn(res.body.user))
