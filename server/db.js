@@ -1,12 +1,12 @@
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient
 
-function getAllBookings (req, res, cb) {
+function getAllBookings (req, cb) {
   const filtered = []
-  getDatabase((err, db) => {
-    if (err) return console.log("err:", err)
-    db.collection('bookings').find().toArray((err, results) => {
-      if (err) return {error: err}
+  return getDatabase((err, db) => {
+    if (err) return cb(err)
+    return db.collection('bookings').find().toArray((err, results) => {
+      if (err) return cb(err)
       for (let i = 0; i < results.length; i++) {
         filtered.push({anonBooking: {
           startDate: results[i].startDate,
@@ -18,35 +18,35 @@ function getAllBookings (req, res, cb) {
     })
   })
 }
-function adminGetAllBookings (req, res, cb) {
+function adminGetAllBookings (req, cb) {
   getDatabase((err, db) => {
-    if (err) return console.log("err:", err)
+    if (err) return cb(err)
     db.collection('bookings').find().toArray((err, results) => {
-      if (err) return {error: err}
+      if (err) return cb(err)
       cb(null, results)
     })
   })
 }
 
-function userAddBooking (req, res, cb) {
+function userAddBooking (req, cb) {
   getDatabase((err, db) => {
-    if (err) return console.log("err:", err)
+    if (err) return cb(err)
     db.collection('bookings').save(req.body, (err, result) => {
-      if (err) return res.json({error: err})
-      cb(null, {id: result.ops[0]._id})
+      if (err) return cb(err)
+      cb(null, result.ops[0])
     })
   })
 }
 
-function confirmBooking (req, res, cb) {
+function confirmBooking (req, cb) {
   getDatabase((err, db) => {
-    if (err) return console.log("err:", err)
+    if (err) return cb(err)
     db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'confirmed': true}}, (err, result) => {
-      if (err) {
-        return res.json({error: err})
-      } else if (result.ok === 1) {
-        cb({updated: true})
+      if (err) return cb(err)
+      if (result.ok === 1) {
+        return cb({updated: true})
       }
+      // What happens when result is not okay?  Is this possible?
     })
   })
 }
@@ -56,7 +56,6 @@ function addUser (user, cb) {
     if (err) return cb(err)
     db.collection('users').save(user, (err, result) => {
       if (err) return cb(err)
-      console.log('result from db', result)
       cb(null, result.ops[0])
     })
   })
@@ -70,21 +69,6 @@ function filterUnconfirmed (data, cb) {
     }
   }
   cb(arr)
-}
-
-function checkUsersForExisting (id, cb) {
-  getDatabase((err, db) => {
-    if (err) return cb(err)
-    db.collection('users').find().toArray((err, results) => {
-      if (err) return cb(err)
-      for (let i = 0; i < results.length; i++) {
-        if (results[i].authId === id) {
-          return cb(null, true)
-        }
-      }
-      cb(null, false)
-    })
-  })
 }
 
 function getUsers (id, cb) {
@@ -102,8 +86,7 @@ function getDatabase (cb) {
     if (err) return cb(err)
     const db = database.db('admin') // To be changed before deployment to a database for production
     db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
-      if (err) return {error: err}
-      cb(null, db)
+      cb(err, db)
     })
   })
 }
