@@ -28,7 +28,6 @@ const App = props => (
         <Route path="/callback" render={() => {
           handleAuthentication()
           props.checkLogin()
-          console.log('getting to here')
           return <Callback />
         }} />
       <Link to="/calender">Bookings</Link>

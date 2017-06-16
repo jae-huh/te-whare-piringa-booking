@@ -29,7 +29,6 @@ function noUserExists (error) {
 }
 
 function loggedIn (user) {
-  console.log('logged in')
   return {
     type: 'LOGGED_IN',
     user
