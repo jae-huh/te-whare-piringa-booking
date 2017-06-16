@@ -107,7 +107,7 @@ router.get('/admin/getunconfirmed', (req, res) => {
 })
 
 router.post('/user/addbooking', (req, res) => {
-  db.userAddBooking(req.body, res, (err, result) => {
+  db.userAddBooking(req.body, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
