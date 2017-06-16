@@ -65,9 +65,22 @@ function getUserIdFromToken (req) {
 
 router.get('/checklogin', (req, res) => {
   const authId = getUserIdFromToken(req)
-  db.getUserDetails(authId, (err, userDetails) => {
+  return db.getUserDetails(authId, (err, userDetails) => {
     if (err) return res.json({error: err})
-    res.json({user: userDetails, hello: 'world'})
+    res.json({user: userDetails})
+  })
+})
+
+router.post('/user/adduser', (req, res) => {
+  const user = req.body
+  user.authId = getUserIdFromToken(req)
+  return db.getUserDetails(user.authId, (err, userDetails) => {
+    if (err) return res.json({error: err})
+    // if (userDetails) return res.json({error: 'You are already registered', user: userDetails})
+    return db.addUser(user, (err, userDetails) => {
+      if (err) return res.json({error: err})
+      return res.json({user: userDetails})
+    })
   })
 })
 
@@ -101,18 +114,7 @@ router.put('/admin/confirm/:id', (req, res) => {
   })
 })
 
-router.post('/user/adduser', (req, res) => {
-  db.checkUsersForExisting(getUserIdFromToken(req), (err, value) => {
-    if (err) return res.json({error: err.message})
-    if (value === true) {
-      return res.redirect('/user/profile')
-    }
-  })
-  db.addUser(req, res, (err, result) => {
-    if (err) return res.json({error: err})
-    res.json(result)
-  })
-})
+
 
 router.get('/user/profile', (req, res) => {
   db.getUsers(req.params.id, (err, result) => {

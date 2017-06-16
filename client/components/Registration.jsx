@@ -1,4 +1,5 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import {submitRegistration} from '../actions/auth'
@@ -36,17 +37,24 @@ class Registration extends React.Component {
           <p><input className='form-control' name='fullName' onChange={this.handleChange} placeholder='Full Name' /></p>
           <p><input className='form-control' name='emailAddress' onChange={this.handleChange} placeholder='Contact Email Address' /></p>
           <p><input className='form-control' name='phoneNumber' onChange={this.handleChange} placeholder='Contact Phone Number' /></p>
-          <p><button className='btn btn-primary' onClick={this.handleClick}>Register</button></p>
+          <p><button className='btn btn-primary' onClick={this.handleSubmit}>Register</button></p>
         </div>
+        {this.props.redirectTo === 'calendar' && <Redirect to='/calendar' />}
       </div>
     )
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapStateToProps (state) {
   return {
-    submitRegistration: (registrationInfo, route, redirect) => dispatch(submitRegistration(registrationInfo, route, redirect))
+    redirectTo: state.redirectTo
   }
 }
 
-export default connect(null, mapDispatchToProps)(Registration)
+function mapDispatchToProps (dispatch) {
+  return {
+    submitRegistration: registrationInfo => dispatch(submitRegistration(registrationInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration)

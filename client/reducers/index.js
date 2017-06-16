@@ -2,8 +2,10 @@ import {combineReducers} from 'redux'
 
 import auth0 from './auth0'
 import user from './user'
+import redirectTo from './redirect'
 
 export default combineReducers({
   auth0,
-  user
+  user,
+  redirectTo
 })
