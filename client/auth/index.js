@@ -1,4 +1,4 @@
-import history from './history'
+import history from '../utils/history'
 import auth0 from 'auth0-js'
 
 const auth0Domain = 'luke-davison.au.auth0.com'

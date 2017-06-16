@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {submitRegistration} from '../actions'
+import {submitRegistration} from '../actions/auth'
 
 class Registration extends React.Component {
   constructor (props) {
@@ -26,9 +26,7 @@ class Registration extends React.Component {
       phoneNumber: this.state.phoneNumber.trim(),
       emailAddress: this.state.emailAddress.trim(),
     }
-    this.props.submitRegistration(registrationInfo, '/register', (err, result) => {
-      console.log('Redirect if successful')
-    })
+    this.props.submitRegistration(registrationInfo)
   }
   render () {
     return (
