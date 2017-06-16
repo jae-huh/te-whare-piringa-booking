@@ -28,10 +28,15 @@ function adminGetAllBookings (req, res, cb) {
   })
 }
 
-function userAddBooking (req, res, cb) {
+function userAddBooking (id, req, res, cb) {
+  if (!validate(req.body)) {
+    return cb({error: 'imcomplete'})
+  }
   getDatabase((err, db) => {
     if (err) return console.log("err:", err)
-    db.collection('bookings').save(req.body, (err, result) => {
+    const data = req.body
+    data.id = id
+    db.collection('bookings').save(data, (err, result) => {
       if (err) return res.json({error: err})
       cb(null, {id: result.ops[0]._id})
     })
@@ -116,6 +121,16 @@ function getUserDetails (authId, cb) {
       const userDetails = results.find(user => user.authId === authId)
       return cb(null, userDetails)
     })
+  })
+}
+
+function validate (obj) {
+  Object.values.map(item => {
+    if (item) {
+      return true
+    } else {
+      return false
+    }
   })
 }
 
