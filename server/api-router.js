@@ -27,7 +27,7 @@ const jwksRsa = require('jwks-rsa')
 router.use(bodyParser.json())
 
 router.get('/getbookings', (req, res) => {
-  db.getAllBookings(req, res, (err, result) => {
+  db.getAllBookings(req, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
@@ -61,7 +61,13 @@ function getUserIdFromToken (req) {
   return decodedToken.payload.sub
 }
 
-// router.use(checkJwt)
+router.use(checkJwt)
+
+router.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send({error: 'Invalid or missing authorization token'})
+  }
+})
 
 router.get('/checklogin', (req, res) => {
   const authId = getUserIdFromToken(req)
@@ -85,14 +91,14 @@ router.post('/user/adduser', (req, res) => {
 })
 
 router.get('/admin/getbookings', (req, res) => {
-  db.adminGetAllBookings(req, res, (err, result) => {
+  db.adminGetAllBookings(req, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
 })
 
 router.get('/admin/getunconfirmed', (req, res) => {
-  db.adminGetAllBookings(req, res, (err, result) => {
+  db.adminGetAllBookings(req, (err, result) => {
     if (err) return res.json({error: err})
     db.filterUnconfirmed(result, filtered => {
       res.json(filtered)
@@ -108,13 +114,11 @@ router.post('/user/addbooking', (req, res) => {
 })
 
 router.put('/admin/confirm/:id', (req, res) => {
-  db.confirmBooking(req, res, (err, result) => {
+  db.confirmBooking(req, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
 })
-
-
 
 router.get('/user/profile', (req, res) => {
   db.getUsers(req.params.id, (err, result) => {
