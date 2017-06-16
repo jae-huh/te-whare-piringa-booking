@@ -1,10 +1,13 @@
 import React from 'react'
-import TimePicker from 'material-ui/TimePicker'
+// import TimePicker from 'material-ui/TimePicker'
 import DatePicker from 'material-ui/DatePicker'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import moment from 'moment'
+import {connect} from 'react-redux'
+
+import {newBooking} from '../actions/index'
 
 injectTapEventPlugin()
 
@@ -12,15 +15,20 @@ class Book extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: null,
-      contactNum: null,
+      authId: '',
+      fullName: '',
+      email: '',
+      phoneNumber: '',
       date: null,
-      eventStart: null,
-      eventEnd: null
+      startTime: null,
+      endTime: null,
+      purpose: null,
+      guestNumber: null
+      
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)
-    this.handleChangeEvent = this.handleChangeEvent.bind(this)
+    this.handleChangeTime = this.handleChangeTime.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -32,49 +40,68 @@ class Book extends React.Component {
 
   handleChangeDate (evt, date) {
     this.setState({
-      date: moment(date).format('DD/MM/YYYY')
+      date: moment(date).format('YYYY/MM/DD')
     })
   }
 
-  handleChangeEvent (date, key) {
+  handleChangeTime (evt, key) {
     this.setState({
-      [key]: moment(date).format('h:mmA')
+      [key]: evt.target.value
     })
   }
 
   handleSubmit (evt) {
     evt.preventDefault()
-    // this.props.dispatch(saveNewCaption(this.state, (newCaptionId) => {
-    //   this.props.routerProps.history.push(`/images/${this.state.imageId}/${newCaptionId}`)
-    // }))
-    console.log(this.state)
+   
+    const data = {
+      fullName: this.state.fullName || this.props.fullName,
+      emailAddress: this.state.email || this.props.emailAddress,
+      phoneNumber: this.state.phoneNumber || this.props.phoneNumber,
+      authId: this.props.authId,
+      startDate: this.state.date + this.state.startTime,
+      endDate: this.state.date + this.state.endTime,
+      purpose: this.state.purpose,
+      guestNumber: this.state.guestNumber,
+      confirmed: false,
+      dateAdded: new Date().toLocaleDateString('en-GB').substring(0, 8)}
+
+    this.props.postNewBooking(data)
+    this.props.history.push('/calendar')
   }
 
   render () {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="email" name="email" placeholder="Email" onChange={this.handleChange} />
+          <input name='fullName' placeholder={this.props.fullName} onChange={this.handleChange} />
           <br />
-          <input type="tel" name="contactNum" placeholder="Contact number" onChange={this.handleChange} />
+          <input type='email' name='email' placeholder={this.props.emailAddress} onChange={this.handleChange} />
+          <br />
+          <input type='tel' name='phoneNumber' placeholder={this.props.phoneNumber} onChange={this.handleChange} />
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <div>
               <DatePicker
-                hintText="Date"
+                hintText='Date'
                 onChange={this.handleChangeDate}
+                required
               />
-              <TimePicker
-                format="ampm"
-                hintText="Start"
-                onChange={(e, date) => this.handleChangeEvent(date, 'eventStart')}
-              />
-              <TimePicker
-                format="ampm"
-                hintText="End"
-                onChange={(e, date) => this.handleChangeEvent(date, 'eventEnd')}
-              />
+              
             </div>
           </MuiThemeProvider>
+          Start time: <select name='startTime' required onChange={e => this.handleChangeTime(e, 'startTime')}>
+            <option value='' disabled selected>Select Time</option>
+            {generateTimes(0)}
+          </select>
+          <br />
+          End time: <select name='endTime' required onChange={e => this.handleChangeTime(e, 'endTime')}>
+            <option value='' disabled selected>Select Time</option>
+            {generateTimes(1)}
+          </select>
+          <br />
+          <textarea name='purpose' required placeholder='Purpose of hire' onChange={this.handleChange} />
+          <br />
+          <input type='number' min='0' name='guestNumber' placeholder='Number of guests' onChange={this.handleChange} required />
+          <br />
           <input type='submit' value='Book' />
         </form>
       </div>
@@ -82,4 +109,33 @@ class Book extends React.Component {
   }
 }
 
-export default Book
+function generateTimes (num) {
+  let times = []
+  for (let i = 6 + num; i <= 21 + num; i++) {
+    for (let j = 0; j <= 30; j += 30) {
+      let time = <option key={i + j}>{i}:{j === 0 ? '00' : j}</option>
+      if (num === 0 && i === 21 && j === 30) {
+        return times
+      } else if (num === 1 && i === 22 && j === 30) {
+        return times
+      } else {
+        times.push(time)
+      }
+    }
+  }
+  return times
+}
+
+function mapStateToProps (state) {
+  return state.user
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    postNewBooking: data => {
+      dispatch(newBooking(data))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book)

@@ -25,6 +25,9 @@ function handleAuthentication (cb) {
 class App extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      user: null
+    }
   }
   componentDidMount () {
     handleAuthentication(this.props.checkLogin)
@@ -38,6 +41,7 @@ class App extends React.Component {
           <Route path="/callback" component={Callback} />
           <Link to="/calendar">Bookings</Link>
           <Link to="/admin">Admin</Link>
+          <Link to="/book">Book</Link>
           <Route path='/admin' component={AdminPortal} />
           <Route path='/calendar' component={Calendar} />
           <Route path="/book" component={Book} />
