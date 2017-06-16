@@ -1,17 +1,21 @@
 
 import {login} from '../api'
 
+const localStorage = global.window.localStorage
+
 export function checkLogin () {
-  return dispatch => {
-    dispatch(checkingLogin())
-    login('get', '/checklogin')
-      .then(res => {
-        if (!res.body.user) {
-          res.body.error && console.log(res.body.error)
-          return dispatch(noUserExists())
-        }
-        dispatch(loggedIn(res.body.user))
-      })
+  if (localStorage.getItem('id_token')) {
+    return dispatch => {
+      dispatch(checkingLogin())
+      login('get', '/checklogin')
+        .then(res => {
+          if (!res.body.user) {
+            res.body.error && console.log(res.body.error)
+            return dispatch(noUserExists())
+          }
+          dispatch(loggedIn(res.body.user))
+        })
+    }
   }
 }
 
@@ -61,5 +65,20 @@ function registrationFailed (error) {
   return {
     type: 'FAILED_REGISTRATION',
     error
+  }
+}
+
+export function logout () {
+  return dispatch => {
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('expires_at')
+    dispatch(loggedOut())
+  }
+}
+
+function loggedOut () {
+  return {
+    type: 'LOGGED_OUT'
   }
 }
