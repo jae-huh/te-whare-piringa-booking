@@ -129,7 +129,6 @@ module.exports = {
   confirmBooking,
   addUser,
   filterUnconfirmed,
-  checkUsersForExisting,
   getUsers,
   getUserDetails
 }
