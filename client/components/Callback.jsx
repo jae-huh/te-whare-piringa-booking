@@ -1,4 +1,6 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 class Callback extends React.Component {
   render () {
@@ -17,10 +19,17 @@ class Callback extends React.Component {
 
     return (
       <div style={style}>
+        {this.props.redirectTo && <Redirect to={`/${this.props.redirectTo}`} />}
         <p>Loading</p>
       </div>
     )
   }
 }
 
-export default Callback
+function mapStateToProps (state) {
+  return {
+    redirectTo: state.redirectTo
+  }
+}
+
+export default connect(mapStateToProps)(Callback)

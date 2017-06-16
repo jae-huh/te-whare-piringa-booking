@@ -78,17 +78,7 @@ class Book extends React.Component {
                 onChange={this.handleChangeDate}
                 required
               />
-
-              {/* <TimePicker
-                format='ampm'
-                hintText='Start'
-                onChange={(e, date) => this.handleChangeEvent(date, 'startTime')}
-              />
-              <TimePicker
-                format='ampm'
-                hintText='End'
-                onChange={(e, date) => this.handleChangeEvent(date, 'endTime')}
-              /> */}
+              
             </div>
           </MuiThemeProvider>
           Start time: <select name='startTime' required onChange={e => this.handleChangeTime(e, 'startTime')}>

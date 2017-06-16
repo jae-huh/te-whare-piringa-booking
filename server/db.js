@@ -28,10 +28,15 @@ function adminGetAllBookings (req, res, cb) {
   })
 }
 
-function userAddBooking (req, res, cb) {
+function userAddBooking (id, req, res, cb) {
+  if (!validate(req.body)) {
+    return cb({error: 'imcomplete'})
+  }
   getDatabase((err, db) => {
     if (err) return console.log("err:", err)
-    db.collection('bookings').save(req.body, (err, result) => {
+    const data = req.body
+    data.id = id
+    db.collection('bookings').save(data, (err, result) => {
       if (err) return res.json({error: err})
       cb(null, {id: result.ops[0]._id})
     })
@@ -51,12 +56,13 @@ function confirmBooking (req, res, cb) {
   })
 }
 
-function addUser (req, res, cb) {
+function addUser (user, cb) {
   getDatabase((err, db) => {
-    if (err) return console.log("err:", err)
-    db.collection('users').save(req.body, (err, result) => {
-      if (err) return res.json({error: err})
-      cb(null, {id: result.ops[0]._id})
+    if (err) return cb(err)
+    db.collection('users').save(user, (err, result) => {
+      if (err) return cb(err)
+      console.log('result from db', result)
+      cb(null, result.ops[0])
     })
   })
 }
@@ -96,25 +102,35 @@ function getUsers (id, cb) {
   })
 }
 
-function getDatabase (callback) {
+function getDatabase (cb) {
   MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
-    if (err) return callback(err)
+    if (err) return cb(err)
     const db = database.db('admin') // To be changed before deployment to a database for production
     db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
       if (err) return {error: err}
-      callback(null, db)
+      cb(null, db)
     })
   })
 }
 
-function getUserDetails (authId, callback) {
+function getUserDetails (authId, cb) {
   getDatabase((err, db) => {
-    if (err) return callback(err)
+    if (err) return cb(err)
     db.collection('users').find().toArray((err, results) => {
-      if (err) return callback(err)
+      if (err) return cb(err)
       const userDetails = results.find(user => user.authId === authId)
-      return callback(null, userDetails)
+      return cb(null, userDetails)
     })
+  })
+}
+
+function validate (obj) {
+  Object.values.map(item => {
+    if (item) {
+      return true
+    } else {
+      return false
+    }
   })
 }
 

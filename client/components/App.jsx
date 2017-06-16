@@ -28,11 +28,12 @@ const App = props => (
         <Route path="/callback" render={() => {
           handleAuthentication()
           props.checkLogin()
+          return <Callback />
         }} />
       <Link to="/calender">Bookings</Link>
       <Link to="/admin">Admin</Link>
       <Route path='/admin' component={AdminPortal} />
-      <Route path='/calender' component={Calendar} />
+      <Route path='/calendar' component={Calendar} />
       <Route path="/book" component={Book} />
       <Route path='/register' component={Registration} />
     </div>
