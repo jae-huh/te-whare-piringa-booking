@@ -66,13 +66,11 @@ class Book extends React.Component {
               <TimePicker
                 format="ampm"
                 hintText="Start"
-                value={this.state.eventStart}
                 onChange={(e, date) => this.handleChangeEvent(date, 'eventStart')}
               />
               <TimePicker
                 format="ampm"
                 hintText="End"
-                value={this.state.eventEnd}
                 onChange={(e, date) => this.handleChangeEvent(date, 'eventEnd')}
               />
             </div>

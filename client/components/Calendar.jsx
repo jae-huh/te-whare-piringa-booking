@@ -1,7 +1,8 @@
 import React from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import {Redirect} from 'react-router'
+
+import history from '../utils/history'
 
 BigCalendar.momentLocalizer(moment)
 const events = [
@@ -95,13 +96,13 @@ class Calendar extends React.Component {
           Click an event to see more info, or
           drag the mouse over the calendar to select a date/time range.
         </h3>
-        {this.state.redirectToBook && <Redirect to='/book' />}
+        {this.state.redirectToBook && history.push('/book')}
         <BigCalendar
           className="calendar"
           selectable
           views={['month', 'week']}
           events={events}
-          defaultView='week'
+          defaultView='month'
           scrollToTime={new Date(1970, 1, 1, 6)}
           defaultDate={new Date(2015, 3, 12)}
           onSelectEvent={event => alert(event.title)}
