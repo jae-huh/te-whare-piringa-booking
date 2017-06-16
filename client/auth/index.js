@@ -1,6 +1,8 @@
 import history from '../utils/history'
 import auth0 from 'auth0-js'
 
+const localStorage = global.window.localStorage
+
 const auth0Domain = 'luke-davison.au.auth0.com'
 const auth0ClientId = 'WCPEyjdLQW37sKZfBMFYNNisB6oyrGdD'
 const auth0CallbackUrl = 'http://localhost:3000/callback'
@@ -26,16 +28,15 @@ export default class Auth {
     this.auth0.authorize();
   }
 
-  handleAuthentication () {
+  handleAuthentication (cb) {
     this.auth0.parseHash((err, authResult) => {
-      alert(JSON.stringify(authResult))
       if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
+        this.setSession(authResult)
+        cb()
       } else if (err) {
-        console.log(err);
-        alert(`Error: ${err.error}. Check the console for further details.`);
+        console.log(err)
       }
-    });
+    })
   }
 
   setSession(authResult) {
