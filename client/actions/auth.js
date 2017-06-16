@@ -45,6 +45,7 @@ export function submitRegistration (registrationInfo) {
     login('post', '/user/adduser', registrationInfo)
       .then(res => {
         if (res.body.user) {
+          console.log(res.body.user)
           dispatch(loggedIn(res.body.user))
         }
         if (res.body.error) {
