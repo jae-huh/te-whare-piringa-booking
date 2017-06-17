@@ -1,7 +1,33 @@
-.calendar {
-  height: 80vh;
+.calendar-date-container, .calendar-header-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.rbc-event {
-  
+.calendar-date, .calendar-header {
+  border-style: solid;
+  width: 13%;
+}
+
+.calendar-date {
+  height: 14vh
+}
+
+.schedule-header-container, .schedule-columns-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.schedule-column-container, .schedule-hours-container {
+  width: 25%;
+}
+
+.schedule-header, .slot, .hour {
+  border-style: solid;
+  width: 100%;
+  height: 2vh
+}
+
+.selected {
+  background-color: pink;
 }
