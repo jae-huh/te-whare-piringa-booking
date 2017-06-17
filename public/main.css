@@ -37,7 +37,8 @@
 
 .schedule-header, .slot, .hour {
   border-style: dashed;
-  border-width: 0.5px;
+  border-width: thin;
+  border-color: grey;
   width: 100%;
   height: 2vh
 }
