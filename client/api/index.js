@@ -25,3 +25,10 @@ export function getUnconfirmed (cb) {
   })
 }
 
+export function getAllBookings (cb) {
+  request.get(`${baseUrl}/getbookings`)
+  .end((err, data) => {
+    if (err) return cb(err)
+    cb(null, data.body)
+  })
+}

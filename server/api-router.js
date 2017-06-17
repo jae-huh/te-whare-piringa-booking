@@ -49,9 +49,7 @@ const checkJwt = jwt({
 })
 
 router.get('/testing', (req, res) => {
-  console.log(req.headers.token)
   const decoded = jsonwt.decode(req.headers.token, {complete: true})
-  console.log(decoded)
   res.send(decoded.payload.sub)
 })
 
