@@ -1,5 +1,4 @@
 import React from 'react'
-// import TimePicker from 'material-ui/TimePicker'
 import DatePicker from 'material-ui/DatePicker'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
@@ -26,6 +25,7 @@ class Book extends React.Component {
       guestNumber: null,
       deletedRequested: false
     }
+
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)
     this.handleChangeTime = this.handleChangeTime.bind(this)
@@ -40,7 +40,7 @@ class Book extends React.Component {
 
   handleChangeDate (evt, date) {
     this.setState({
-      date: moment(date).format('YYYY/MM/DD')
+      date: moment(date).format('YYYY-MM-DD-')
     })
   }
 
@@ -52,7 +52,7 @@ class Book extends React.Component {
 
   handleSubmit (evt) {
     evt.preventDefault()
-   
+
     const data = {
       fullName: this.state.fullName || this.props.fullName,
       emailAddress: this.state.email || this.props.emailAddress,
@@ -73,11 +73,11 @@ class Book extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input name='fullName' placeholder={this.props.fullName} onChange={this.handleChange} />
+          Full Name: <input name='fullName' placeholder={this.props.fullName} onChange={this.handleChange} />
           <br />
-          <input type='email' name='email' placeholder={this.props.emailAddress} onChange={this.handleChange} />
+          Email Address: <input type='email' name='email' placeholder={this.props.emailAddress} onChange={this.handleChange} />
           <br />
-          <input type='tel' name='phoneNumber' placeholder={this.props.phoneNumber} onChange={this.handleChange} />
+          Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.phoneNumber} onChange={this.handleChange} />
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <div>
               <DatePicker
@@ -85,16 +85,16 @@ class Book extends React.Component {
                 onChange={this.handleChangeDate}
                 required
               />
-              
+
             </div>
           </MuiThemeProvider>
-          Start time: <select name='startTime' required onChange={e => this.handleChangeTime(e, 'startTime')}>
-            <option value='' disabled selected>Select Time</option>
+          Start time: <select name='startTime' defaultValue='SelectTime' required onChange={e => this.handleChangeTime(e, 'startTime')}>
+            <option value='SelectTime' disabled>Select Time</option>
             {generateTimes(0)}
           </select>
           <br />
-          End time: <select name='endTime' required onChange={e => this.handleChangeTime(e, 'endTime')}>
-            <option value='' disabled selected>Select Time</option>
+          End time: <select name='endTime' defaultValue='SelectTime' required onChange={e => this.handleChangeTime(e, 'endTime')}>
+            <option value='SelectTime' disabled>Select Time</option>
             {generateTimes(1)}
           </select>
           <br />
