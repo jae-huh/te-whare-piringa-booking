@@ -94,3 +94,13 @@ export function deleteBooking (id) {
   }
 }
 
+export function userBookings (authId) {
+  return dispatch => {
+    dispatch(gettingData())
+    login('get', `/user/getbookings/${authId}`)
+    .then(res => {
+      dispatch(receiveBookings(res.body))
+      dispatch(receivedData())
+    })
+  }
+}

@@ -1,7 +1,6 @@
 import React from 'react'
 import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import moment from 'moment'
 import {connect} from 'react-redux'
 
 import {newBooking} from '../actions/index'
