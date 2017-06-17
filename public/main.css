@@ -5,3 +5,10 @@
 .rbc-event {
   
 }
+
+.unconfirmed-list {
+  width: 350px;
+  height: 450px;
+  overflow: scroll;
+
+}
