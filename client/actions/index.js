@@ -1,23 +1,19 @@
 import {login, getAllBookings} from '../api'
 
-export const POSTING_BOOKING = 'POSTING_BOOKING'
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
 export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS'
 export const UNCONFIRMED = 'UNCONFIRMED'
-
-function postingBooking () {
-  return {
-    type: POSTING_BOOKING
-  }
-}
+export const GETTING_DATA = 'GETTING_DATA'
+export const RECEIVED_DATA = 'RECEIVED_DATA'
 
 export function newBooking (data) {
   return dispatch => {
-    dispatch(postingBooking())
+    dispatch(gettingData())
     login('post', '/user/addbooking', data)
         .then(res => {
           dispatch(bookingPosted(res.body))
           dispatch(sendEmail(res.body))
+          dispatch(receivedData())
         })
   }
 }
@@ -43,10 +39,26 @@ export const receiveBookings = bookings => {
 
 export const fetchBookings = () => {
   return dispatch => {
+    dispatch(gettingData())
     getAllBookings((err, res) => {
       if (err) return
       dispatch(receiveBookings(res))
+      dispatch(receivedData())
     })
+  }
+}
+
+export const gettingData = () => {
+  return {
+    type: GETTING_DATA
+  }
+}
+
+export const receivedData = () => {
+  return {
+    type: RECEIVED_DATA
+  }
+}
 
 export function getUnconfirmed () {
   return dispatch => {
