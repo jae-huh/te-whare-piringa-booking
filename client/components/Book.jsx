@@ -23,8 +23,8 @@ class Book extends React.Component {
       startTime: null,
       endTime: null,
       purpose: null,
-      guestNumber: null
-      
+      guestNumber: null,
+      deletedRequested: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)

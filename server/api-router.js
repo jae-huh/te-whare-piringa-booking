@@ -116,6 +116,7 @@ router.post('/user/addbooking', (req, res) => {
 router.put('/admin/confirm/:id', (req, res) => {
   db.confirmBooking(req, (err, result) => {
     if (err) return res.json({error: err})
+    console.log(result)
     res.json(result)
   })
 })
