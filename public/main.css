@@ -16,7 +16,14 @@
 }
 
 .calendar-date {
-  height: 14vh
+  height: 14vh;
+  padding: 0.5em;
+}
+
+.calendar-date:hover {
+  background-color: #0066CC;
+  color: #ffffff;
+  transition: all .35s ease-in
 }
 
 .schedule-header-container, .schedule-columns-container {
