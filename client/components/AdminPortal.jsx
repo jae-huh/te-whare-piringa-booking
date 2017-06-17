@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getUnconfirmed, confirm} from '../actions/index'
+import {getUnconfirmed, confirm, deleteBooking} from '../actions/index'
 import Setting from './Settings'
 
 class AdminPortal extends React.Component {
@@ -9,11 +9,16 @@ class AdminPortal extends React.Component {
     this.state = {
       unconfirmed: []
     }
-    this.handleClick = this.handleClick.bind(this)
+    this.handleConfirmClick = this.handleConfirmClick.bind(this)
+    this.handleDeleteClick = this.handleDeleteClick.bind(this)
   }
 
-  handleClick (id) {
+  handleConfirmClick (id) {
     this.props.confirm(id)
+  }
+
+  handleDeleteClick (id) {
+    this.props.deleteBooking(id)
   }
 
   render () {
@@ -28,8 +33,8 @@ class AdminPortal extends React.Component {
               <div key={item._id}>
                 {item.fullName}<br />
                 {item.startDate} to {item.endDate}
-                <button onClick={() => { this.handleClick(item._id) }}>Confirm</button>
-                <button>Delete</button>
+                <button onClick={() => { this.handleConfirmClick(item._id) }}>Confirm</button>
+                <button onClick={() => { this.handleDeleteClick(item._id) }}>Delete</button>
                 <button>More</button>
               </div>
             )
@@ -53,7 +58,8 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     getUnconfirmed: dispatch(getUnconfirmed()),
-    confirm: id => { dispatch(confirm(id)) }
+    confirm: id => { dispatch(confirm(id)) },
+    deleteBooking: id => { dispatch(deleteBooking(id)) }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPortal)

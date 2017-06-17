@@ -105,6 +105,17 @@ function getUserDetails (authId, cb) {
   })
 }
 
+function deleteBooking (id, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('bookings').remove({_id: ObjectId(id)}, (err, result) => {
+      if (err) return cb(err)
+      console.log(result)
+      cb(null, result)
+    })
+  })
+}
+
 function validate (obj) {
   Object.values.map(item => {
     if (item) {
@@ -123,5 +134,6 @@ module.exports = {
   addUser,
   filterUnconfirmed,
   getUsers,
-  getUserDetails
+  getUserDetails,
+  deleteBooking
 }
