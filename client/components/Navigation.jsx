@@ -13,6 +13,7 @@ const Navigation = props => {
       <Link to="/admin">Admin</Link>
       <Link to="/book">Book</Link>
       <Link to="/schedule">Schedule</Link>
+      <Link to="/profile">profile</Link>
     </div>
   )
 }

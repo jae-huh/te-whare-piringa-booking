@@ -13,6 +13,7 @@ import Logout from './Logout'
 import NewCalendar from './NewCalendar'
 import Schedular from './Schedular'
 import Navigation from './Navigation'
+import Profile from './Profile'
 
 import {checkLogin} from '../actions/auth'
 
@@ -41,6 +42,7 @@ class App extends React.Component {
           <Route path='/schedule' component={Schedular} />
           <Route path="/book" component={Book} />
           <Route path='/register' component={Registration} />
+          <Route path='/profile' component={Profile} />
         </div>
       </BrowserRouter>
     )
