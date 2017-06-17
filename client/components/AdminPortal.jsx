@@ -30,12 +30,16 @@ class AdminPortal extends React.Component {
           <h2>Unconfirmed Bookings</h2>
           {this.props.unconfirmed.map(item => {
             return (
-              <div key={item._id}>
+              <div key={item._id} className="row">
+                <div className="col-sm-8 list-of-unconfirmed">
                 {item.fullName}<br />
                 {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}
-                <button onClick={() => { this.handleConfirmClick(item._id) }}>Confirm</button>
-                <button onClick={() => { this.handleDeleteClick(item._id) }}>Delete</button>
-                <button>More</button>
+                </div>
+                <div className="col-sm-4 buttons-of-unconfirmed text-center">
+                  <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(item._id) }}></span>
+                  <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(item._id) }}></span>
+                  <span className="glyphicon glyphicon-plus more"></span>
+                </div>
               </div>
             )
           })}

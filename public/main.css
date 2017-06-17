@@ -13,6 +13,31 @@
 
 }
 
+.buttons-of-unconfirmed :hover {
+  font-size: 25px;
+}
+
+.remove {
+  color: red;
+  font-size: 18px;
+  margin: 5px;
+}
+
+.confirm {
+  color: green;
+  font-size: 18px;
+  margin: 5px
+}  
+
+.more{
+  color: blue;
+  font-size: 18px;
+  margin: 5px
+}
+.list-of-unconfirmed {
+  border: 1px solid grey;
+  border-radius: 5px;
+}
 /*Date picker*/
 .rdt {
   position: relative;
