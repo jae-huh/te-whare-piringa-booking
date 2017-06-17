@@ -1,7 +1,5 @@
 import React from 'react'
-import DatePicker from 'material-ui/DatePicker'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import moment from 'moment'
 import {connect} from 'react-redux'
@@ -18,37 +16,39 @@ class Book extends React.Component {
       fullName: '',
       email: '',
       phoneNumber: '',
-      date: null,
-      startTime: null,
-      endTime: null,
+      dateStart: null,
+      dateEnd: null,
       purpose: null,
       guestNumber: null,
       deletedRequested: false
     }
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleChangeDate = this.handleChangeDate.bind(this)
-    this.handleChangeTime = this.handleChangeTime.bind(this)
+    this.handleChangeDateStart = this.handleChangeDateStart.bind(this)
+    this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
+  
   handleChange (evt) {
     this.setState({
       [evt.target.name]: evt.target.value
     })
   }
 
-  handleChangeDate (evt, date) {
+  handleChangeDateStart (date) {
     this.setState({
-      date: moment(date).format('YYYY-MM-DD-')
+      dateStart: date._d
     })
   }
 
-  handleChangeTime (evt, key) {
+  handleChangeDateEnd (date) {
     this.setState({
-      [key]: evt.target.value
+      dateEnd: date._d
     })
   }
+
+
+
 
   handleSubmit (evt) {
     evt.preventDefault()
@@ -58,17 +58,17 @@ class Book extends React.Component {
       emailAddress: this.state.email || this.props.emailAddress,
       phoneNumber: this.state.phoneNumber || this.props.phoneNumber,
       authId: this.props.authId,
-      startDate: this.state.date + this.state.startTime,
-      endDate: this.state.date + this.state.endTime,
+      startDate: this.state.dateStart,
+      endDate: this.state.dateEnd,
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
       confirmed: false,
-      dateAdded: new Date().toLocaleDateString('en-GB').substring(0, 8)}
+      dateAdded: new Date()}
 
     this.props.postNewBooking(data)
+    console.log(data)
     this.props.history.push('/calendar')
   }
-
   render () {
     return (
       <div>
@@ -77,26 +77,15 @@ class Book extends React.Component {
           <br />
           Email Address: <input type='email' name='email' placeholder={this.props.emailAddress} onChange={this.handleChange} />
           <br />
-          Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.phoneNumber} onChange={this.handleChange} />
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <div>
-              <DatePicker
-                hintText='Date'
-                onChange={this.handleChangeDate}
-                required
-              />
-
-            </div>
-          </MuiThemeProvider>
-          Start time: <select name='startTime' defaultValue='SelectTime' required onChange={e => this.handleChangeTime(e, 'startTime')}>
-            <option value='SelectTime' disabled>Select Time</option>
-            {generateTimes(0)}
-          </select>
+          Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.phoneNumber} onChange={this.handleChange} /><br />
+          Start Date and Time:
+       <Datetime
+       onChange={this.handleChangeDateStart}
+       timeConstraints={{hours: {min: 6, max: 22, step: 1}}}/>
           <br />
-          End time: <select name='endTime' defaultValue='SelectTime' required onChange={e => this.handleChangeTime(e, 'endTime')}>
-            <option value='SelectTime' disabled>Select Time</option>
-            {generateTimes(1)}
-          </select>
+          End Date and time:
+           <Datetime
+       onChange={this.handleChangeDateEnd}/>
           <br />
           <textarea name='purpose' required placeholder='Purpose of hire' onChange={this.handleChange} />
           <br />
@@ -107,23 +96,6 @@ class Book extends React.Component {
       </div>
     )
   }
-}
-
-function generateTimes (num) {
-  let times = []
-  for (let i = 6 + num; i <= 21 + num; i++) {
-    for (let j = 0; j <= 30; j += 30) {
-      let time = <option key={i + j}>{i}:{j === 0 ? '00' : j}</option>
-      if (num === 0 && i === 21 && j === 30) {
-        return times
-      } else if (num === 1 && i === 22 && j === 30) {
-        return times
-      } else {
-        times.push(time)
-      }
-    }
-  }
-  return times
 }
 
 function mapStateToProps (state) {

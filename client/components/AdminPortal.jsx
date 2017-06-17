@@ -32,7 +32,7 @@ class AdminPortal extends React.Component {
             return (
               <div key={item._id}>
                 {item.fullName}<br />
-                {item.startDate} to {item.endDate}
+                {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}
                 <button onClick={() => { this.handleConfirmClick(item._id) }}>Confirm</button>
                 <button onClick={() => { this.handleDeleteClick(item._id) }}>Delete</button>
                 <button>More</button>
