@@ -3,8 +3,8 @@ import {login} from '../api'
 const localStorage = global.window.localStorage
 
 export function checkLogin () {
-  if (localStorage.getItem('id_token')) {
-    return dispatch => {
+  return dispatch => {
+    if (localStorage.getItem('id_token')) {
       dispatch(checkingLogin())
       login('get', '/checklogin')
         .then(res => {
@@ -12,9 +12,10 @@ export function checkLogin () {
             res.body.error && console.log(res.body.error)
             return dispatch(noUserExists())
           }
-          dispatch(loggedIn(res.body.user))
+          return dispatch(loggedIn(res.body.user))
         })
     }
+    return dispatch(noUserExists())
   }
 }
 
