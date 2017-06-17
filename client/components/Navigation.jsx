@@ -14,6 +14,6 @@ const Navigation = props => {
       <Link to="/book">Book</Link>
     </div>
   )
-}
+} 
 
 export default Navigation
