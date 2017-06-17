@@ -88,6 +88,21 @@ router.post('/user/adduser', (req, res) => {
   })
 })
 
+router.get('/user/getbookings/:authId', (req, res) => {
+  db.adminGetAllBookings(req, (err, result) => {
+    if (err) return res.json({error: err})
+    result.map(item => {
+      if (item.authId === req.params.authId) {
+        return item
+      }
+      return {
+        startDate: item.startDate,
+        endDate: item.endDate
+      }
+    })
+  })
+})
+
 router.get('/admin/getbookings', (req, res) => {
   db.adminGetAllBookings(req, (err, result) => {
     if (err) return res.json({error: err})
