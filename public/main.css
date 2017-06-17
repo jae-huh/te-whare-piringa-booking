@@ -50,6 +50,10 @@
   background-color: red;
 }
 
+.datepick {
+  max-width: 20%;
+}
+
 .reserved-key {
   background-color: olivedrab;
   height: 25px;
