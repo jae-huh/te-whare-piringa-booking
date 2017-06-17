@@ -18,19 +18,67 @@
   flex-direction: row;
 }
 
-.schedule-column-container, .schedule-hours-container {
-  width: 25%;
+.schedule-column-container {
+  width: 30%;
+}
+.schedule-hours-container{
+  width: 10%;
 }
 
 .schedule-header, .slot, .hour {
-  border-style: dashed;
-  border-width: 0.5px;
+  border-style: solid;
+  border-width: thin;
   width: 100%;
-  height: 2vh
+  height: 18px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+.time {
+  max-width: 10%;
 }
 
 .selected {
   background-color: pink;
+}
+
+.reserved {
+  background-color: olivedrab;
+}
+
+.confirmed {
+  background-color: red;
+}
+
+.datepick {
+  max-width: 20%;
+}
+
+.reserved-key {
+  background-color: olivedrab;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.booked-key {
+  background-color: red;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.availible {
+  height: 25px;
+  width: 25px;
+  background-color: white;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
 }
 .unconfirmed-list {
   width: 350px;
@@ -39,6 +87,31 @@
 
 }
 
+.buttons-of-unconfirmed :hover {
+  font-size: 25px;
+}
+
+.remove {
+  color: red;
+  font-size: 18px;
+  margin: 5px;
+}
+
+.confirm {
+  color: green;
+  font-size: 18px;
+  margin: 5px
+}  
+
+.more{
+  color: blue;
+  font-size: 18px;
+  margin: 5px
+}
+.list-of-unconfirmed {
+  border: 1px solid grey;
+  border-radius: 5px;
+}
 /*Date picker*/
 .rdt {
   position: relative;

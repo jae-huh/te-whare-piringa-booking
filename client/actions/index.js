@@ -36,13 +36,28 @@ export const receiveBookings = bookings => {
     bookings: bookings
   }
 }
+function errorHandler (error) {
+  return {
+    type: 'ERROR',
+    error
 
+  }
+}
 export const fetchBookings = () => {
   return dispatch => {
     dispatch(gettingData())
-    getAllBookings((err, res) => {
-      if (err) return
-      dispatch(receiveBookings(res))
+    getAllBookings(res => {
+      let arr = []
+      for (let i = 0; i < res.length; i++) {
+        const obj = {
+          startDate: new Date(res[i].anonBooking.startDate),
+          endDate: new Date(res[i].anonBooking.endDate),
+          confirmed: res[i].anonBooking.confirmed
+
+        }
+        arr.push(obj)
+      }
+      dispatch(receiveBookings(arr))
       dispatch(receivedData())
     })
   }
