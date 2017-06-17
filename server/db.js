@@ -18,7 +18,7 @@ function getAllBookings (req, cb) {
     })
   })
 }
-function adminGetAllBookings (req, res, cb) {
+function adminGetAllBookings (req, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').find().toArray((err, results) => {

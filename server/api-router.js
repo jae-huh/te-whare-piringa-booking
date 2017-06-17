@@ -136,15 +136,25 @@ router.post('/sendemail', (req, res) => {
     }
   })
 
-  let subject = 'test email'
+  let subject = 'New Booking'
   let reciever = 'daffron92@gmail.com'
   let sender = 'user@gmail.com'
+  const data = req.body
 
   let mailOptions = {
     from: sender,
     to: reciever,
     subject: subject,
-    html: '<b>Hello world</b>'
+    html: `<h1>New Booking from ${data.fullName}<h1>
+    <a href="http://192.168.20.135:3000/admin"><h2>Click here to confirm<h2></a>
+    <h3>Full Details</h3>
+    Email: ${data.emailAddress}<br>
+    Phone: ${data.phoneNumber}<br>
+    Start: ${data.startDate}<br>
+    End: ${data.endDate}<br>
+    Purpose: ${data.purpose}<br>
+    Number of Guests: ${data.guestNumber}
+    `
   }
 
   transporter.sendMail(mailOptions, (error, info) => {
