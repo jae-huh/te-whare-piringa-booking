@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Route, BrowserRouter, Link} from 'react-router-dom'
+import {Route, BrowserRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import Auth from '../auth'
@@ -8,10 +8,9 @@ import Calendar from './Calendar'
 import Book from './Book'
 import Callback from './Callback'
 import history from '../utils/history'
-import Login from './Login'
 import AdminPortal from './AdminPortal'
 import Registration from './Registration'
-import Logout from './Logout'
+import Navigation from './Navigation'
 
 import {checkLogin} from '../actions/auth'
 
@@ -31,12 +30,10 @@ class App extends React.Component {
     return (
       <BrowserRouter history={history} component={App}>
         <div>
-          {!this.props.user.fullName && <Route path="/" component={Login} />}
-          {this.props.user.fullName && <Route path="/" component={Logout} />}
+          <Route path='/' render={props => (
+            <Navigation fullName={this.props.user.fullName} />
+          )}/>
           <Route path="/callback" component={Callback} />
-          <Link to="/calendar">Bookings</Link>
-          <Link to="/admin">Admin</Link>
-          <Link to="/book">Book</Link>
           <Route path='/admin' component={AdminPortal} />
           <Route path='/calendar' component={Calendar} />
           <Route path="/book" component={Book} />
