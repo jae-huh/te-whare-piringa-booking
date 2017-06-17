@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import {makeNewBooking} from '../actions/calendar'
+import {fetchBookings} from '../actions/index'
 
 class Schedular extends React.Component {
   constructor (props) {
@@ -59,6 +60,7 @@ class Schedular extends React.Component {
     }
   }
 
+
   render () {
     return (
       <div className='schedule'>
@@ -68,9 +70,17 @@ class Schedular extends React.Component {
           <p>End Time: <input value={moment(this.state.endTime).format('HH:mm')} /></p>
           <p><input type='submit' onClick={this.submitBooking} value='Book Now' /></p>
         </div>
+        <div className="container">
+          <h3>Key:</h3>
+          <div className="row">
+            <div className="col-md-1">Availible<div className="availible"></div></div>
+            <div className="col-md-1">Reserved<div className="reserved-key"></div></div>
+            <div className="col-md-1">Booked<div className="booked-key"></div></div>
+          </div>
+        </div>
         <div className='schedule-navbar' />
         <div className='schedule-header-container'>
-          <div className='schedule-header'>Timeslot</div>
+          <div className='schedule-header time'>Timeslot</div>
           <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
           <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
           <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
@@ -112,11 +122,21 @@ class Schedular extends React.Component {
       for (let j = 0; j < 2; j++) {
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         const divId = 'slot' + moment(selectedDate).format('YYYY-MM-DD-HH-mm')
-        let selected = ''
+        let classNames = ''
         if (selectedDate >= this.state.startTime && selectedDate < this.state.endTime) {
-          selected = ' selected'
+          classNames += ' selected'
         }
-        dayArray.push(<div id={divId} className={'slot' + selected} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
+        if (this.props.bookings.find(booking => {
+          return booking.startDate <= selectedDate && booking.endDate > selectedDate && booking.confirmed === false
+        })) {
+          classNames += ' reserved'
+        }
+        if (this.props.bookings.find(booking => {
+          return booking.startDate <= selectedDate && booking.endDate > selectedDate && booking.confirmed === true
+        })) {
+          classNames += ' confirmed'
+        }
+        dayArray.push(<div id={divId} className={'slot' + classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
       }
     }
     return dayArray
@@ -125,13 +145,16 @@ class Schedular extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    date: state.display.date
+    date: state.display.date,
+    bookings: state.bookings
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd))
+    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd)),
+    getBookings: dispatch(fetchBookings())
+
   }
 }
 

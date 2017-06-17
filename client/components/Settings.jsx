@@ -8,8 +8,7 @@ class Settings extends React.Component {
         <h2>Settings</h2>
         <form>
           <p>
-            Gmail Address<input type="text" />
-            Gmail Password<input type="password" />
+            Email Address<input type="text" />
           </p>
           <button>Change</button>
         </form>
