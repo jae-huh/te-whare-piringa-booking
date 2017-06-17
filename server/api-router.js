@@ -29,7 +29,7 @@ router.use(bodyParser.json())
 router.get('/getbookings', (req, res) => {
   db.getAllBookings(req, (err, result) => {
     if (err) return res.json({error: err})
-    res.json(result)
+    res.json({result: result})
   })
 })
 

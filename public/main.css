@@ -32,6 +32,10 @@
 .selected {
   background-color: pink;
 }
+
+.reserved {
+  background-color: olivedrab;
+}
 .unconfirmed-list {
   width: 350px;
   height: 450px;

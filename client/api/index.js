@@ -17,18 +17,11 @@ export function login (method = 'get', endpoint, data = {}) {
     })
 }
 
-export function getUnconfirmed (cb) {
-  request.get('/api/v1/admin/getunconfirmed')
-  .end((err, data) => {
-    if (err) return cb(err)
-    cb(null, data.body)
+
+export function getAllBookings (cb) {
+  request.get('/api/v1/getbookings')
+  .then(result => {
+    cb(result.body.result)
   })
 }
 
-export function getAllBookings (cb) {
-  request.get(`${baseUrl}/getbookings`)
-  .end((err, data) => {
-    if (err) return cb(err)
-    cb(null, data.body)
-  })
-}

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import {makeNewBooking} from '../actions/calendar'
+import {fetchBookings} from '../actions/index'
 
 class Schedular extends React.Component {
   constructor (props) {
@@ -59,7 +60,9 @@ class Schedular extends React.Component {
     }
   }
 
+
   render () {
+    console.log(this.props)
     return (
       <div className='schedule'>
         <div className='new-booking-form'>
@@ -112,11 +115,19 @@ class Schedular extends React.Component {
       for (let j = 0; j < 2; j++) {
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         const divId = 'slot' + moment(selectedDate).format('YYYY-MM-DD-HH-mm')
-        let selected = ''
+        let classNames = ''
         if (selectedDate >= this.state.startTime && selectedDate < this.state.endTime) {
-          selected = ' selected'
+          classNames += ' selected'
         }
-        dayArray.push(<div id={divId} className={'slot' + selected} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
+        if (this.props.bookings.find(booking => {
+          console.log('booking', booking)
+          console.log('selected', selectedDate)
+          return booking.startDate <= selectedDate && booking.endDate > selectedDate
+        })) {
+          console.log('adding reserved')
+          classNames += ' reserved'
+        }
+        dayArray.push(<div id={divId} className={'slot' + classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
       }
     }
     return dayArray
@@ -125,13 +136,16 @@ class Schedular extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    date: state.display.date
+    date: state.display.date,
+    bookings: state.bookings
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd))
+    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd)),
+    getBookings: dispatch(fetchBookings())
+
   }
 }
 
