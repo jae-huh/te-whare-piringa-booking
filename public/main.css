@@ -7,6 +7,12 @@
 .calendar-date, .calendar-header {
   border-style: solid;
   width: 13%;
+  border-color: grey;
+  border-width: thin;
+}
+
+.calendar-header {
+  text-align: center;
 }
 
 .calendar-date {
