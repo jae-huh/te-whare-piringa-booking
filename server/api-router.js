@@ -49,9 +49,7 @@ const checkJwt = jwt({
 })
 
 router.get('/testing', (req, res) => {
-  console.log(req.headers.token)
   const decoded = jsonwt.decode(req.headers.token, {complete: true})
-  console.log(decoded)
   res.send(decoded.payload.sub)
 })
 
@@ -71,7 +69,7 @@ router.use((err, req, res, next) => {
 
 router.get('/checklogin', (req, res) => {
   const authId = getUserIdFromToken(req)
-    db.getUserDetails(authId, (err, userDetails) => {
+  db.getUserDetails(authId, (err, userDetails) => {
     if (err) return res.json({error: err})
     res.json({user: userDetails})
   })
@@ -86,6 +84,21 @@ router.post('/user/adduser', (req, res) => {
     return db.addUser(user, (err, userDetails) => {
       if (err) return res.json({error: err})
       return res.json({user: userDetails})
+    })
+  })
+})
+
+router.get('/user/getbookings/:authId', (req, res) => {
+  db.adminGetAllBookings(req, (err, result) => {
+    if (err) return res.json({error: err})
+    result.map(item => {
+      if (item.authId === req.params.authId) {
+        return item
+      }
+      return {
+        startDate: item.startDate,
+        endDate: item.endDate
+      }
     })
   })
 })
@@ -120,6 +133,13 @@ router.put('/admin/confirm/:id', (req, res) => {
   })
 })
 
+router.delete('/admin/delete/:id', (req, res) => {
+  db.deleteBooking(req.params.id, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
+
 router.get('/user/profile', (req, res) => {
   db.getUsers(req.params.id, (err, result) => {
     if (err) return res.json({error: err})
@@ -136,15 +156,25 @@ router.post('/sendemail', (req, res) => {
     }
   })
 
-  let subject = 'test email'
+  let subject = 'New Booking'
   let reciever = 'daffron92@gmail.com'
   let sender = 'user@gmail.com'
+  const data = req.body
 
   let mailOptions = {
     from: sender,
     to: reciever,
     subject: subject,
-    html: '<b>Hello world</b>'
+    html: `<h1>New Booking from ${data.fullName}<h1>
+    <a href="http://192.168.20.135:3000/admin"><h2>Click here to confirm<h2></a>
+    <h3>Full Details</h3>
+    Email: ${data.emailAddress}<br>
+    Phone: ${data.phoneNumber}<br>
+    Start: ${data.startDate}<br>
+    End: ${data.endDate}<br>
+    Purpose: ${data.purpose}<br>
+    Number of Guests: ${data.guestNumber}
+    `
   }
 
   transporter.sendMail(mailOptions, (error, info) => {

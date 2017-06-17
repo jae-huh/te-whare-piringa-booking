@@ -18,7 +18,7 @@ function getAllBookings (req, cb) {
     })
   })
 }
-function adminGetAllBookings (req, res, cb) {
+function adminGetAllBookings (req, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').find().toArray((err, results) => {
@@ -32,6 +32,7 @@ function userAddBooking (data, cb) {
   // if (!validate(req.body)) {
   //   return cb({error: 'imcomplete'})
   // }
+ 
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').save(data, (err, result) => {
@@ -46,9 +47,9 @@ function confirmBooking (req, cb) {
     if (err) return cb(err)
     db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'confirmed': true}}, (err, result) => {
       if (err) return cb(err)
-      if (result.ok === 1) {
-        return cb({updated: true})
-      }
+   
+        return cb(null, result)
+     
       // What happens when result is not okay?  Is this possible?
     })
   })
@@ -105,6 +106,17 @@ function getUserDetails (authId, cb) {
   })
 }
 
+function deleteBooking (id, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('bookings').remove({_id: ObjectId(id)}, (err, result) => {
+      if (err) return cb(err)
+      console.log(result)
+      cb(null, result)
+    })
+  })
+}
+
 function validate (obj) {
   Object.values.map(item => {
     if (item) {
@@ -123,5 +135,6 @@ module.exports = {
   addUser,
   filterUnconfirmed,
   getUsers,
-  getUserDetails
+  getUserDetails,
+  deleteBooking
 }

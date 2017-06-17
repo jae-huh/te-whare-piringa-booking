@@ -16,11 +16,11 @@ class Schedular extends React.Component {
     this.mousePressed = this.mousePressed.bind(this)
     this.mouseReleased = this.mouseReleased.bind(this)
     this.mouseEnter = this.mouseEnter.bind(this)
+    this.submitBooking = this.submitBooking.bind(this)
   }
   submitBooking () {
-    this.props.makeNewBooking(this.state, () => {
-      this.props.history.push('/book')
-    })
+    this.props.makeNewBooking(this.state.startTime, this.state.endTime)
+    this.props.history.push('/book')
   }
 
   mousePressed (e) {
@@ -66,7 +66,7 @@ class Schedular extends React.Component {
           <p>Date: <input value={moment(this.state.startTime).format('DD/MM/YYYY')} /></p>
           <p>Start Time: <input value={moment(this.state.startTime).format('HH:mm')} /></p>
           <p>End Time: <input value={moment(this.state.endTime).format('HH:mm')} /></p>
-          <p><input type='submit' onClick={this.makeNewBooking} value='Book Now' /></p>
+          <p><input type='submit' onClick={this.submitBooking} value='Book Now' /></p>
         </div>
         <div className='schedule-navbar' />
         <div className='schedule-header-container'>
@@ -131,7 +131,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    makeNewBooking: (data, redirect) => dispatch(makeNewBooking(data, redirect))
+    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd))
   }
 }
 

@@ -5,11 +5,15 @@ import user from './user'
 import redirectTo from './redirect'
 import booking from './booking'
 import display from './display'
+import bookings from './bookings'
+import unconfirmed from './unconfirmed'
 
 export default combineReducers({
   auth0,
   user,
   redirectTo,
   booking,
-  display
+  display,
+  bookings,
+  unconfirmed
 })
