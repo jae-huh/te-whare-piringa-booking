@@ -62,7 +62,6 @@ class Schedular extends React.Component {
 
 
   render () {
-    console.log(this.props)
     return (
       <div className='schedule'>
         <div className='new-booking-form'>
@@ -71,9 +70,17 @@ class Schedular extends React.Component {
           <p>End Time: <input value={moment(this.state.endTime).format('HH:mm')} /></p>
           <p><input type='submit' onClick={this.submitBooking} value='Book Now' /></p>
         </div>
+        <div className="container">
+          <h3>Key:</h3>
+          <div className="row">
+            <div className="col-md-1">Availible<div className="availible"></div></div>
+            <div className="col-md-1">Reserved<div className="reserved-key"></div></div>
+            <div className="col-md-1">Booked<div className="booked-key"></div></div>
+          </div>
+        </div>
         <div className='schedule-navbar' />
         <div className='schedule-header-container'>
-          <div className='schedule-header'>Timeslot</div>
+          <div className='schedule-header time'>Timeslot</div>
           <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
           <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
           <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
@@ -99,8 +106,11 @@ class Schedular extends React.Component {
   getHours () {
     const d = new Date()
     const hourArray = []
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 17; i++) {
       for (let j = 0; j < 2; j++) {
+        if (i === 16 && j === 1) {
+          return hourArray
+        }
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         const divContents = moment(selectedDate).format('HH:mm')
         hourArray.push(<div className={'hour'}>{divContents}</div>)
@@ -111,8 +121,11 @@ class Schedular extends React.Component {
 
   getTimeSlots (d) {
     const dayArray = []
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 17; i++) {
       for (let j = 0; j < 2; j++) {
+        if (i === 16 && j === 1) {
+          return dayArray
+        }
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         const divId = 'slot' + moment(selectedDate).format('YYYY-MM-DD-HH-mm')
         let classNames = ''
@@ -120,12 +133,14 @@ class Schedular extends React.Component {
           classNames += ' selected'
         }
         if (this.props.bookings.find(booking => {
-          console.log('booking', booking)
-          console.log('selected', selectedDate)
-          return booking.startDate <= selectedDate && booking.endDate > selectedDate
+          return booking.startDate <= selectedDate && booking.endDate > selectedDate && booking.confirmed === false
         })) {
-          console.log('adding reserved')
           classNames += ' reserved'
+        }
+        if (this.props.bookings.find(booking => {
+          return booking.startDate <= selectedDate && booking.endDate > selectedDate && booking.confirmed === true
+        })) {
+          classNames += ' confirmed'
         }
         dayArray.push(<div id={divId} className={'slot' + classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
       }
