@@ -89,10 +89,11 @@ router.post('/user/adduser', (req, res) => {
 })
 
 router.get('/user/getbookings/:authId', (req, res) => {
+  const authId = getUserIdFromToken(req)
   db.adminGetAllBookings(req, (err, result) => {
     if (err) return res.json({error: err})
-    result.map(item => {
-      if (item.authId === req.params.authId) {
+    const output = result.map(item => {
+      if (item.authId === authId) {
         return item
       }
       return {
@@ -100,6 +101,7 @@ router.get('/user/getbookings/:authId', (req, res) => {
         endDate: item.endDate
       }
     })
+    res.json(output)
   })
 })
 

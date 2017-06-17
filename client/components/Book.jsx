@@ -1,7 +1,6 @@
 import React from 'react'
 import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import moment from 'moment'
 import {connect} from 'react-redux'
 
 import {newBooking} from '../actions/index'
@@ -28,7 +27,7 @@ class Book extends React.Component {
     this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  
+
   handleChange (evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -46,9 +45,6 @@ class Book extends React.Component {
       dateEnd: date._d
     })
   }
-
-
-
 
   handleSubmit (evt) {
     evt.preventDefault()

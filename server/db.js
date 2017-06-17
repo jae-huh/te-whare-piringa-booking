@@ -32,7 +32,7 @@ function userAddBooking (data, cb) {
   // if (!validate(req.body)) {
   //   return cb({error: 'imcomplete'})
   // }
- 
+
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').save(data, (err, result) => {
@@ -47,9 +47,9 @@ function confirmBooking (req, cb) {
     if (err) return cb(err)
     db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'confirmed': true}}, (err, result) => {
       if (err) return cb(err)
-   
+
         return cb(null, result)
-     
+
       // What happens when result is not okay?  Is this possible?
     })
   })

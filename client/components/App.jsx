@@ -11,6 +11,7 @@ import history from '../utils/history'
 import AdminPortal from './AdminPortal'
 import Registration from './Registration'
 import Navigation from './Navigation'
+import Profile from './Profile'
 
 import {checkLogin} from '../actions/auth'
 
@@ -38,6 +39,7 @@ class App extends React.Component {
           <Route path='/calendar' component={Calendar} />
           <Route path="/book" component={Book} />
           <Route path='/register' component={Registration} />
+          <Route path='/profile' component={Profile} />
         </div>
       </BrowserRouter>
     )
