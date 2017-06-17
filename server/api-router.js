@@ -69,7 +69,7 @@ router.use((err, req, res, next) => {
 
 router.get('/checklogin', (req, res) => {
   const authId = getUserIdFromToken(req)
-    db.getUserDetails(authId, (err, userDetails) => {
+  db.getUserDetails(authId, (err, userDetails) => {
     if (err) return res.json({error: err})
     res.json({user: userDetails})
   })
