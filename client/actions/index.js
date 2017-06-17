@@ -85,3 +85,12 @@ export function confirm (id) {
   }
 }
 
+export function deleteBooking (id) {
+  return dispatch => {
+    login('delete', `/admin/delete/${id}`)
+    .then(res => {
+      if (res) return dispatch(getUnconfirmed())
+    })
+  }
+}
+
