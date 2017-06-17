@@ -75,3 +75,13 @@ function unconfirmed (data) {
     data
   }
 }
+
+export function confirm (id) {
+  return dispatch => {
+    login('put', `/admin/confirm/${id}`)
+    .then(res => {
+      if (res.ok) return dispatch(getUnconfirmed())
+    })
+  }
+}
+

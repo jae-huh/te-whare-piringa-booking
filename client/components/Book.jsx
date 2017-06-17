@@ -1,5 +1,4 @@
 import React from 'react'
-// import TimePicker from 'material-ui/TimePicker'
 import DatePicker from 'material-ui/DatePicker'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
@@ -23,9 +22,10 @@ class Book extends React.Component {
       startTime: null,
       endTime: null,
       purpose: null,
-      guestNumber: null
-
+      guestNumber: null,
+      deletedRequested: false
     }
+
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)
     this.handleChangeTime = this.handleChangeTime.bind(this)
