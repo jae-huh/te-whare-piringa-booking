@@ -28,7 +28,6 @@ class Profile extends React.Component {
   }
 
   render () {
-    console.log(this.props.bookings, this.props.authId)
     return (
       <div>
         <h1>profile</h1>
