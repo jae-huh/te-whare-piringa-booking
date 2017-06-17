@@ -116,7 +116,13 @@ router.post('/user/addbooking', (req, res) => {
 router.put('/admin/confirm/:id', (req, res) => {
   db.confirmBooking(req, (err, result) => {
     if (err) return res.json({error: err})
-    console.log(result)
+    res.json(result)
+  })
+})
+
+router.delete('/admin/delete/:id', (req, res) => {
+  db.deleteBooking(req.params.id, (err, result) => {
+    if (err) return res.json({error: err})
     res.json(result)
   })
 })
