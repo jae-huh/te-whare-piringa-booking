@@ -32,6 +32,7 @@ function userAddBooking (data, cb) {
   // if (!validate(req.body)) {
   //   return cb({error: 'imcomplete'})
   // }
+ 
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').save(data, (err, result) => {
