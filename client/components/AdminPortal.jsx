@@ -1,5 +1,6 @@
 import React from 'react'
-import {getUnconfirmed} from '../api/'
+import {connect} from 'react-redux'
+import {getUnconfirmed} from '../actions/index'
 
 class AdminPortal extends React.Component {
   constructor (props) {
@@ -8,20 +9,6 @@ class AdminPortal extends React.Component {
       unconfirmed: []
     }
     this.handleClick = this.handleClick.bind(this)
-    this.listUnconfirmed = this.listUnconfirmed.bind(this)
-  }
-
-  componentDidMount () {
-    this.listUnconfirmed()
-  }
-
-  listUnconfirmed () {
-    getUnconfirmed((err, res) => {
-      if (err) this.setState({error: err.message})
-      this.setState({
-        unconfirmed: res
-      })
-    })
   }
 
   handleClick (id) {
@@ -32,7 +19,7 @@ class AdminPortal extends React.Component {
     return (
       <div className="admin-portal">
         <h1>Admin Portal</h1>
-        {this.state.unconfirmed.map(item => {
+        {this.props.unconfirmed.map(item => {
           return (
             <div>
               {item.startDate} to {item.endDate}
@@ -45,4 +32,15 @@ class AdminPortal extends React.Component {
   }
 }
 
-export default AdminPortal
+function mapStateToProps (state) {
+  return {
+    unconfirmed: state.unconfirmed
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    getUnconfirmed: dispatch(getUnconfirmed())
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPortal)

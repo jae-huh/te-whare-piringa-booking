@@ -3,6 +3,7 @@ import {login, getAllBookings} from '../api'
 export const POSTING_BOOKING = 'POSTING_BOOKING'
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
 export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS'
+export const UNCONFIRMED = 'UNCONFIRMED'
 
 function postingBooking () {
   return {
@@ -16,8 +17,14 @@ export function newBooking (data) {
     login('post', '/user/addbooking', data)
         .then(res => {
           dispatch(bookingPosted(res.body))
+          dispatch(sendEmail(res.body))
         })
   }
+}
+
+function sendEmail (data) {
+  login('post', '/sendemail', data)
+  .then(f => f)
 }
 
 function bookingPosted (data) {
@@ -40,5 +47,19 @@ export const fetchBookings = () => {
       if (err) return
       dispatch(receiveBookings(res))
     })
+
+export function getUnconfirmed () {
+  return dispatch => {
+    login('get', '/admin/getunconfirmed')
+    .then(res => {
+      dispatch(unconfirmed(res.body))
+    })
+  }
+}
+
+function unconfirmed (data) {
+  return {
+    type: UNCONFIRMED,
+    data
   }
 }
