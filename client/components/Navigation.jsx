@@ -12,6 +12,7 @@ const Navigation = props => {
       <Link to="/calendar">Bookings</Link>
       <Link to="/admin">Admin</Link>
       <Link to="/book">Book</Link>
+      <Link to="/schedule">Schedule</Link>
     </div>
   )
 }

@@ -16,8 +16,8 @@ class Book extends React.Component {
       fullName: '',
       email: '',
       phoneNumber: '',
-      dateStart: null,
-      dateEnd: null,
+      dateStart: this.props.display.dateStart,
+      dateEnd: this.props.display.dateEnd,
       purpose: null,
       guestNumber: null,
       deletedRequested: false
@@ -28,7 +28,7 @@ class Book extends React.Component {
     this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  
+
   handleChange (evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -47,17 +47,14 @@ class Book extends React.Component {
     })
   }
 
-
-
-
   handleSubmit (evt) {
     evt.preventDefault()
 
     const data = {
-      fullName: this.state.fullName || this.props.fullName,
-      emailAddress: this.state.email || this.props.emailAddress,
-      phoneNumber: this.state.phoneNumber || this.props.phoneNumber,
-      authId: this.props.authId,
+      fullName: this.state.fullName || this.props.user.fullName,
+      emailAddress: this.state.email || this.props.user.emailAddress,
+      phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
+      authId: this.props.user.authId,
       startDate: this.state.dateStart,
       endDate: this.state.dateEnd,
       purpose: this.state.purpose,
@@ -73,18 +70,18 @@ class Book extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          Full Name: <input name='fullName' placeholder={this.props.fullName} onChange={this.handleChange} />
+          Full Name: <input name='fullName' placeholder={this.props.user.fullName} onChange={this.handleChange} />
           <br />
-          Email Address: <input type='email' name='email' placeholder={this.props.emailAddress} onChange={this.handleChange} />
+          Email Address: <input type='email' name='email' placeholder={this.props.user.emailAddress} onChange={this.handleChange} />
           <br />
-          Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.phoneNumber} onChange={this.handleChange} /><br />
+          Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.user.phoneNumber} onChange={this.handleChange} /><br />
           Start Date and Time:
-       <Datetime
+       <Datetime value={this.props.display.dateStart}
        onChange={this.handleChangeDateStart}
        timeConstraints={{hours: {min: 6, max: 22, step: 1}}}/>
           <br />
           End Date and time:
-           <Datetime
+           <Datetime value={this.props.display.dateEnd}
        onChange={this.handleChangeDateEnd}/>
           <br />
           <textarea name='purpose' required placeholder='Purpose of hire' onChange={this.handleChange} />
@@ -99,7 +96,10 @@ class Book extends React.Component {
 }
 
 function mapStateToProps (state) {
-  return state.user
+  return {
+    user: state.user,
+    display: state.display
+  }
 }
 
 function mapDispatchToProps (dispatch) {
