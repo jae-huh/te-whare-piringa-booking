@@ -25,6 +25,7 @@ class Calendar extends React.Component {
   selectDate (e) {
     const dateString = e.target.id.substr(3)
     const dateSelected = new Date(moment(dateString, 'YYYY-MM-DD'))
+    if (dateSelected.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) return
     this.props.switchDate(dateSelected)
     this.props.history.push('/schedule')
   }
