@@ -68,12 +68,12 @@ class Schedular extends React.Component {
           <p>End Time: <input value={moment(this.state.endTime).format('HH:mm')} /></p>
           <p><input type='submit' onClick={this.submitBooking} value='Book Now' /></p>
         </div>
-        <div className="container">
+        <div className='container'>
           <h3>Key:</h3>
-          <div className="row">
-            <div className="col-md-1">Availible<div className="availible"></div></div>
-            <div className="col-md-1">Reserved<div className="reserved-key"></div></div>
-            <div className="col-md-1">Booked<div className="booked-key"></div></div>
+          <div className='row'>
+            <div className='col-md-1'>Availible<div className='availible' /></div>
+            <div className='col-md-1'>Reserved<div className='reserved-key' /></div>
+            <div className='col-md-1'>Booked<div className='booked-key' /></div>
           </div>
         </div>
         <div className='schedule-navbar' />
@@ -104,14 +104,19 @@ class Schedular extends React.Component {
   getHours () {
     const d = new Date()
     const hourArray = []
-    for (let i = 0; i < 17; i++) {
+    for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 2; j++) {
-        if (i === 16 && j === 1) {
-          return hourArray
+        let selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
+        let dateFormatted = moment(selectedDate).format('HH:mm')
+        let divContents = ''
+        let classNames = 'hour'
+        if (j === 1) {
+          classNames += ' half-hour'
+        } else {
+          classNames += ' full-hour'
+          divContents = dateFormatted
         }
-        const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
-        const divContents = moment(selectedDate).format('HH:mm')
-        hourArray.push(<div key={divContents} className={'hour'}>{divContents}</div>)
+        hourArray.push(<div key={dateFormatted} className={classNames}>{divContents}</div>)
       }
     }
     return hourArray
@@ -119,14 +124,16 @@ class Schedular extends React.Component {
 
   getTimeSlots (d) {
     const dayArray = []
-    for (let i = 0; i < 17; i++) {
+    for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 2; j++) {
-        if (i === 16 && j === 1) {
-          return dayArray
-        }
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
+        let classNames = 'slot'
+        if (j === 1) {
+          classNames += ' half-hour'
+        } else {
+          classNames += ' full-hour'
+        }
         const dateFormatted = moment(selectedDate).format('YYYY-MM-DD-HH-mm')
-        let classNames = ''
         if (selectedDate >= this.state.startTime && selectedDate < this.state.endTime) {
           classNames += ' selected'
         }
@@ -140,7 +147,7 @@ class Schedular extends React.Component {
         })) {
           classNames += ' confirmed'
         }
-        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={'slot' + classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
+        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
       }
     }
     return dayArray
