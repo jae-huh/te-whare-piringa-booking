@@ -156,7 +156,7 @@ function makeUserAdmin (email, cb) {
     })
   })
 }
-
+console.log('')
 module.exports = {
   anonGetAllBookings,
   userGetAllBookings,
