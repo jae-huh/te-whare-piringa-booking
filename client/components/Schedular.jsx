@@ -19,6 +19,12 @@ class Schedular extends React.Component {
     this.submitBooking = this.submitBooking.bind(this)
   }
   submitBooking () {
+    const chosenSlots = intervals(this.state.startTime, this.state.endTime)
+    const takenSlots = takenTimesIntoIntervals(this.props.bookings)
+    if ((compareSlotSelection(chosenSlots, takenSlots))) {
+      return alert('That time has already been taken!')
+    }
+
     this.props.makeNewBooking(this.state.startTime, this.state.endTime)
     this.props.history.push('/book')
   }
@@ -76,27 +82,25 @@ class Schedular extends React.Component {
             <div className='col-md-1'>Booked<div className='booked-key' /></div>
           </div>
         </div>
-        <div className="schedule-body">
-          <div className='schedule-navbar' />
-          <div className='schedule-header-container'>
-            <div className='schedule-header time'>Timeslot</div>
-            <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
-            <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
-            <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
+        <div className='schedule-navbar' />
+        <div className='schedule-header-container'>
+          <div className='schedule-header time'>Timeslot</div>
+          <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
+          <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
+          <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
+        </div>
+        <div className='schedule-columns-container'>
+          <div className='schedule-hours-container'>
+            {this.getHours()}
           </div>
-          <div className='schedule-columns-container'>
-            <div className='schedule-hours-container'>
-              {this.getHours()}
-            </div>
-            <div className='schedule-column-container yesterday'>
-              {this.getTimeSlots(new Date(moment(this.props.date).subtract(1, 'days')))}
-            </div>
-            <div className='schedule-column-container today'>
-              {this.getTimeSlots(new Date(moment(this.props.date)))}
-            </div>
-            <div className='schedule-column-container tomorrow'>
-              {this.getTimeSlots(new Date(moment(this.props.date).add(1, 'days')))}
-            </div>
+          <div className='schedule-column-container yesterday'>
+            {this.getTimeSlots(new Date(moment(this.props.date).subtract(1, 'days')))}
+          </div>
+          <div className='schedule-column-container today'>
+            {this.getTimeSlots(new Date(moment(this.props.date)))}
+          </div>
+          <div className='schedule-column-container tomorrow'>
+            {this.getTimeSlots(new Date(moment(this.props.date).add(1, 'days')))}
           </div>
         </div>
       </div>
@@ -130,7 +134,6 @@ class Schedular extends React.Component {
       for (let j = 0; j < 2; j++) {
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         let classNames = 'slot'
-        let ptag = ''
         if (j === 1) {
           classNames += ' half-hour'
         } else {
@@ -150,17 +153,50 @@ class Schedular extends React.Component {
         })) {
           classNames += ' confirmed'
         }
-        const toDisplay = this.props.bookings.find(booking => {
-          return booking.startDate.getTime() === selectedDate.getTime()
-        })
-        if (toDisplay && toDisplay.fullName) {
-          ptag = toDisplay.fullName + ' ' + toDisplay.purpose
-        }
-        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter}>{<div>{ptag}</div>}</div>)
+        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
       }
     }
     return dayArray
   }
+}
+
+function compareSlotSelection (chosenSlots, takenSlots) {
+  for (let i = 0; i < chosenSlots.length - 1; i++) {
+    for (let j = 0; j < takenSlots.length; j++) {
+      for (let k = 0; k < takenSlots[j].length - 1; k++) {
+        if (chosenSlots[i] === takenSlots[j][k]) {
+          return true
+        }
+      }
+    }
+  }
+}
+
+function takenTimesIntoIntervals (bookings) {
+  let slotArr = bookings.map(obj => {
+    return intervals(obj.startDate, obj.endDate)
+  })
+  return slotArr
+}
+
+function intervals (startTime, endTime) {
+  const start = moment(startTime, 'YYYY-MM-DD hh:mm')
+  const end = moment(endTime, 'YYYY-MM-DD hh:mm')
+
+  // round starting minutes up to nearest 30 (26 --> 30, 32 --> 60)
+  // note that 59 will round up to 60, and moment.js handles that correctly
+  start.minutes(Math.ceil(start.minutes() / 30) * 30)
+
+  const result = []
+
+  const current = moment(start)
+
+  while (current <= end) {
+    result.push(current.format('YYYY-MM-DD HH:mm'))
+    current.add(30, 'minutes')
+  }
+
+  return result
 }
 
 function mapStateToProps (state) {
