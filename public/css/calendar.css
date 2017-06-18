@@ -125,7 +125,7 @@
   border-width: 2px;
   border-style: solid;
 }
-.unconfirmed-list {
+.unconfirmed-list, .delete-list {
   width: 350px;
   height: 450px;
   overflow: scroll;
@@ -156,4 +156,8 @@
 .list-of-unconfirmed {
   border: 1px solid grey;
   border-radius: 5px;
+}
+.calendar-container {
+  margin: 25px;
+  border: 3px solid #07839B!important;
 }

@@ -1,10 +1,10 @@
-import {login, getAllBookings} from '../api'
+import {login} from '../api'
 
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
 export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS'
 export const UNCONFIRMED = 'UNCONFIRMED'
-export const GETTING_DATA = 'GETTING_DATA'
-export const RECEIVED_DATA = 'RECEIVED_DATA'
+export const WAITING = 'WAITING'
+export const NOT_WAITING = 'NOT_WAITING'
 export const ADMINSUCCESS = 'ADMINSUCCESS'
 export const ERROR = 'ERROR'
 
@@ -23,7 +23,12 @@ export function newBooking (data) {
 
 function sendEmail (data) {
   login('post', '/sendemail', data)
-  .then()
+  .then(f => f)
+}
+
+function sendConfirm (data) {
+  login('post', '/sendconfirm/', data)
+  .then(f => f)
 }
 
 function bookingPosted (booking) {
@@ -55,30 +60,42 @@ export function errorHandler (error) {
 
 export const gettingData = () => {
   return {
-    type: GETTING_DATA
+    type: WAITING
   }
 }
 
 export const receivedData = () => {
   return {
-    type: RECEIVED_DATA
+    type: NOT_WAITING
   }
 }
 
 export function confirm (id) {
   return dispatch => {
+    dispatch(gettingData())
     login('put', `/admin/confirm/${id}`)
     .then(res => {
-      if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
+      if (res.body.result) {
+        dispatch(receiveBookings(res.body.bookings))
+        res.body.bookings.find(item => {
+          if (item._id === id) {
+            dispatch(sendConfirm(item))
+          }
+        })
+      }
     })
   }
 }
 
 export function deleteBooking (id) {
   return dispatch => {
+    dispatch(gettingData())
     login('delete', `/admin/delete/${id}`)
     .then(res => {
-      if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
+      if (res.body.result) {
+        dispatch(receivedData())
+        return dispatch(receiveBookings(res.body.bookings))
+      }
     })
   }
 }
@@ -104,5 +121,18 @@ export function selectBooking (booking) {
   return {
     type: BOOKINGPOSTED,
     booking
+  }
+}
+
+export function requestDelete (id) {
+  return dispatch => {
+    dispatch(gettingData())
+    login('put', `/user/requestdelete/${id}`)
+    .then(res => {
+      if (res.body.result) {
+        dispatch(receivedData())
+        return dispatch(receiveBookings(res.body.bookings))
+      }
+    })
   }
 }

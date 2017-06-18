@@ -1,8 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const db = require('./db')
+const email = require('./email')
 const router = express.Router()
-const nodemailer = require('nodemailer')
 const jsonwt = require('jsonwebtoken')
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
@@ -115,6 +115,14 @@ router.put('/admin/confirm/:id', (req, res) => {
   })
 })
 
+router.put('/user/requestdelete/:id', (req, res) => {
+  const authId = getUserIdFromToken(req)
+  db.requestDelete(req, authId, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
+
 router.put('/admin/makeadmin/:email', (req, res) => {
   const email = req.params.email
   db.makeUserAdmin(email, (err, result) => {
@@ -139,41 +147,10 @@ router.get('/user/profile', (req, res) => {
 })
 
 router.post('/sendemail', (req, res) => {
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASS
-    }
-  })
+  email.sendNewBookingEmail(req, res)
+})
 
-  let subject = 'New Booking'
-  let reciever = 'daffron92@gmail.com'
-  let sender = 'user@gmail.com'
-  const data = req.body
-
-  let mailOptions = {
-    from: sender,
-    to: reciever,
-    subject: subject,
-    html: `<h1>New Booking from ${data.fullName}<h1>
-    <a href="http://192.168.20.135:3000/admin"><h2>Click here to confirm<h2></a>
-    <h3>Full Details</h3>
-    Email: ${data.emailAddress}<br>
-    Phone: ${data.phoneNumber}<br>
-    Start: ${data.startDate}<br>
-    End: ${data.endDate}<br>
-    Purpose: ${data.purpose}<br>
-    Number of Guests: ${data.guestNumber}
-    `
-  }
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      res.json({message: error})
-    } else {
-      res.json({message: info.response})
-    }
-  })
+router.post('/sendconfirm', (req, res) => {
+  email.confirmedBookingEmail(req, res)
 })
 module.exports = router

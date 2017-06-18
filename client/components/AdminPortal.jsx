@@ -62,9 +62,28 @@ class AdminPortal extends React.Component {
             <div className="col-md-4 text-center">
               <button onClick={this.settingShow}>Settings</button>
               {this.state.showSettings && <Setting />}
-              {this.props.booking && <Details />}
+              {this.props.booking.fullName && <Details />}
             </div>
           </div>
+          <div className="row">
+          <div className="col-md-8 delete-list">
+            <h2>Delete Requested Bookings</h2>
+            {this.props.bookings.filter(booking => booking.deleteRequested).map(item => {
+              return (
+                <div key={item._id} className="row">
+                  <div className="col-sm-8 list-of-delete">
+                  {item.fullName}<br />
+                  {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}
+                  </div>
+                  <div className="col-sm-4 buttons-of-unconfirmed text-center">
+                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(item._id) }}></span>
+                    <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
         </div>
         : <h1>Not authorised</h1>
         }
@@ -76,7 +95,8 @@ class AdminPortal extends React.Component {
 function mapStateToProps (state) {
   return {
     bookings: state.bookings,
-    admin: state.user.admin
+    admin: state.user.admin,
+    booking: state.booking
   }
 }
 
