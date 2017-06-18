@@ -1,44 +1,3 @@
-/*naviation*/
-.navbar {
-  background-color: #07839b;
-  box-shadow: 0px -2px 8px 4px rgba(0,0,0,0.5);
-  height: 49px;
-}
-
-.nav-main-link {
-  margin-left: 20px;
-  position: relative;
-  top: 10px;
-  color: #fff;
-}
-
-.nav-main-link:hover {
-  text-decoration: none;
-  color: #E37222;
-}
-
-.nav>li>a:hover {
-  background-color: #E37222;
-  color: #fff;
-}
-
-.nav-links {
-  text-decoration: none;
-  color: #fff;
-}
-
-.nav-menu {
-  margin: 0;
-}
-
-.nav-links:hover {
-  text-decoration: none;
-}
-
-.login > a:hover {
-  text-decoration: none;
-}
-
 /*home content*/
 .home-background {
   background-color: #d1d1d1;
@@ -51,7 +10,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
 }
 
 .home-content-div {
@@ -135,5 +94,5 @@
 
 /*so the components are visible without nav bar hiding the top part*/
 .admin-portal, .book-container, .calendar-container, .callback-container, .error-container, .calendar, .profile-container, .login-page, .schedule, .settings-container {
-  margin-top: 50px;
+  margin-top: 60px;
 }
