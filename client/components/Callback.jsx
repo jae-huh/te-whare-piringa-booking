@@ -18,7 +18,7 @@ class Callback extends React.Component {
     }
 
     return (
-      <div style={style}>
+      <div className="callback-container" style={style}>
         {this.props.redirectTo && <Redirect to={`/${this.props.redirectTo}`} />}
         <p>Loading</p>
       </div>

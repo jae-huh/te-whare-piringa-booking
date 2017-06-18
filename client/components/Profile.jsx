@@ -29,7 +29,7 @@ class Profile extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="profile-container">
         <h1>profile</h1>
         <div>
           <h2>Your Bookings</h2>

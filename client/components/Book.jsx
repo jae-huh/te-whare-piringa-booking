@@ -67,7 +67,7 @@ class Book extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div className='book-container'>
         <form onSubmit={this.handleSubmit}>
           Full Name: <input name='fullName' placeholder={this.props.user.fullName} onChange={this.handleChange} />
           <br />
