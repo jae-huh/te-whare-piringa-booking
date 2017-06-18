@@ -128,8 +128,7 @@ class Schedular extends React.Component {
       for (let j = 0; j < 2; j++) {
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         let classNames = 'slot'
-        let ptag
-        let temp
+        let ptag = ''
         if (j === 1) {
           classNames += ' half-hour'
         } else {
@@ -149,11 +148,11 @@ class Schedular extends React.Component {
         })) {
           classNames += ' confirmed'
         }
-        if (this.props.bookings.find(booking => {
-          temp = booking
+        const toDisplay = this.props.bookings.find(booking => {
           return booking.startDate.getTime() === selectedDate.getTime()
-        })) {
-          ptag = temp.fullName
+        })
+        if (toDisplay) {
+          ptag = toDisplay.fullName
         }
         dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter}>{<div>{ptag}</div>}</div>)
       }
