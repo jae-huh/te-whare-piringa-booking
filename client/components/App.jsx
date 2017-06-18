@@ -15,6 +15,7 @@ import Navigation from './Navigation'
 import Profile from './Profile'
 import Details from './Details'
 import Home from './Home'
+import Error from './Error'
 
 import {checkLogin} from '../actions/auth'
 
@@ -37,6 +38,7 @@ class App extends React.Component {
           <Route path='/' render={props => (
             <Navigation fullName={this.props.user.fullName} />
           )}/>
+          {this.props.error && <Error /> }
           <Route exact path='/' component={Home} />
           <Route path="/callback" component={Callback} />
           <Route path='/admin' component={AdminPortal} />
@@ -54,7 +56,8 @@ class App extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    user: state.user
+    user: state.user,
+    error: state.error
   }
 }
 

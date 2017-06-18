@@ -2,7 +2,6 @@ import React from 'react'
 import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 import {newBooking} from '../actions/index'
 
