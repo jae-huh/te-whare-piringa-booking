@@ -39,17 +39,19 @@ class Calendar extends React.Component {
         <div className='calendar-title'>
           <h2>{moment(this.props.date).format('MMMM YYYY')}</h2>
         </div>
-        <div className='calendar-header-container'>
-          <div className='calendar-header'>Sunday</div>
-          <div className='calendar-header'>Monday</div>
-          <div className='calendar-header'>Tuesday</div>
-          <div className='calendar-header'>Wednesday</div>
-          <div className='calendar-header'>Thursday</div>
-          <div className='calendar-header'>Friday</div>
-          <div className='calendar-header'>Saturday</div>
-        </div>
-        <div className='calendar-date-container' >
-          {this.getDates(this.props.date)}
+        <div className="calendar-container">
+          <div className='calendar-header-container'>
+            <div className='calendar-header'>Sunday</div>
+            <div className='calendar-header'>Monday</div>
+            <div className='calendar-header'>Tuesday</div>
+            <div className='calendar-header'>Wednesday</div>
+            <div className='calendar-header'>Thursday</div>
+            <div className='calendar-header'>Friday</div>
+            <div className='calendar-header'>Saturday</div>
+          </div>
+          <div className='calendar-date-container' >
+            {this.getDates(this.props.date)}
+          </div>
         </div>
       </div>
     )

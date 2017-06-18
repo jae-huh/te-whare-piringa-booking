@@ -2,7 +2,8 @@ import React from 'react'
 import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import {connect} from 'react-redux'
-
+import {Redirect} from 'react-router-dom'
+import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 import {newBooking} from '../actions/index'
 
 injectTapEventPlugin()
@@ -26,12 +27,17 @@ class Book extends React.Component {
     this.handleChangeDateStart = this.handleChangeDateStart.bind(this)
     this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   handleChange (evt) {
     this.setState({
       [evt.target.name]: evt.target.value
     })
+  }
+
+  handleClose () {
+    this.props.history.push('/')
   }
 
   handleChangeDateStart (date) {
@@ -68,7 +74,8 @@ class Book extends React.Component {
   render () {
     return (
       <div className='book-container'>
-        <form onSubmit={this.handleSubmit}>
+      {this.props.user.authId
+        ? <form onSubmit={this.handleSubmit}>
           Full Name: <input name='fullName' placeholder={this.props.user.fullName} onChange={this.handleChange} />
           <br />
           Email Address: <input type='email' name='email' placeholder={this.props.user.emailAddress} onChange={this.handleChange} />
@@ -91,6 +98,14 @@ class Book extends React.Component {
           <br />
           <input type='submit' value='Book' />
         </form>
+      : <ModalContainer onClose={this.handleClose}>
+          <ModalDialog onClose={this.handleClose}>
+            <h1>You Are Not Logged In</h1>
+            <p>Please log in or register</p>
+          </ModalDialog>
+        </ModalContainer>
+      }
+      }
       </div>
     )
   }
