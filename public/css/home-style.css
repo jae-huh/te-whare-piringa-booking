@@ -1,7 +1,10 @@
 /*naviation*/
 .navbar {
-  background-color: rgb(127,63,150);
+  /*background-color: rgb(127,63,150);*/
+  background-color: #07839b;
   box-shadow: 0px -2px 8px 4px rgba(0,0,0,0.5);
+  height: 49px;
+  position: relative;
 }
 
 .nav-main-link {
@@ -13,18 +16,17 @@
 
 .nav-main-link:hover {
   text-decoration: none;
-  color: rgb(127,63,150);
-  background-color: #fff;
+  color: #E37222;
 }
 
+.nav>li>a:hover {
+  background-color: #E37222;
+  color: #fff;
+}
 
 .nav-links {
   text-decoration: none;
   color: #fff;
-}
-
-.nav-links:hover {
-  color: rgb(127,63,150);
 }
 
 .nav-menu {
@@ -85,7 +87,35 @@
 }
 
 .about-info-heading {
-  border-bottom: 4px solid #BBC434;
+  border-bottom: 4px solid #E37222;
   font-size: 1.7em;
   padding: 5px 10px;
 }
+
+/*contact us*/
+.contact {
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  justify-content: space-around;
+}
+
+#map {
+  width: 350px;
+  height: 300px;
+  background-color: grey;
+}
+
+.contact-information {
+  margin: 10px;
+}
+
+.contact-information > h2 {
+  font-size: 1.7em;
+  border-bottom: 4px solid #04BA3B;
+}
+
+/*so the components are visible without nav bar hiding the top part*/
+/*.admin-portal .book-container .calendar-container .callback-container .error-container .calendar .profile-container .login-page .schedule .settings-container {
+  margin-top: 200px;
+}*/
