@@ -1,14 +1,16 @@
 import {login, getAllBookings} from '../api'
-import {receiveBookings} from './index'
+import {receiveBookings, WAITING, NOT_WAITING} from './index'
 
 const localStorage = global.window.localStorage
 
 export function checkLogin () {
   return dispatch => {
+    dispatch(gettingData())
     if (!localStorage.getItem('id_token')) {
       dispatch(noUserExists())
       getAllBookings()
         .then(res => {
+          dispatch(receivedData())
           return dispatch(receiveBookings(res.body.bookings))
         })
     }
@@ -20,6 +22,7 @@ export function checkLogin () {
           return dispatch(noUserExists())
         }
         dispatch(loggedIn(res.body.user))
+        dispatch(receivedData())
         return dispatch(receiveBookings(res.body.bookings))
       })
   }
@@ -28,6 +31,18 @@ export function checkLogin () {
 function checkingLogin () {
   return {
     type: 'CHECKING_LOGIN'
+  }
+}
+
+export const gettingData = () => {
+  return {
+    type: WAITING
+  }
+}
+
+export const receivedData = () => {
+  return {
+    type: NOT_WAITING
   }
 }
 
