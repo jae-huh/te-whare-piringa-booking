@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import Details from './Details'
-import {selectBooking} from '../actions/index'
+import {selectBooking, requestDelete} from '../actions/index'
 
 class Profile extends React.Component {
   constructor (props) {
@@ -15,6 +15,10 @@ class Profile extends React.Component {
     this.props.selectBooking(booking)
   }
 
+  requestBookingToBeDeleted (id) {
+    this.props.requestDelete(id)
+  }
+
   showUserBookings () {
     return this.props.bookings.filter(booking => booking.authId).map((booking, i) => {
       return (
@@ -23,6 +27,7 @@ class Profile extends React.Component {
           <td>{moment(booking.endDate).format('YYYY-MM-DD HH:mm')}</td>
           <td>{booking.confirmed ? 'Confirmed' : 'Waiting to be confirmed'}</td>
           <td><button onClick={() => this.saveBookingToStore(booking)}>View</button></td>
+          <td><button onClick={() => this.requestBookingToBeDeleted(booking._id)}>Request Delete</button></td>
         </tr>
       )
     })
@@ -31,7 +36,7 @@ class Profile extends React.Component {
   render () {
     return (
       <div className="profile-container">
-        <h1>profile</h1>
+        <h1>Profile</h1>
         <div>
           <h2>Your Bookings</h2>
           <table>
@@ -40,6 +45,7 @@ class Profile extends React.Component {
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Confirmation Status</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>
@@ -56,7 +62,8 @@ class Profile extends React.Component {
 
 function mapDispatchToProps (dispatch) {
   return {
-    selectBooking: booking => { dispatch(selectBooking(booking)) }
+    selectBooking: booking => dispatch(selectBooking(booking)),
+    requestDelete: id => dispatch(requestDelete(id))
   }
 }
 
