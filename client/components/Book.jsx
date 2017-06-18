@@ -70,6 +70,7 @@ class Book extends React.Component {
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
   }
+
   render () {
     return (
       <div className='book-container'>
@@ -103,7 +104,6 @@ class Book extends React.Component {
             <p>Please log in or register</p>
           </ModalDialog>
         </ModalContainer>
-      }
       }
       </div>
     )
