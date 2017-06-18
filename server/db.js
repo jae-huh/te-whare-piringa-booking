@@ -20,6 +20,7 @@ function userGetAllBookings (authId, cb) {
         }
         return filterOutDetails(booking)
       })
+      cb(null, bookings)
     })
   })
 }
@@ -62,15 +63,15 @@ function userAddBooking (booking, authId, cb) {
   })
 }
 
-function confirmBooking (req, cb) {
+function confirmBooking (req, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'confirmed': true}}, (err, result) => {
       if (err) return cb(err)
-
-        return cb(null, result)
-
-      // What happens when result is not okay?  Is this possible?
+      userGetAllBookings(authId, (err, bookings) => {
+        if (err) return cb(err)
+        cb(null, {result, bookings})
+      })
     })
   })
 }
@@ -83,16 +84,6 @@ function addUser (user, cb) {
       cb(null, result.ops[0])
     })
   })
-}
-
-function filterUnconfirmed (data, cb) {
-  const arr = []
-  for (let i = 0; i < data.length; i++) {
-    if (!data[i].confirmed) {
-      arr.push(data[i])
-    }
-  }
-  cb(arr)
 }
 
 function getUsers (id, cb) {
@@ -126,13 +117,15 @@ function getUserDetails (authId, cb) {
   })
 }
 
-function deleteBooking (id, cb) {
+function deleteBooking (id, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').remove({_id: ObjectId(id)}, (err, result) => {
       if (err) return cb(err)
-      console.log(result)
-      cb(null, result)
+      userGetAllBookings(authId, (err, bookings) => {
+        if (err) return cb(err)
+        cb(null, {result, bookings})
+      })
     })
   })
 }
@@ -163,7 +156,6 @@ module.exports = {
   userAddBooking,
   confirmBooking,
   addUser,
-  filterUnconfirmed,
   getUsers,
   getUserDetails,
   deleteBooking,

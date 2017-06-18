@@ -65,27 +65,11 @@ export const receivedData = () => {
   }
 }
 
-export function getUnconfirmed () {
-  return dispatch => {
-    login('get', '/admin/getunconfirmed')
-    .then(res => {
-      dispatch(unconfirmed(res.body))
-    })
-  }
-}
-
-function unconfirmed (data) {
-  return {
-    type: UNCONFIRMED,
-    data
-  }
-}
-
 export function confirm (id) {
   return dispatch => {
     login('put', `/admin/confirm/${id}`)
     .then(res => {
-      if (res.ok) return dispatch(getUnconfirmed())
+      if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
     })
   }
 }
@@ -94,7 +78,7 @@ export function deleteBooking (id) {
   return dispatch => {
     login('delete', `/admin/delete/${id}`)
     .then(res => {
-      if (res) return dispatch(getUnconfirmed())
+      if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
     })
   }
 }
