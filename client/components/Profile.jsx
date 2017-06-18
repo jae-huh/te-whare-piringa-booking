@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
+import Details from './Details'
 import {selectBooking, requestDelete} from '../actions/index'
 
 class Profile extends React.Component {
@@ -52,6 +53,7 @@ class Profile extends React.Component {
               {this.showUserBookings()}
             </tbody>
           </table>
+          {this.props.booking.fullName && <Details />}
         </div>
       </div>
     )
@@ -67,6 +69,7 @@ function mapDispatchToProps (dispatch) {
 
 function mapStateToProps (state) {
   return {
+    booking: state.booking,
     bookings: state.bookings,
     authId: state.user.authId
   }

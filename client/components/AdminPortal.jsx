@@ -62,7 +62,7 @@ class AdminPortal extends React.Component {
             <div className="col-md-4 text-center">
               <button onClick={this.settingShow}>Settings</button>
               {this.state.showSettings && <Setting />}
-              {this.props.booking && <Details />}
+              {this.props.booking.fullName && <Details />}
             </div>
           </div>
           <div className="row">
@@ -95,7 +95,8 @@ class AdminPortal extends React.Component {
 function mapStateToProps (state) {
   return {
     bookings: state.bookings,
-    admin: state.user.admin
+    admin: state.user.admin,
+    booking: state.booking
   }
 }
 
