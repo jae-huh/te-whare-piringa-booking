@@ -24,7 +24,7 @@ class Settings extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="settings-container">
         <h2>Settings</h2>
         <form>
           <p>
