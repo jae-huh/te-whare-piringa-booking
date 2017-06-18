@@ -17,7 +17,6 @@ export function login (method = 'get', endpoint, data = {}) {
     })
 }
 
-
 export function getAllBookings (cb) {
   request.get('/api/v1/getbookings')
   .then(result => {

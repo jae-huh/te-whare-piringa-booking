@@ -1,56 +1,77 @@
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient
 
-function getAllBookings (req, cb) {
-  const filtered = []
+function anonGetAllBookings (cb) {
+  getAllBookings((err, bookings) => {
+    bookings = bookings.map(filterOutDetails)
+    cb(err, bookings)
+  })
+}
+
+function userGetAllBookings (authId, cb) {
+  getAllBookings((err, bookings) => {
+    if (err) return cb(err)
+    checkAdminStatus(authId, (err, admin) => {
+      if (err) return cb(err)
+      if (admin) return cb(null, bookings)
+      bookings = bookings.map(booking => {
+        if (booking.authId === authId) {
+          return booking
+        }
+        return filterOutDetails(booking)
+      })
+      cb(null, bookings)
+    })
+  })
+}
+
+function getAllBookings (cb) {
   return getDatabase((err, db) => {
     if (err) return cb(err)
-    return db.collection('bookings').find().toArray((err, results) => {
+    return db.collection('bookings').find().toArray((err, bookings) => {
       if (err) return cb(err)
-      for (let i = 0; i < results.length; i++) {
-        filtered.push({anonBooking: {
-          startDate: results[i].startDate,
-          endDate: results[i].endDate,
-          confirmed: results[i].confirmed}
-        })
-      }
-      cb(null, filtered)
+      cb(null, bookings)
     })
   })
 }
-function adminGetAllBookings (req, cb) {
+
+function filterOutDetails (booking) {
+  return {
+    startDate: booking.startDate,
+    endDate: booking.endDate,
+    confirmed: booking.confirmed
+  }
+}
+
+function checkAdminStatus (authId, cb) {
+  getUserDetails(authId, (err, user) => {
+    if (err) return cb(err)
+    cb(null, user.admin)
+  })
+}
+
+function userAddBooking (booking, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
-    db.collection('bookings').find().toArray((err, results) => {
+    db.collection('bookings').save(booking, (err, result) => {
       if (err) return cb(err)
-      cb(null, results)
+      userGetAllBookings(authId, (err, bookings) => {
+        if (err) return cb(err)
+        cb(null, {booking, bookings})
+      })
     })
   })
 }
 
-function userAddBooking (data, cb) {
-  // if (!validate(req.body)) {
-  //   return cb({error: 'imcomplete'})
-  // }
-
-  getDatabase((err, db) => {
-    if (err) return cb(err)
-    db.collection('bookings').save(data, (err, result) => {
-      if (err) return cb(err)
-      cb(null, result.ops[0])
-    })
-  })
-}
-
-function confirmBooking (req, cb) {
+function confirmBooking (req, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'confirmed': true}}, (err, result) => {
       if (err) return cb(err)
-
-        return cb(null, result)
-
-      // What happens when result is not okay?  Is this possible?
+      userGetAllBookings(authId, (err, bookings) => {
+        if (err) return cb(err)
+        cb(null, {result, bookings})
+      })
     })
   })
 }
@@ -63,16 +84,6 @@ function addUser (user, cb) {
       cb(null, result.ops[0])
     })
   })
-}
-
-function filterUnconfirmed (data, cb) {
-  const arr = []
-  for (let i = 0; i < data.length; i++) {
-    if (!data[i].confirmed) {
-      arr.push(data[i])
-    }
-  }
-  cb(arr)
 }
 
 function getUsers (id, cb) {
@@ -106,13 +117,25 @@ function getUserDetails (authId, cb) {
   })
 }
 
-function deleteBooking (id, cb) {
+function deleteBooking (id, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').remove({_id: ObjectId(id)}, (err, result) => {
       if (err) return cb(err)
-      console.log(result)
-      cb(null, result)
+      userGetAllBookings(authId, (err, bookings) => {
+        if (err) return cb(err)
+        cb(null, {result, bookings})
+      })
+    })
+  })
+}
+
+function makeUserAdmin (email, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('users').update({emailAddress: email}, {$set: {'admin': true}}, (err, result) => {
+      if (err) return cb(err)
+      return cb(null, result)
     })
   })
 }
@@ -128,13 +151,13 @@ function validate (obj) {
 }
 
 module.exports = {
-  getAllBookings,
-  adminGetAllBookings,
+  anonGetAllBookings,
+  userGetAllBookings,
   userAddBooking,
   confirmBooking,
   addUser,
-  filterUnconfirmed,
   getUsers,
   getUserDetails,
-  deleteBooking
+  deleteBooking,
+  makeUserAdmin
 }

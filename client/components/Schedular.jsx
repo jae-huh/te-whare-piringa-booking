@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import {makeNewBooking} from '../actions/calendar'
-import {fetchBookings} from '../actions/index'
 
 class Schedular extends React.Component {
   constructor (props) {
@@ -107,18 +106,17 @@ class Schedular extends React.Component {
     const hourArray = []
     for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 2; j++) {
-        let selectedDate
-        let divContents
+        let selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
+        let dateFormatted = moment(selectedDate).format('HH:mm')
+        let divContents = ''
         let classNames = 'hour'
         if (j === 1) {
-          divContents = ''
           classNames += ' half-hour'
         } else {
-          selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
           classNames += ' full-hour'
-          divContents = moment(selectedDate).format('HH:mm')
+          divContents = dateFormatted
         }
-        hourArray.push(<div className={classNames}>{divContents}</div>)
+        hourArray.push(<div key={dateFormatted} className={classNames}>{divContents}</div>)
       }
     }
     return hourArray
@@ -129,13 +127,13 @@ class Schedular extends React.Component {
     for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 2; j++) {
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
-        const divId = 'slot' + moment(selectedDate).format('YYYY-MM-DD-HH-mm')
         let classNames = 'slot'
         if (j === 1) {
           classNames += ' half-hour'
         } else {
           classNames += ' full-hour'
         }
+        const dateFormatted = moment(selectedDate).format('YYYY-MM-DD-HH-mm')
         if (selectedDate >= this.state.startTime && selectedDate < this.state.endTime) {
           classNames += ' selected'
         }
@@ -149,7 +147,7 @@ class Schedular extends React.Component {
         })) {
           classNames += ' confirmed'
         }
-        dayArray.push(<div id={divId} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
+        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
       }
     }
     return dayArray
@@ -165,9 +163,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd)),
-    getBookings: dispatch(fetchBookings())
-
+    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd))
   }
 }
 
