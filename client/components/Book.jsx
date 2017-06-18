@@ -59,10 +59,10 @@ class Book extends React.Component {
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
       confirmed: false,
-      dateAdded: new Date()}
-
+      dateAdded: new Date(),
+      deleteRequested: false
+    }
     this.props.postNewBooking(data)
-    console.log(data)
     this.props.history.push('/calendar')
   }
   render () {
@@ -77,11 +77,13 @@ class Book extends React.Component {
           Start Date and Time:
        <Datetime value={this.props.display.dateStart}
        onChange={this.handleChangeDateStart}
-       timeConstraints={{hours: {min: 6, max: 22, step: 1}}}/>
+       timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
+       className="datepick"/>
           <br />
           End Date and time:
            <Datetime value={this.props.display.dateEnd}
-       onChange={this.handleChangeDateEnd}/>
+       onChange={this.handleChangeDateEnd}
+       className="datepick"/>
           <br />
           <textarea name='purpose' required placeholder='Purpose of hire' onChange={this.handleChange} />
           <br />

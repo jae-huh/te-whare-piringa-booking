@@ -117,6 +117,16 @@ function deleteBooking (id, cb) {
   })
 }
 
+function makeUserAdmin (email, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('users').update({emailAddress: email}, {$set: {'admin': true}}, (err, result) => {
+      if (err) return cb(err)
+      return cb(null, result)
+    })
+  })
+}
+
 function validate (obj) {
   Object.values.map(item => {
     if (item) {
@@ -136,5 +146,6 @@ module.exports = {
   filterUnconfirmed,
   getUsers,
   getUserDetails,
-  deleteBooking
+  deleteBooking,
+  makeUserAdmin
 }

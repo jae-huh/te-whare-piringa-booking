@@ -29,7 +29,7 @@ router.use(bodyParser.json())
 router.get('/getbookings', (req, res) => {
   db.getAllBookings(req, (err, result) => {
     if (err) return res.json({error: err})
-    res.json(result)
+    res.json({result: result})
   })
 })
 
@@ -130,6 +130,14 @@ router.post('/user/addbooking', (req, res) => {
 
 router.put('/admin/confirm/:id', (req, res) => {
   db.confirmBooking(req, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
+
+router.put('/admin/makeadmin/:email', (req, res) => {
+  const email = req.params.email
+  db.makeUserAdmin(email, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })

@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 import Login from './Login'
 import Logout from './Logout'
@@ -21,6 +22,7 @@ const Navigation = props => {
             <li className="nav-menu"><Link className="nav-links" to="/admin">Admin</Link></li>
             <li className="nav-menu">{!props.fullName && <Login />}</li>
             <li className="nav-menu">{props.fullName && <Logout />}</li>
+            <li>{props.admin && <Link to="/admin">Admin</Link>}</li>
           </ul>
         </div>
       </nav>
@@ -28,4 +30,8 @@ const Navigation = props => {
   )
 }
 
-export default Navigation
+function mapStateToProps (state) {
+  return state.user
+}
+
+export default connect(mapStateToProps)(Navigation)
