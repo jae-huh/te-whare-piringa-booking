@@ -15,7 +15,7 @@ const Navigation = props => {
       <ul className="nav navbar-nav">
         <li className="active"> <Link to="/book">Book</Link></li>
         <li><Link to="/schedule">Schedule</Link></li>
-        <li><Link to="/profile">profile</Link></li>
+        <li><Link to="/profile">Profile</Link></li>
         <li><Link to="/calendar">Bookings</Link></li>
       </ul>
       <ul className="nav navbar-nav navbar-right">
