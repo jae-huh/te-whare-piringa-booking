@@ -10,56 +10,43 @@ export function newBooking (data) {
   return dispatch => {
     dispatch(gettingData())
     login('post', '/user/addbooking', data)
-        .then(res => {
-          dispatch(bookingPosted(res.body))
-          dispatch(sendEmail(res.body))
-          dispatch(receivedData())
-        })
+      .then(res => {
+        dispatch(bookingPosted(res.body.booking))
+        dispatch(receiveBookings(res.body.bookings))
+        dispatch(receivedData())
+        sendEmail(res.body.booking)
+      })
   }
 }
 
 function sendEmail (data) {
   login('post', '/sendemail', data)
-  .then(f => f)
+  .then()
 }
 
-function bookingPosted (data) {
+function bookingPosted (booking) {
+  booking.startDate = new Date(booking.startDate)
+  booking.endDate = new Date(booking.endDate)
   return {
     type: BOOKINGPOSTED,
-    data
+    booking
   }
 }
 
 export const receiveBookings = bookings => {
   return {
     type: RECEIVE_BOOKINGS,
-    bookings: bookings
+    bookings: bookings.map(booking => {
+      booking.startDate = new Date(booking.startDate)
+      booking.endDate = new Date(booking.endDate)
+      return booking
+    })
   }
 }
 function errorHandler (error) {
   return {
     type: 'ERROR',
     error
-
-  }
-}
-export const fetchBookings = () => {
-  return dispatch => {
-    dispatch(gettingData())
-    getAllBookings(res => {
-      let arr = []
-      for (let i = 0; i < res.length; i++) {
-        const obj = {
-          startDate: new Date(res[i].anonBooking.startDate),
-          endDate: new Date(res[i].anonBooking.endDate),
-          confirmed: res[i].anonBooking.confirmed
-
-        }
-        arr.push(obj)
-      }
-      dispatch(receiveBookings(arr))
-      dispatch(receivedData())
-    })
   }
 }
 

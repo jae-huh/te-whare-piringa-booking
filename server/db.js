@@ -1,43 +1,60 @@
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient
 
-function getAllBookings (req, cb) {
-  const filtered = []
+function anonGetAllBookings (cb) {
+  getAllBookings((err, bookings) => {
+    bookings = bookings.map(filterOutDetails)
+    cb(err, bookings)
+  })
+}
+
+function userGetAllBookings (authId, cb) {
+  getAllBookings((err, bookings) => {
+    if (err) return cb(err)
+    checkAdminStatus(authId, (err, admin) => {
+      if (err) return cb(err)
+      if (admin) return cb(null, bookings)
+      bookings = bookings.map(booking => {
+        if (booking.authId === authId) {
+          return booking
+        }
+        return filterOutDetails(booking)
+      })
+    })
+  })
+}
+
+function getAllBookings (cb) {
   return getDatabase((err, db) => {
     if (err) return cb(err)
-    return db.collection('bookings').find().toArray((err, results) => {
+    return db.collection('bookings').find().toArray((err, bookings) => {
       if (err) return cb(err)
-      for (let i = 0; i < results.length; i++) {
-        filtered.push({anonBooking: {
-          startDate: results[i].startDate,
-          endDate: results[i].endDate,
-          confirmed: results[i].confirmed}
-        })
-      }
-      cb(null, filtered)
-    })
-  })
-}
-function adminGetAllBookings (req, cb) {
-  getDatabase((err, db) => {
-    if (err) return cb(err)
-    db.collection('bookings').find().toArray((err, results) => {
-      if (err) return cb(err)
-      cb(null, results)
+      cb(null, bookings)
     })
   })
 }
 
-function userAddBooking (data, cb) {
-  // if (!validate(req.body)) {
-  //   return cb({error: 'imcomplete'})
-  // }
+function filterOutDetails (booking) {
+  return {
+    startDate: booking.startDate,
+    endDate: booking.endDate,
+    confirmed: booking.confirmed
+  }
+}
 
+function checkAdminStatus (authId, cb) {
+  cb(null, true) // to be replaced with actual functionality
+}
+
+function userAddBooking (booking, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
-    db.collection('bookings').save(data, (err, result) => {
+    db.collection('bookings').save(booking, (err, result) => {
       if (err) return cb(err)
-      cb(null, result.ops[0])
+      userGetAllBookings(authId, (err, bookings) => {
+        if (err) return cb(err)
+        cb(null, {booking, bookings})
+      })
     })
   })
 }
@@ -56,6 +73,7 @@ function confirmBooking (req, cb) {
 }
 
 function addUser (user, cb) {
+  user.admin = false
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('users').save(user, (err, result) => {
@@ -128,8 +146,8 @@ function validate (obj) {
 }
 
 module.exports = {
-  getAllBookings,
-  adminGetAllBookings,
+  anonGetAllBookings,
+  userGetAllBookings,
   userAddBooking,
   confirmBooking,
   addUser,

@@ -27,7 +27,7 @@ const jwksRsa = require('jwks-rsa')
 router.use(bodyParser.json())
 
 router.get('/getbookings', (req, res) => {
-  db.getAllBookings(req, (err, result) => {
+  db.getAllBookings((err, result) => {
     if (err) return res.json({error: err})
     res.json({result: result})
   })
@@ -69,9 +69,18 @@ router.use((err, req, res, next) => {
 
 router.get('/checklogin', (req, res) => {
   const authId = getUserIdFromToken(req)
-  db.getUserDetails(authId, (err, userDetails) => {
+  return db.getUserDetails(authId, (err, user) => {
     if (err) return res.json({error: err})
-    res.json({user: userDetails})
+    if (!user) {
+      return db.anonGetAllBookings((err, bookings) => {
+        if (err) return res.json({error: err})
+        return res.json({user, bookings})
+      })
+    }
+    return db.userGetAllBookings(authId, (err, bookings) => {
+      if (err) return res.json({error: err})
+      return res.json({user, bookings})
+    })
   })
 })
 
@@ -88,9 +97,9 @@ router.post('/user/adduser', (req, res) => {
   })
 })
 
-router.get('/user/getbookings/:authId', (req, res) => {
+router.get('/user/getbookings', (req, res) => {
   const authId = getUserIdFromToken(req)
-  db.adminGetAllBookings(req, (err, result) => {
+  db.adminGetAllBookings((err, result) => {
     if (err) return res.json({error: err})
     const output = result.map(item => {
       if (item.authId === authId) {
@@ -106,7 +115,7 @@ router.get('/user/getbookings/:authId', (req, res) => {
 })
 
 router.get('/admin/getbookings', (req, res) => {
-  db.adminGetAllBookings(req, (err, result) => {
+  db.adminGetAllBookings((err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
@@ -122,7 +131,8 @@ router.get('/admin/getunconfirmed', (req, res) => {
 })
 
 router.post('/user/addbooking', (req, res) => {
-  db.userAddBooking(req.body, (err, result) => {
+  const authId = getUserIdFromToken(req)
+  db.userAddBooking(req.body, authId, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })

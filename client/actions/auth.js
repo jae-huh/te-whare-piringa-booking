@@ -1,4 +1,5 @@
 import {login} from '../api'
+import {receiveBookings} from './index'
 
 const localStorage = global.window.localStorage
 
@@ -12,7 +13,8 @@ export function checkLogin () {
             res.body.error && console.log(res.body.error)
             return dispatch(noUserExists())
           }
-          return dispatch(loggedIn(res.body.user))
+          dispatch(loggedIn(res.body.user))
+          dispatch(receiveBookings(res.body.bookings))
         })
     }
     return dispatch(noUserExists())
@@ -32,10 +34,11 @@ function noUserExists (error) {
   }
 }
 
-function loggedIn (user) {
+function loggedIn (user, bookings) {
   return {
     type: 'LOGGED_IN',
-    user
+    user,
+    bookings
   }
 }
 
