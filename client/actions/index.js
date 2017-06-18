@@ -5,6 +5,8 @@ export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS'
 export const UNCONFIRMED = 'UNCONFIRMED'
 export const GETTING_DATA = 'GETTING_DATA'
 export const RECEIVED_DATA = 'RECEIVED_DATA'
+export const ADMINSUCCESS = 'ADMINSUCCESS'
+export const ERROR = 'ERROR'
 
 export function newBooking (data) {
   return dispatch => {
@@ -43,10 +45,35 @@ export const receiveBookings = bookings => {
     })
   }
 }
+
 function errorHandler (error) {
   return {
-    type: 'ERROR',
+    type: ERROR,
     error
+<<<<<<< HEAD
+=======
+
+  }
+}
+export const fetchBookings = () => {
+  return dispatch => {
+    dispatch(gettingData())
+    getAllBookings(res => {
+      let arr = []
+      for (let i = 0; i < res.length; i++) {
+        const obj = {
+          startDate: new Date(res[i].anonBooking.startDate),
+          endDate: new Date(res[i].anonBooking.endDate),
+          confirmed: res[i].anonBooking.confirmed
+
+        }
+        arr.push(obj)
+      }
+      if (arr.length < 1) return dispatch(errorHandler('No Bookings'))
+      dispatch(receiveBookings(arr))
+      dispatch(receivedData())
+    })
+>>>>>>> 394d0bfeebea8585f872e72368a8c4a520b3ea06
   }
 }
 
@@ -104,5 +131,22 @@ export function userBookings (authId) {
       dispatch(receiveBookings(res.body))
       dispatch(receivedData())
     })
+  }
+}
+
+export function makeAdmin (email) {
+  return dispatch => {
+    dispatch(gettingData())
+    login('put', `/admin/makeadmin/${email}`)
+    .then(res => {
+      dispatch(adminSuccess(res))
+    })
+  }
+}
+
+function adminSuccess (res) {
+  return {
+    type: ADMINSUCCESS,
+    res
   }
 }

@@ -1,3 +1,6 @@
+.logs {
+  right: auto
+}
 .calendar-date-container, .calendar-header-container {
   display: flex;
   flex-direction: row;

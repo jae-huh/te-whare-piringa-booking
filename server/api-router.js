@@ -145,6 +145,14 @@ router.put('/admin/confirm/:id', (req, res) => {
   })
 })
 
+router.put('/admin/makeadmin/:email', (req, res) => {
+  const email = req.params.email
+  db.makeUserAdmin(email, (err, result) => {
+    if (err) return res.json({error: err})
+    res.json(result)
+  })
+})
+
 router.delete('/admin/delete/:id', (req, res) => {
   db.deleteBooking(req.params.id, (err, result) => {
     if (err) return res.json({error: err})
