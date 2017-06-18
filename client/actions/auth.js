@@ -7,7 +7,10 @@ export function checkLogin () {
   return dispatch => {
     if (!localStorage.getItem('id_token')) {
       dispatch(noUserExists())
-      login('get', '/getbookings')
+      getAllBookings()
+        .then(res => {
+          return dispatch(receiveBookings(res.body.bookings))
+        })
     }
     dispatch(checkingLogin())
     return login('get', '/checklogin')
@@ -78,6 +81,10 @@ export function logout () {
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     dispatch(loggedOut())
+    getAllBookings()
+      .then(res => {
+        return dispatch(receiveBookings(res.body.bookings))
+      })
   }
 }
 
