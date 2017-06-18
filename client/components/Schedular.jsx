@@ -76,25 +76,27 @@ class Schedular extends React.Component {
             <div className='col-md-1'>Booked<div className='booked-key' /></div>
           </div>
         </div>
-        <div className='schedule-navbar' />
-        <div className='schedule-header-container'>
-          <div className='schedule-header time'>Timeslot</div>
-          <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
-        </div>
-        <div className='schedule-columns-container'>
-          <div className='schedule-hours-container'>
-            {this.getHours()}
+        <div className="schedule-body">
+          <div className='schedule-navbar' />
+          <div className='schedule-header-container'>
+            <div className='schedule-header time'>Timeslot</div>
+            <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
+            <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
+            <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
           </div>
-          <div className='schedule-column-container yesterday'>
-            {this.getTimeSlots(new Date(moment(this.props.date).subtract(1, 'days')))}
-          </div>
-          <div className='schedule-column-container today'>
-            {this.getTimeSlots(new Date(moment(this.props.date)))}
-          </div>
-          <div className='schedule-column-container tomorrow'>
-            {this.getTimeSlots(new Date(moment(this.props.date).add(1, 'days')))}
+          <div className='schedule-columns-container'>
+            <div className='schedule-hours-container'>
+              {this.getHours()}
+            </div>
+            <div className='schedule-column-container yesterday'>
+              {this.getTimeSlots(new Date(moment(this.props.date).subtract(1, 'days')))}
+            </div>
+            <div className='schedule-column-container today'>
+              {this.getTimeSlots(new Date(moment(this.props.date)))}
+            </div>
+            <div className='schedule-column-container tomorrow'>
+              {this.getTimeSlots(new Date(moment(this.props.date).add(1, 'days')))}
+            </div>
           </div>
         </div>
       </div>
@@ -152,7 +154,7 @@ class Schedular extends React.Component {
           return booking.startDate.getTime() === selectedDate.getTime()
         })
         if (toDisplay) {
-          ptag = toDisplay.fullName
+          ptag = toDisplay.fullName + ' ' + toDisplay.purpose
         }
         dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter}>{<div>{ptag}</div>}</div>)
       }

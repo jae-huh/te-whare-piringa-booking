@@ -30,13 +30,17 @@
 
 
 /*Scheduler styling*/
-
+.schedule-body {
+    margin: 25px;
+  border: 3px solid #07839B!important;
+}
 .schedule-header-container, .schedule-columns-container {
   display: flex;
   flex-direction: row;
 }
 
 .schedule-column-container {
+
   width: 30%;
 }
 .schedule-hours-container{
@@ -83,10 +87,12 @@
 
 .reserved {
   background-color: olivedrab;
+  border: none!important;
 }
 
 .confirmed {
   background-color: red;
+  border: none!important;
 }
 
 .datepick {
