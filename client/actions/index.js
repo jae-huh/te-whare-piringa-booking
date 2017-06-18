@@ -112,17 +112,8 @@ export function requestDelete (id) {
     dispatch(gettingData())
     login('put', `/user/requestdelete/${id}`)
     .then(res => {
-      console.log(res)
+      if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
       // sendEmail(res.body.booking)
     })
   }
 }
-
-// export function confirm (id) {
-//   return dispatch => {
-//     login('put', `/admin/confirm/${id}`)
-//     .then(res => {
-//       if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
-//     })
-//   }
-// }
