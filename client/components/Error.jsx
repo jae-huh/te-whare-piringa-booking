@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 function Error (props) {
   return (
-    <h1>{props.errorMessage}</h1>
+    <h1 className="error-container">{props.errorMessage}</h1>
   )
 }
 

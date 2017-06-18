@@ -9,11 +9,12 @@ import Callback from './Callback'
 import history from '../utils/history'
 import AdminPortal from './AdminPortal'
 import Registration from './Registration'
-import Logout from './Logout'
 import NewCalendar from './NewCalendar'
 import Schedular from './Schedular'
 import Navigation from './Navigation'
 import Profile from './Profile'
+import Details from './Details'
+import Home from './Home'
 
 import {checkLogin} from '../actions/auth'
 
@@ -36,6 +37,7 @@ class App extends React.Component {
           <Route path='/' render={props => (
             <Navigation fullName={this.props.user.fullName} />
           )}/>
+          <Route exact path='/' component={Home} />
           <Route path="/callback" component={Callback} />
           <Route path='/admin' component={AdminPortal} />
           <Route path='/calendar' component={NewCalendar} />
@@ -43,6 +45,7 @@ class App extends React.Component {
           <Route path="/book" component={Book} />
           <Route path='/register' component={Registration} />
           <Route path='/profile' component={Profile} />
+          <Route path='/details' component={Details} />
         </div>
       </BrowserRouter>
     )

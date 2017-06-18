@@ -7,9 +7,19 @@ import Details from './Details'
 class AdminPortal extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      showSettings: false
+    }
     this.handleConfirmClick = this.handleConfirmClick.bind(this)
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
     this.saveBookingToStore = this.saveBookingToStore.bind(this)
+    this.settingShow = this.settingShow.bind(this)
+  }
+
+  settingShow () {
+    this.state.showSettings
+    ? this.setState({showSettings: false})
+    : this.setState({showSettings: true})
   }
 
   handleConfirmClick (id) {
@@ -50,8 +60,9 @@ class AdminPortal extends React.Component {
             })}
           </div>
             <div className="col-md-4 text-center">
-              <Setting />
-              {this.props.booking && <Details />}
+              <button onClick={this.settingShow}>Settings</button>
+              {this.state.showSettings && <Setting />}
+              {this.props.booking.fullName && <Details />}
             </div>
           </div>
         </div>
@@ -65,7 +76,8 @@ class AdminPortal extends React.Component {
 function mapStateToProps (state) {
   return {
     bookings: state.bookings,
-    admin: state.user.admin
+    admin: state.user.admin,
+    booking: state.booking
   }
 }
 
