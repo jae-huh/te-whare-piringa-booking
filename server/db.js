@@ -122,10 +122,12 @@ function getUsers (id, cb) {
 function getDatabase (cb) {
   MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     if (err) return cb(err)
-    const db = database.db('admin') // To be changed before deployment to a database for production
-    db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
-      cb(err, db)
-    })
+    const db = database.db('admin')
+    cb(null, db)
+     // To be changed before deployment to a database for production
+    // db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
+    //   cb(err, db)
+    // })
   })
 }
 
