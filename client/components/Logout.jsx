@@ -4,13 +4,11 @@ import {logout} from '../actions/auth'
 
 function LogoutButton (props) {
   return (
-    <div>
-      <h4>
+      <li>
         <a style={{cursor: 'pointer'}} onClick={props.logout}>
           Log Out
         </a>
-      </h4>
-    </div>
+      </li>
   )
 }
 
