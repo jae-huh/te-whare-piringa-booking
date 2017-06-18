@@ -73,7 +73,6 @@ function confirmBooking (req, cb) {
 }
 
 function addUser (user, cb) {
-  user.admin = false
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('users').save(user, (err, result) => {
