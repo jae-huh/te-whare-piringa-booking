@@ -23,7 +23,12 @@ export function newBooking (data) {
 
 function sendEmail (data) {
   login('post', '/sendemail', data)
-  .then()
+  .then(f => f)
+}
+
+function sendConfirm (data) {
+  login('post', '/sendconfirm/', data)
+  .then(f => f)
 }
 
 function bookingPosted (booking) {
@@ -69,7 +74,14 @@ export function confirm (id) {
   return dispatch => {
     login('put', `/admin/confirm/${id}`)
     .then(res => {
-      if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
+      if (res.body.result) {
+        dispatch(receiveBookings(res.body.bookings))
+        res.body.bookings.find(item => {
+          if (item._id === id) {
+            dispatch(sendConfirm(item))
+          }
+        })
+      }
     })
   }
 }
