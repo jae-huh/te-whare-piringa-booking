@@ -10,9 +10,9 @@ const jwksRsa = require('jwks-rsa')
 router.use(bodyParser.json())
 
 router.get('/getbookings', (req, res) => {
-  db.getAllBookings((err, result) => {
+  db.anonGetAllBookings((err, bookings) => {
     if (err) return res.json({error: err})
-    res.json({result: result})
+    return res.json({bookings})
   })
 })
 
@@ -29,11 +29,6 @@ const checkJwt = jwt({
   audience: 'WCPEyjdLQW37sKZfBMFYNNisB6oyrGdD',
   issuer: 'https://luke-davison.au.auth0.com/',
   algorithms: ['RS256']
-})
-
-router.get('/testing', (req, res) => {
-  const decoded = jsonwt.decode(req.headers.token, {complete: true})
-  res.send(decoded.payload.sub)
 })
 
 function getUserIdFromToken (req) {
