@@ -1,13 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {confirm, deleteBooking} from '../actions/index'
+import {confirm, deleteBooking, selectBooking} from '../actions/index'
 import Setting from './Settings'
+import Details from './Details'
 
 class AdminPortal extends React.Component {
   constructor (props) {
     super(props)
     this.handleConfirmClick = this.handleConfirmClick.bind(this)
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
+    this.saveBookingToStore = this.saveBookingToStore.bind(this)
   }
 
   handleConfirmClick (id) {
@@ -16,6 +18,10 @@ class AdminPortal extends React.Component {
 
   handleDeleteClick (id) {
     this.props.deleteBooking(id)
+  }
+
+  saveBookingToStore (booking) {
+    this.props.selectBooking(booking)
   }
 
   render () {
@@ -37,7 +43,7 @@ class AdminPortal extends React.Component {
                   <div className="col-sm-4 buttons-of-unconfirmed text-center">
                     <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(item._id) }}></span>
                     <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(item._id) }}></span>
-                    <span className="glyphicon glyphicon-plus more"></span>
+                    <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
                   </div>
                 </div>
               )
@@ -45,6 +51,7 @@ class AdminPortal extends React.Component {
           </div>
             <div className="col-md-4 text-center">
               <Setting />
+              {this.props.booking && <Details />}
             </div>
           </div>
         </div>
@@ -65,7 +72,8 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     confirm: id => { dispatch(confirm(id)) },
-    deleteBooking: id => { dispatch(deleteBooking(id)) }
+    deleteBooking: id => { dispatch(deleteBooking(id)) },
+    selectBooking: booking => { dispatch(selectBooking(booking)) }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPortal)
