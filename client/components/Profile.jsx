@@ -1,35 +1,35 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import moment from 'moment'
 
-import {userBookings} from '../actions'
+import {selectBooking} from '../actions/index'
 
 class Profile extends React.Component {
-  constructor () {
-    super()
-    this.showUserBookings = this.showUserBookings.bind(this)
+  constructor (props) {
+    super(props)
+    this.saveBookingToStore = this.saveBookingToStore.bind(this)
   }
 
-  componentDidMount () {
-    this.props.userBookings(this.props.authId)
+  saveBookingToStore (booking) {
+    this.props.selectBooking(booking)
   }
 
   showUserBookings () {
-    return this.props.bookings.map((booking, i) => {
-      if (booking.authId) {
-        return (
-          <tr key={i}>
-            <td>{booking.startDate}</td>
-            <td>{booking.endDate}</td>
-            <td>{booking.confirmed ? 'Confirmed' : 'Waiting to be confirmed'}</td>
-          </tr>
-        )
-      }
+    return this.props.bookings.filter(booking => booking.authId).map((booking, i) => {
+      return (
+        <tr key={i}>
+          <td>{moment(booking.startDate).format('YYYY-MM-DD HH:mm')}</td>
+          <td>{moment(booking.endDate).format('YYYY-MM-DD HH:mm')}</td>
+          <td>{booking.confirmed ? 'Confirmed' : 'Waiting to be confirmed'}</td>
+          <td><button onClick={() => this.saveBookingToStore(booking)}>View</button></td>
+        </tr>
+      )
     })
   }
 
   render () {
     return (
-      <div>
+      <div className="profile-container">
         <h1>profile</h1>
         <div>
           <h2>Your Bookings</h2>
@@ -39,6 +39,7 @@ class Profile extends React.Component {
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Confirmation Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -53,9 +54,7 @@ class Profile extends React.Component {
 
 function mapDispatchToProps (dispatch) {
   return {
-    userBookings: () => {
-      dispatch(userBookings())
-    }
+    selectBooking: booking => { dispatch(selectBooking(booking)) }
   }
 }
 
