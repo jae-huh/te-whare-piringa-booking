@@ -26,6 +26,8 @@ class Registration extends React.Component {
       fullName: this.state.fullName.trim(),
       phoneNumber: this.state.phoneNumber.trim(),
       emailAddress: this.state.emailAddress.trim(),
+      authId: this.state.authId,
+      admin: false
     }
     this.props.submitRegistration(registrationInfo)
   }

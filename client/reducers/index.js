@@ -7,6 +7,7 @@ import booking from './booking'
 import display from './display'
 import bookings from './bookings'
 import unconfirmed from './unconfirmed'
+import adminSuccess from './adminsuccess'
 
 export default combineReducers({
   auth0,
@@ -15,5 +16,6 @@ export default combineReducers({
   booking,
   display,
   bookings,
-  unconfirmed
+  unconfirmed,
+  adminSuccess
 })

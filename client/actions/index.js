@@ -5,6 +5,7 @@ export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS'
 export const UNCONFIRMED = 'UNCONFIRMED'
 export const GETTING_DATA = 'GETTING_DATA'
 export const RECEIVED_DATA = 'RECEIVED_DATA'
+export const ADMINSUCCESS = 'ADMINSUCCESS'
 
 export function newBooking (data) {
   return dispatch => {
@@ -117,5 +118,21 @@ export function userBookings (authId) {
       dispatch(receiveBookings(res.body))
       dispatch(receivedData())
     })
+  }
+}
+
+export function makeAdmin (email) {
+  return dispatch => {
+    login('put', `/admin/makeadmin/${email}`)
+    .then(res => {
+      dispatch(adminSuccess(res))
+    })
+  }
+}
+
+function adminSuccess (res) {
+  return {
+    type: ADMINSUCCESS,
+    res
   }
 }
