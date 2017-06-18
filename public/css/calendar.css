@@ -61,13 +61,17 @@
   border-width: 0.05em;
 }
 
-.slot {
+.full-hour {
   border-width: 0 0.05em 0.05em 0;
+  border-style: dotted;
 }
 
-.hour {
-  border-width: 0 0.05em 0.05em 0.05em;
+.half-hour {
+  border-width: 0 0.05em 0.05em 0;
+  border-style: solid;
+  border-style:
 }
+
 
 .time {
   max-width: 10%;

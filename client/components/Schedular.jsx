@@ -60,7 +60,6 @@ class Schedular extends React.Component {
     }
   }
 
-
   render () {
     return (
       <div className='schedule'>
@@ -70,12 +69,12 @@ class Schedular extends React.Component {
           <p>End Time: <input value={moment(this.state.endTime).format('HH:mm')} /></p>
           <p><input type='submit' onClick={this.submitBooking} value='Book Now' /></p>
         </div>
-        <div className="container">
+        <div className='container'>
           <h3>Key:</h3>
-          <div className="row">
-            <div className="col-md-1">Availible<div className="availible"></div></div>
-            <div className="col-md-1">Reserved<div className="reserved-key"></div></div>
-            <div className="col-md-1">Booked<div className="booked-key"></div></div>
+          <div className='row'>
+            <div className='col-md-1'>Availible<div className='availible' /></div>
+            <div className='col-md-1'>Reserved<div className='reserved-key' /></div>
+            <div className='col-md-1'>Booked<div className='booked-key' /></div>
           </div>
         </div>
         <div className='schedule-navbar' />
@@ -108,9 +107,18 @@ class Schedular extends React.Component {
     const hourArray = []
     for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 2; j++) {
-        const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
-        const divContents = moment(selectedDate).format('HH:mm')
-        hourArray.push(<div className={'hour'}>{divContents}</div>)
+        let selectedDate
+        let divContents
+        let classNames = 'hour'
+        if (j === 1) {
+          divContents = ''
+          classNames += ' half-hour'
+        } else {
+          selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
+          classNames += ' full-hour'
+          divContents = moment(selectedDate).format('HH:mm')
+        }
+        hourArray.push(<div className={classNames}>{divContents}</div>)
       }
     }
     return hourArray
@@ -122,7 +130,12 @@ class Schedular extends React.Component {
       for (let j = 0; j < 2; j++) {
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         const divId = 'slot' + moment(selectedDate).format('YYYY-MM-DD-HH-mm')
-        let classNames = ''
+        let classNames = 'slot'
+        if (j === 1) {
+          classNames += ' half-hour'
+        } else {
+          classNames += ' full-hour'
+        }
         if (selectedDate >= this.state.startTime && selectedDate < this.state.endTime) {
           classNames += ' selected'
         }
@@ -136,7 +149,7 @@ class Schedular extends React.Component {
         })) {
           classNames += ' confirmed'
         }
-        dayArray.push(<div id={divId} className={'slot' + classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
+        dayArray.push(<div id={divId} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter} />)
       }
     }
     return dayArray
