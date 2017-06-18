@@ -28,11 +28,19 @@
   transition: all .35s ease-in
 }
 
+.currentDay {
+  background-color: #dcecfb;
+}
+
 .last-month:hover,
 .calendar-inactive:hover {
   background-color: #ffffff;
   color: black;
   transition: none;
+}
+
+.last-month, .next-month {
+  color: #afacac;
 }
 
 
