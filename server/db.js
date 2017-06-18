@@ -43,7 +43,10 @@ function filterOutDetails (booking) {
 }
 
 function checkAdminStatus (authId, cb) {
-  cb(null, true) // to be replaced with actual functionality
+  getUserDetails(authId, (err, user) => {
+    if (err) return cb(err)
+    cb(null, user.admin)
+  })
 }
 
 function userAddBooking (booking, authId, cb) {

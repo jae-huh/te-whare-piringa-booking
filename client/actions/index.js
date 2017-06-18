@@ -46,34 +46,10 @@ export const receiveBookings = bookings => {
   }
 }
 
-function errorHandler (error) {
+export function errorHandler (error) {
   return {
     type: ERROR,
     error
-<<<<<<< HEAD
-=======
-
-  }
-}
-export const fetchBookings = () => {
-  return dispatch => {
-    dispatch(gettingData())
-    getAllBookings(res => {
-      let arr = []
-      for (let i = 0; i < res.length; i++) {
-        const obj = {
-          startDate: new Date(res[i].anonBooking.startDate),
-          endDate: new Date(res[i].anonBooking.endDate),
-          confirmed: res[i].anonBooking.confirmed
-
-        }
-        arr.push(obj)
-      }
-      if (arr.length < 1) return dispatch(errorHandler('No Bookings'))
-      dispatch(receiveBookings(arr))
-      dispatch(receivedData())
-    })
->>>>>>> 394d0bfeebea8585f872e72368a8c4a520b3ea06
   }
 }
 
