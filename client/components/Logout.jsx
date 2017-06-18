@@ -4,13 +4,9 @@ import {logout} from '../actions/auth'
 
 function LogoutButton (props) {
   return (
-    <div>
-      <h4>
-        <a style={{cursor: 'pointer'}} onClick={props.logout}>
-          Log Out
-        </a>
-      </h4>
-    </div>
+    <a className="nav-links" style={{cursor: 'pointer'}} onClick={props.logout}>
+      Log Out
+    </a>
   )
 }
 
