@@ -19,8 +19,8 @@ const Navigation = props => {
         <li><Link to="/calendar">Bookings</Link></li>
       </ul>
       <ul className="nav navbar-nav navbar-right">
-        <li>{!props.fullName && <Login />}</li>
-        <li>{props.fullName && <Logout />}</li>
+        {!props.fullName && <Login />}
+        {props.fullName && <Logout />}
         <li>{props.admin &&
         <Link to="/admin">Admin</Link>
           }

@@ -55,6 +55,10 @@
   background-color: olivedrab;
 }
 
+.currentDay {
+  background-color: lightskyblue;
+}
+
 .confirmed {
   background-color: red;
 }

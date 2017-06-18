@@ -1,20 +1,3 @@
-// const checkScopes = jwtAuthz(['read:messages']);
-
-// app.get('/api/public', function(req, res) {
-//   res.json({
-//     message: "Hello from a public endpoint! You don't need to be authenticated to see this."
-//   });
-// });
-
-// app.get('/api/private', checkJwt, checkScopes, function(req, res) {
-//   res.json({
-//     message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
-//   });
-// });
-
-// app.listen(3001);
-// console.log('Listening on http://localhost:3001');
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const db = require('./db')
@@ -27,7 +10,7 @@ const jwksRsa = require('jwks-rsa')
 router.use(bodyParser.json())
 
 router.get('/getbookings', (req, res) => {
-  db.getAllBookings(req, (err, result) => {
+  db.getAllBookings((err, result) => {
     if (err) return res.json({error: err})
     res.json({result: result})
   })
@@ -69,9 +52,18 @@ router.use((err, req, res, next) => {
 
 router.get('/checklogin', (req, res) => {
   const authId = getUserIdFromToken(req)
-  db.getUserDetails(authId, (err, userDetails) => {
+  return db.getUserDetails(authId, (err, user) => {
     if (err) return res.json({error: err})
-    res.json({user: userDetails})
+    if (!user) {
+      return db.anonGetAllBookings((err, bookings) => {
+        if (err) return res.json({error: err})
+        return res.json({user, bookings})
+      })
+    }
+    return db.userGetAllBookings(authId, (err, bookings) => {
+      if (err) return res.json({error: err})
+      return res.json({user, bookings})
+    })
   })
 })
 
@@ -88,9 +80,9 @@ router.post('/user/adduser', (req, res) => {
   })
 })
 
-router.get('/user/getbookings/:authId', (req, res) => {
+router.get('/user/getbookings', (req, res) => {
   const authId = getUserIdFromToken(req)
-  db.adminGetAllBookings(req, (err, result) => {
+  db.adminGetAllBookings((err, result) => {
     if (err) return res.json({error: err})
     const output = result.map(item => {
       if (item.authId === authId) {
@@ -106,30 +98,23 @@ router.get('/user/getbookings/:authId', (req, res) => {
 })
 
 router.get('/admin/getbookings', (req, res) => {
-  db.adminGetAllBookings(req, (err, result) => {
+  db.adminGetAllBookings((err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
 })
 
-router.get('/admin/getunconfirmed', (req, res) => {
-  db.adminGetAllBookings(req, (err, result) => {
-    if (err) return res.json({error: err})
-    db.filterUnconfirmed(result, filtered => {
-      res.json(filtered)
-    })
-  })
-})
-
 router.post('/user/addbooking', (req, res) => {
-  db.userAddBooking(req.body, (err, result) => {
+  const authId = getUserIdFromToken(req)
+  db.userAddBooking(req.body, authId, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
 })
 
 router.put('/admin/confirm/:id', (req, res) => {
-  db.confirmBooking(req, (err, result) => {
+  const authId = getUserIdFromToken(req)
+  db.confirmBooking(req, authId, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
@@ -144,7 +129,8 @@ router.put('/admin/makeadmin/:email', (req, res) => {
 })
 
 router.delete('/admin/delete/:id', (req, res) => {
-  db.deleteBooking(req.params.id, (err, result) => {
+  const authId = getUserIdFromToken(req)
+  db.deleteBooking(req.params.id, authId, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })

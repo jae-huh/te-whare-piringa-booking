@@ -4,7 +4,7 @@ const initialState = {}
 const booking = (state = initialState, action) => {
   switch (action.type) {
     case BOOKINGPOSTED:
-      return action.data
+      return action.booking
     default:
       return state
   }

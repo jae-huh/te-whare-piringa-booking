@@ -1,14 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getUnconfirmed, confirm, deleteBooking} from '../actions/index'
+import {confirm, deleteBooking} from '../actions/index'
 import Setting from './Settings'
 
 class AdminPortal extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      unconfirmed: []
-    }
     this.handleConfirmClick = this.handleConfirmClick.bind(this)
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
   }
@@ -30,7 +27,7 @@ class AdminPortal extends React.Component {
         <div className="row">
           <div className="col-md-8 unconfirmed-list">
             <h2>Unconfirmed Bookings</h2>
-            {this.props.unconfirmed.map(item => {
+            {this.props.bookings.filter(booking => !booking.confirmed).map(item => {
               return (
                 <div key={item._id} className="row">
                   <div className="col-sm-8 list-of-unconfirmed">
@@ -60,14 +57,13 @@ class AdminPortal extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    unconfirmed: state.unconfirmed,
+    bookings: state.bookings,
     admin: state.user.admin
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    getUnconfirmed: dispatch(getUnconfirmed()),
     confirm: id => { dispatch(confirm(id)) },
     deleteBooking: id => { dispatch(deleteBooking(id)) }
   }
