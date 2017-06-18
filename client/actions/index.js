@@ -113,7 +113,6 @@ export function requestDelete (id) {
     login('put', `/user/requestdelete/${id}`)
     .then(res => {
       if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
-      sendEmail(res.body.booking)
     })
   }
 }
