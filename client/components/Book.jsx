@@ -63,9 +63,10 @@ class Book extends React.Component {
       endDate: this.state.dateEnd,
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
-      confirmed: false,
-      dateAdded: new Date(),
-      deleteRequested: false
+      // these details will be added on the backend - leaving them here for reference
+      // confirmed: false,
+      // dateAdded: new Date(),
+      // deleteRequested: false
     }
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
