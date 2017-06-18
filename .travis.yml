@@ -10,3 +10,4 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: 04af2270-3e6e-4131-ab9d-446486696bdd
+  on: staging
