@@ -110,3 +110,10 @@ function adminSuccess (res) {
     res
   }
 }
+
+export function selectBooking (booking) {
+  return {
+    type: BOOKINGPOSTED,
+    booking
+  }
+}
