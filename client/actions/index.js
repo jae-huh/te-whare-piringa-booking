@@ -1,4 +1,4 @@
-import {login, getAllBookings} from '../api'
+import {login} from '../api'
 
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
 export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS'
@@ -110,8 +110,19 @@ export function selectBooking (booking) {
 export function requestDelete (id) {
   return dispatch => {
     dispatch(gettingData())
-    login('put', `/user/requestdelete${id}`)
-    .then(f => f)
-    // add email dispatch here
+    login('put', `/user/requestdelete/${id}`)
+    .then(res => {
+      console.log(res)
+      // sendEmail(res.body.booking)
+    })
   }
 }
+
+// export function confirm (id) {
+//   return dispatch => {
+//     login('put', `/admin/confirm/${id}`)
+//     .then(res => {
+//       if (res.body.result) return dispatch(receiveBookings(res.body.bookings))
+//     })
+//   }
+// }

@@ -115,7 +115,7 @@ router.put('/admin/confirm/:id', (req, res) => {
   })
 })
 
-router.put('user/requestdelete/"id', (req, res)  => {
+router.put('user/requestdelete/:id', (req, res) => {
   const authId = getUserIdFromToken(req)
   db.requestDelete(req, authId, (err, result) => {
     if (err) return res.json({error: err})

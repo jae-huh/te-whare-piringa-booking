@@ -19,7 +19,7 @@ class Book extends React.Component {
       dateEnd: this.props.display.dateEnd,
       purpose: null,
       guestNumber: null,
-      deletedRequested: false
+      deleteRequested: false
     }
 
     this.handleChange = this.handleChange.bind(this)
