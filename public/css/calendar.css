@@ -125,7 +125,7 @@
   border-width: 2px;
   border-style: solid;
 }
-.unconfirmed-list {
+.unconfirmed-list, .delete-list {
   width: 350px;
   height: 450px;
   overflow: scroll;
