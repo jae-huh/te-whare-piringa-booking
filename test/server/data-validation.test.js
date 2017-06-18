@@ -200,3 +200,57 @@ test('error message returned for 30 minute booking', t => {
   const actual = validate.validateBookingDetailsBasic(booking)
   t.is(actual, expected, 'function should return a string')
 })
+
+test('check user validation returns "ok" message for a valid user registration', t => {
+  const user = Object.create(exampleUser)
+  const expected = 'ok'
+  const actual = validate.validateUserDetailsBasic(user)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('check user validation returns a string', t => {
+  const user = {}
+  const expected = 'string'
+  const actual = typeof validate.validateUserDetailsBasic(user)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned if user did not enter a full name', t => {
+  const user = Object.create(exampleUser)
+  user.fullName = ''
+  const expected = 'Please enter your full name'
+  const actual = validate.validateUserDetailsBasic(user)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned if user did not enter an email address', t => {
+  const user = Object.create(exampleUser)
+  user.emailAddress = ''
+  const expected = 'Please enter a contact email address'
+  const actual = validate.validateUserDetailsBasic(user)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned if user did not enter a phone number', t => {
+  const user = Object.create(exampleUser)
+  user.phoneNumber = ''
+  const expected = 'Please enter a contact phone number'
+  const actual = validate.validateUserDetailsBasic(user)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned if user did not enter a valid email address', t => {
+  const user = Object.create(exampleUser)
+  user.emailAddress = 'asdf'
+  const expected = 'Please enter a valid email address'
+  const actual = validate.validateUserDetailsBasic(user)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned if user did not enter a valid phone number', t => {
+  const user = Object.create(exampleUser)
+  user.phoneNumber = '98y3'
+  const expected = 'Please enter a valid phone number'
+  const actual = validate.validateUserDetailsBasic(user)
+  t.is(actual, expected, 'function should return a string')
+})
