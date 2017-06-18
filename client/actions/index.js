@@ -126,6 +126,7 @@ export function userBookings (authId) {
 
 export function makeAdmin (email) {
   return dispatch => {
+    dispatch(gettingData())
     login('put', `/admin/makeadmin/${email}`)
     .then(res => {
       dispatch(adminSuccess(res))
