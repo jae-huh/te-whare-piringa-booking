@@ -43,7 +43,7 @@ class Settings extends React.Component {
   }
 }
 function mapStatetoProps (state) {
-  return state.adminSuccess
+  return {adminSuccess: state.adminSuccess}
 }
 
 export default connect(mapStatetoProps)(Settings)

@@ -36,6 +36,9 @@ class Calendar extends React.Component {
           <div className='calendar-previous'><a onClick={this.previousMonth} >Previous Month </a> </div>
           <div className='calendar-next'><a onClick={this.nextMonth} >Next Month </a> </div>
         </div>
+        <div className='calendar-title'>
+          <h2>{moment(this.props.date).format('MMMM YYYY')}</h2>
+        </div>
         <div className='calendar-header-container'>
           <div className='calendar-header'>Sunday</div>
           <div className='calendar-header'>Monday</div>
@@ -57,25 +60,32 @@ class Calendar extends React.Component {
     const lastDate = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()
     const lastDay = new Date(d.getFullYear(), d.getMonth(), lastDate).getDay()
     const dateArray = []
+    let today = new Date()
+    today = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+
     let i = 0
     while (i < firstDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth(), 1 - firstDay + i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
     i = 1
     while (i <= lastDate) {
       const thisDate = new Date(d.getFullYear(), d.getMonth(), i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div id={'day' + thisDateFormatted} className='calendar-date this-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      let classNames = 'calendar-date this-month'
+      if (thisDate.getTime() === today.getTime()) {
+        classNames += ' currentDay'
+      }
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
     i = 1
     while (i < 7 - lastDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth() + 1, i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div id={'day' + thisDateFormatted} className='calendar-date next-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date next-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
     return dateArray
