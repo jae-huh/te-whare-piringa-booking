@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import moment from 'moment'
 
 //bare min component to avoid err
 
@@ -7,22 +8,30 @@ function Details (props) {
 
   return (
     <div>
-      <p>Name: {props.booking.fullName}</p>
-      <p>Email: {props.booking.emailAddress}</p>
-      <p>Phone number: {props.booking.phoneNumber}</p>
-      <p>Purpose: {props.booking.purpose}</p>
-      <p>Status: {checkStatus(props.booking.confirmed)}</p>
-      <p>Date request made: {props.booking.dateAdded}</p>
+      <table className='detailsTable'>
+        <tr>
+          <td><b>Name</b></td>
+          <td>{props.booking.fullName}</td>
+        </tr>
+        <tr>
+          <td><b>Email</b></td>
+          <td>{props.booking.emailAddress}</td>
+        </tr>
+        <tr>
+          <td><b>Phone</b></td>
+          <td>{props.booking.phoneNumber}</td>
+        </tr>
+        <tr>
+          <td><b>Purpose</b></td>
+          <td>{props.booking.purpose}</td>
+        </tr>
+        <tr>
+          <td><b>Requested on</b></td>
+          <td>{moment(props.booking.dateAdded).format('YYYY-MM-DD HH:mm')}</td>
+        </tr>
+      </table>
     </div>
   )
-}
-
-function checkStatus (status) {
-  if (status) {
-    return <p>Approved</p>
-  } else {
-    return <p>Awaiting review</p>
-  }
 }
 
 function mapStateToProps (state) {

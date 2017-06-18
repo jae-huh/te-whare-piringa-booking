@@ -106,3 +106,12 @@ export function selectBooking (booking) {
     booking
   }
 }
+
+export function requestDelete (id) {
+  return dispatch => {
+    dispatch(gettingData())
+    login('put', `/user/requestdelete/${id}`)
+    .then(f => f)
+    // add email dispatch here
+  }
+}

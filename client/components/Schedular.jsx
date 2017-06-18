@@ -153,7 +153,7 @@ class Schedular extends React.Component {
         const toDisplay = this.props.bookings.find(booking => {
           return booking.startDate.getTime() === selectedDate.getTime()
         })
-        if (toDisplay) {
+        if (toDisplay && toDisplay.fullName) {
           ptag = toDisplay.fullName + ' ' + toDisplay.purpose
         }
         dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter}>{<div>{ptag}</div>}</div>)
