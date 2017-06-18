@@ -100,12 +100,6 @@
   justify-content: space-around;
 }
 
-#map {
-  width: 350px;
-  height: 300px;
-  background-color: grey;
-}
-
 .contact-information {
   margin: 10px;
 }
@@ -113,6 +107,7 @@
 .contact-information > h2 {
   font-size: 1.7em;
   border-bottom: 4px solid #04BA3B;
+  padding: 5px 10px;
 }
 
 /*so the components are visible without nav bar hiding the top part*/
