@@ -2,7 +2,6 @@ import React from 'react'
 import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 import {newBooking} from '../actions/index'
 
@@ -71,6 +70,7 @@ class Book extends React.Component {
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
   }
+
   render () {
     return (
       <div className='book-container'>
@@ -104,7 +104,6 @@ class Book extends React.Component {
             <p>Please log in or register</p>
           </ModalDialog>
         </ModalContainer>
-      }
       }
       </div>
     )

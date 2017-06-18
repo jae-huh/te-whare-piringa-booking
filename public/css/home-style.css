@@ -1,10 +1,8 @@
 /*naviation*/
 .navbar {
-  /*background-color: rgb(127,63,150);*/
   background-color: #07839b;
   box-shadow: 0px -2px 8px 4px rgba(0,0,0,0.5);
   height: 49px;
-  /*position: relative;*/
 }
 
 .nav-main-link {
@@ -67,11 +65,36 @@
   width: 60%;
   padding: 0 50px;
   background-color: #fff;
-  box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.75);
+  box-shadow: 0 0 17px 1px rgba(0,0,0,0.75);
 }
 
 .section-container {
   padding-top: 50px;
+}
+
+/*gallery*/
+.gallery {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.gallery-image-container {
+  width: 300px;
+  height: 230px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.gallery-single-image {
+  width: 100%;
+}
+
+.gallery-logo {
+  height: auto;
 }
 
 /*about us*/
