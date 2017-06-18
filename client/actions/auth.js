@@ -1,4 +1,4 @@
-import {login} from '../api'
+import {login, getAllBookings} from '../api'
 import {receiveBookings} from './index'
 
 const localStorage = global.window.localStorage
@@ -6,7 +6,8 @@ const localStorage = global.window.localStorage
 export function checkLogin () {
   return dispatch => {
     if (!localStorage.getItem('id_token')) {
-      return dispatch(noUserExists())
+      dispatch(noUserExists())
+      login('get', '/getbookings')
     }
     dispatch(checkingLogin())
     return login('get', '/checklogin')
