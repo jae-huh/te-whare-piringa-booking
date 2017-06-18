@@ -4,7 +4,7 @@
   background-color: #07839b;
   box-shadow: 0px -2px 8px 4px rgba(0,0,0,0.5);
   height: 49px;
-  position: relative;
+  /*position: relative;*/
 }
 
 .nav-main-link {
@@ -116,6 +116,6 @@
 }
 
 /*so the components are visible without nav bar hiding the top part*/
-/*.admin-portal .book-container .calendar-container .callback-container .error-container .calendar .profile-container .login-page .schedule .settings-container {
-  margin-top: 200px;
-}*/
+.admin-portal, .book-container, .calendar-container, .callback-container, .error-container, .calendar, .profile-container, .login-page, .schedule, .settings-container {
+  margin-top: 50px;
+}
