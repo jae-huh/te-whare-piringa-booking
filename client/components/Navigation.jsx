@@ -18,7 +18,7 @@ const Navigation = props => {
             <li className="nav-menu"><a className="nav-links" href="/#gallery">Gallery</a></li>
             <li className="nav-menu"><a className="nav-links" href="/#about">About</a></li>
             <li className="nav-menu"><a className="nav-links" href="/#contact">Contact</a></li>
-            <li className="nav-menu"><Link className="nav-links" to="/profile">profile</Link></li>
+            <li className="nav-menu"><Link className="nav-links" to="/profile">Profile</Link></li>
             <li className="nav-menu"><Link className="nav-links" to="/admin">Admin</Link></li>
             <li className="nav-menu">{!props.fullName && <Login />}</li>
             <li className="nav-menu">{props.fullName && <Logout />}</li>
