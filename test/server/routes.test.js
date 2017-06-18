@@ -24,12 +24,3 @@ test('database responds with data', t => {
 test.beforeEach(t => {
   t.context.request = request(app)
 })
-// test.cb("app.get('/api/v1/getbookings')", t => {
-//   t.context.request
-//   .get('/api/v1/getbookings')
-//   .end((err, res) => {
-//     if (err) return t.fail()
-//     t.is(typeof res.body, 'object', 'should be equal')
-//     t.end()
-//   })
-// })
