@@ -1,21 +1,23 @@
 import {login} from '../api'
+import {receiveBookings} from './index'
 
 const localStorage = global.window.localStorage
 
 export function checkLogin () {
   return dispatch => {
-    if (localStorage.getItem('id_token')) {
-      dispatch(checkingLogin())
-      login('get', '/checklogin')
-        .then(res => {
-          if (!res.body.user) {
-            res.body.error && console.log(res.body.error)
-            return dispatch(noUserExists())
-          }
-          return dispatch(loggedIn(res.body.user))
-        })
+    if (!localStorage.getItem('id_token')) {
+      return dispatch(noUserExists())
     }
-    return dispatch(noUserExists())
+    dispatch(checkingLogin())
+    return login('get', '/checklogin')
+      .then(res => {
+        if (!res.body.user) {
+          res.body.error && console.log(res.body.error)
+          return dispatch(noUserExists())
+        }
+        dispatch(loggedIn(res.body.user))
+        return dispatch(receiveBookings(res.body.bookings))
+      })
   }
 }
 
@@ -32,10 +34,11 @@ function noUserExists (error) {
   }
 }
 
-function loggedIn (user) {
+function loggedIn (user, bookings) {
   return {
     type: 'LOGGED_IN',
-    user
+    user,
+    bookings
   }
 }
 
