@@ -1,11 +1,13 @@
 import React from 'react'
 
+import Maps from './Maps'
+
 const Contact = () => {
   return (
     <section className='contact-container section-container' id='contact'>
       <h1 className='home-headings'>Contact Us</h1>
       <div className='contact'>
-        <div id="map"></div>
+        <Maps />
         <div className="contact-information">
           <h2>Address</h2>
           <p>29 Fenchurch St, Glen Innes, Auckland 1072</p>

@@ -4,9 +4,9 @@ import Auth from '../auth'
 function LoginButton (props) {
   const auth = new Auth()
   return (
-    <a className="nav-links" style={{cursor: 'pointer'}} onClick={auth.login}>
+    <li className="navigation-list-item" onClick={auth.login}>
       Log In
-    </a>
+    </li>
   )
 }
 
