@@ -37,7 +37,6 @@ class App extends React.Component {
           <Route path='/' render={props => (
             <Navigation fullName={this.props.user.fullName} />
           )}/>
-          {/*<Error />*/}
           <Route exact path='/' component={Home} />
           <Route path="/callback" component={Callback} />
           <Route path='/admin' component={AdminPortal} />
