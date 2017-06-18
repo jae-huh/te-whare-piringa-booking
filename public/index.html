@@ -1,11 +1,20 @@
 <!DOCTYPE html>
+<html>
 <head>
-  <title>Captions</title>
-  <link rel="stylesheet" href="main.css">
+  <title>Te Whare Piringa Hall Bookings</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/datepicker.css">
+  <link rel="stylesheet" href="/css/calendar.css">
+  <link rel="stylesheet" href="/css/home-style.css">
 </head>
-<body>
-  <div id="app"></div>
-
+<body data-spy="scroll" data-target=".navbar">
+  <div id="app" class="conatiner"></div>
   <script src="bundle.js"></script>
+  <script src="scripts/google-maps.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQ9Ni14O9xt1KAJ6d4H6M_eRWIyL2liCY&callback=initMap">
+  </script>
 </body>
 </html>

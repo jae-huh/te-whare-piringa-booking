@@ -1,0 +1,163 @@
+/*Calendar styling*/
+
+.calendar-date-container, .calendar-header-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.calendar-date, .calendar-header {
+  border-style: solid;
+  width: 13%;
+  border-color: grey;
+  border-width: thin;
+}
+
+.calendar-header {
+  text-align: center;
+}
+
+.calendar-date {
+  height: 14vh;
+  padding: 0.5em;
+}
+
+.calendar-date:hover {
+  background-color: #0066CC;
+  color: #ffffff;
+  transition: all .35s ease-in
+}
+
+
+/*Scheduler styling*/
+.schedule-body {
+    margin: 25px;
+  border: 3px solid #07839B!important;
+}
+.schedule-header-container, .schedule-columns-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.schedule-column-container {
+
+  width: 30%;
+}
+.schedule-hours-container{
+  width: 10%;
+}
+
+.schedule-header, .slot, .hour {
+  border-color: rgba(150,150,150,0.5);
+  border-style: solid;
+  width: 100%;
+  height: 1.3em;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+
+.schedule-header {
+  border-width: 0.05em 0.05em 0.05em 0;
+}
+
+.schedule-header.time {
+  border-width: 0.05em;
+}
+
+.full-hour {
+  border-width: 0 0.05em 0.05em 0;
+  border-style: dotted;
+}
+
+.half-hour {
+  border-width: 0 0.05em 0.05em 0;
+  border-style: solid;
+  border-style:
+}
+
+
+.time {
+  max-width: 10%;
+}
+
+.selected {
+  background-color: pink;
+}
+
+.reserved {
+  background-color: olivedrab;
+  border: none!important;
+}
+
+.confirmed {
+  background-color: red;
+  border: none!important;
+}
+
+.datepick {
+  max-width: 20%;
+}
+
+.reserved-key {
+  background-color: olivedrab;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.booked-key {
+  background-color: red;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.availible {
+  height: 25px;
+  width: 25px;
+  background-color: white;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+}
+.unconfirmed-list, .delete-list {
+  width: 350px;
+  height: 450px;
+  overflow: scroll;
+
+}
+
+.buttons-of-unconfirmed :hover {
+  font-size: 25px;
+}
+
+.remove {
+  color: red;
+  font-size: 18px;
+  margin: 5px;
+}
+
+.confirm {
+  color: green;
+  font-size: 18px;
+  margin: 5px
+}
+
+.more{
+  color: blue;
+  font-size: 18px;
+  margin: 5px
+}
+.list-of-unconfirmed {
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+.calendar-container {
+  margin: 25px;
+  border: 3px solid #07839B!important;
+}

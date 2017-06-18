@@ -1,7 +1,19 @@
-var path = require('path')
-var express = require('express')
-var server = express()
+const express = require('express')
+const router = require('./api-router')
+const path = require('path')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 
-server.use(express.static(path.join(__dirname, '../public')))
+const app = express()
 
-module.exports = server
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static(path.join(__dirname, '../public')))
+app.use('/api/v1/', router)
+
+app.use(cors())
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+})
+
+module.exports = app
