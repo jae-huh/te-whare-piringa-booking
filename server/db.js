@@ -53,7 +53,7 @@ function checkAdminStatus (authId, cb) {
 }
 
 function userAddBooking (booking, authId, cb) {
-  const dataCheck = validate.validateBookingDetailsBasic(booking)
+  const dataCheck = validate.validateBookingDetails(booking)
   if (dataCheck !== 'ok') return (dataCheck)
   booking.confirmed = false
   booking.dateAdded = new Date()
@@ -97,7 +97,7 @@ function requestDelete (req, authId, cb) {
 }
 
 function addUser (user, cb) {
-  const dataCheck = validate.validateUserDetailsBasic(user)
+  const dataCheck = validate.validateUserDetails(user)
   if (dataCheck !== 'ok') return (dataCheck)
   user.dateAdded = new Date()
   getDatabase((err, db) => {

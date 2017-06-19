@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-function validateBookingDetailsBasic (booking) {
+function validateBookingDetails (booking) {
   if (!booking) return 'No booking details found'
   if (!booking.fullName) return 'Please enter the contact person\'s name'
   if (!booking.emailAddress) return 'Please enter a contact email address'
@@ -22,7 +22,7 @@ function validateBookingDetailsBasic (booking) {
   return 'ok'
 }
 
-function validateUserDetailsBasic (user) {
+function validateUserDetails (user) {
   if (!user) return 'No booking details found'
   if (!user.fullName) return 'Please enter your full name'
   if (!user.emailAddress) return 'Please enter a contact email address'
@@ -37,7 +37,21 @@ function checkEmailFormat (email) {
   return pattern.test(email)
 }
 
+function checkBookingForOverlap (booking, bookings) {
+  const startDate1 = (new Date(booking.startDate))
+  const endDate1 = (new Date(booking.endDate)).getTime()
+  if (bookings.find(compareHours)) return 'Your request overlaps with another booking'
+  return 'ok'
+
+  function compareHours (existingBooking) {
+    const startDate2 = (new Date(existingBooking.startDate)).getTime()
+    const endDate2 = (new Date(existingBooking.endDate)).getTime()
+    return (endDate1 > startDate2 && (startDate1 < startDate2 || endDate1 <= endDate2)) || (startDate1 < endDate2 && (endDate1 > endDate2 || startDate1 >= startDate2))
+  }
+}
+
 module.exports = {
-  validateBookingDetailsBasic,
-  validateUserDetailsBasic
+  validateBookingDetails,
+  validateUserDetails,
+  checkBookingForOverlap
 }
