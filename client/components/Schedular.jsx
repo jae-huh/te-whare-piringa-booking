@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
+import NewBookingForm from './NewBookingForm'
 import {makeNewBooking} from '../actions/calendar'
 import {compareSlotSelection, takenTimesIntoIntervals, intervals} from '../utils/overlap'
 
@@ -69,12 +70,7 @@ class Schedular extends React.Component {
   render () {
     return (
       <div className='schedule'>
-        <div className='new-booking-form'>
-          <p>Date: <input value={moment(this.state.startTime).format('DD/MM/YYYY')} /></p>
-          <p>Start Time: <input value={moment(this.state.startTime).format('HH:mm')} /></p>
-          <p>End Time: <input value={moment(this.state.endTime).format('HH:mm')} /></p>
-          <p><input type='submit' onClick={this.submitBooking} value='Book Now' /></p>
-        </div>
+        {this.props.user.authId && <NewBookingForm startTime={this.state.startTime} endTime={this.state.endTime} />}
         <div className='container'>
           <h3>Key:</h3>
           <div className='row'>
@@ -181,7 +177,8 @@ class Schedular extends React.Component {
 function mapStateToProps (state) {
   return {
     date: state.display.date,
-    bookings: state.bookings
+    bookings: state.bookings,
+    user: state.user
   }
 }
 

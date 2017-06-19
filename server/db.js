@@ -54,11 +54,11 @@ function checkAdminStatus (authId, cb) {
 
 function userAddBooking (booking, authId, cb) {
   let dataCheck = validate.validateBookingDetails(booking)
-  if (dataCheck !== 'ok') return cb(dataCheck)
+  if (dataCheck !== 'ok') return cb({validationError: dataCheck})
   getAllBookings((err, bookings) => {
     if (err) return cb(err)
     dataCheck = validate.checkBookingForOverlap(booking, bookings)
-    if (dataCheck !== 'ok') return dataCheck
+    if (dataCheck !== 'ok') return cb({validationError: dataCheck})
     booking.confirmed = false
     booking.dateAdded = new Date()
     booking.deleteRequested = false
@@ -103,7 +103,7 @@ function requestDelete (req, authId, cb) {
 
 function addUser (user, cb) {
   const dataCheck = validate.validateUserDetails(user)
-  if (dataCheck !== 'ok') return cb(dataCheck)
+  if (dataCheck !== 'ok') return cb({validationError: dataCheck})
   user.dateAdded = new Date()
   getDatabase((err, db) => {
     if (err) return cb(err)
