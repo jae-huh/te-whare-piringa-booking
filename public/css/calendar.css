@@ -37,9 +37,14 @@
   background-color: #dcecfb;
 }
 
+.last-month,
+.calendar-inactive {
+  background-color: #eeeeee;
+}
+
 .last-month:hover,
 .calendar-inactive:hover {
-  background-color: #ffffff;
+  background-color: #eeeeee;
   transition: none;
   cursor: default;
 }
@@ -49,7 +54,7 @@
 }
 
 .last-month:hover {
-    color: #afacac;
+  color: #afacac;
 }
 
 .last-month, .next-month {
