@@ -1,6 +1,8 @@
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient
 
+const validate = require('./validation')
+
 function anonGetAllBookings (cb) {
   getAllBookings((err, bookings) => {
     bookings = bookings.map(filterOutDetails)
@@ -51,6 +53,11 @@ function checkAdminStatus (authId, cb) {
 }
 
 function userAddBooking (booking, authId, cb) {
+  const dataCheck = validate.validateBookingDetailsBasic(booking)
+  if (dataCheck !== 'ok') return (dataCheck)
+  booking.confirmed = false
+  booking.dateAdded = new Date()
+  booking.deleteRequested = false
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').save(booking, (err, result) => {
@@ -90,6 +97,9 @@ function requestDelete (req, authId, cb) {
 }
 
 function addUser (user, cb) {
+  const dataCheck = validate.validateUserDetailsBasic(user)
+  if (dataCheck !== 'ok') return (dataCheck)
+  user.dateAdded = new Date()
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('users').save(user, (err, result) => {
@@ -112,10 +122,8 @@ function getUsers (id, cb) {
 function getDatabase (cb) {
   MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     if (err) return cb(err)
-    const db = database.db('admin') // To be changed before deployment to a database for production
-    db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
-      cb(err, db)
-    })
+    const db = database.db('admin')
+    cb(null, db)
   })
 }
 
@@ -150,16 +158,6 @@ function makeUserAdmin (email, cb) {
       if (err) return cb(err)
       return cb(null, result)
     })
-  })
-}
-
-function validate (obj) {
-  Object.values.map(item => {
-    if (item) {
-      return true
-    } else {
-      return false
-    }
   })
 }
 

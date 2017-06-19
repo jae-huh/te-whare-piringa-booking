@@ -1,9 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 function Error (props) {
   return (
-    <h1 className="error-container">{props.errorMessage}</h1>
+    <ModalContainer >
+        <ModalDialog >
+          <h1>{props.errorMessage}</h1>
+        </ModalDialog>
+    </ModalContainer>
   )
 }
 

@@ -25,11 +25,35 @@
 .calendar-date:hover {
   background-color: #0066CC;
   color: #ffffff;
-  transition: all .35s ease-in
+  transition: all .35s ease-in;
+  cursor: pointer;
 }
 
 .calendar-booked {
   background-color: red;
+}
+
+.currentDay {
+  background-color: #dcecfb;
+}
+
+.last-month:hover,
+.calendar-inactive:hover {
+  background-color: #ffffff;
+  transition: none;
+  cursor: default;
+}
+
+.calendar-inactive:hover {
+  color: #000000;
+}
+
+.last-month:hover {
+    color: #afacac;
+}
+
+.last-month, .next-month {
+  color: #afacac;
 }
 
 /*Scheduler styling*/

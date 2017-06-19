@@ -2,7 +2,6 @@ import React from 'react'
 import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 import {newBooking} from '../actions/index'
 
@@ -64,13 +63,15 @@ class Book extends React.Component {
       endDate: this.state.dateEnd,
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
-      confirmed: false,
-      dateAdded: new Date(),
-      deleteRequested: false
+      // these details will be added on the backend - leaving them here for reference
+      // confirmed: false,
+      // dateAdded: new Date(),
+      // deleteRequested: false
     }
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
   }
+
   render () {
     return (
       <div className='book-container'>
@@ -104,7 +105,6 @@ class Book extends React.Component {
             <p>Please log in or register</p>
           </ModalDialog>
         </ModalContainer>
-      }
       }
       </div>
     )

@@ -29,6 +29,14 @@ function Details (props) {
           <td><b>Requested on</b></td>
           <td>{moment(props.booking.dateAdded).format('YYYY-MM-DD HH:mm')}</td>
         </tr>
+        <tr>
+          <td><b>Booking Confirmed</b></td>
+          <td>{props.booking.confirmed ? 'Yes' : 'No'}</td>
+        </tr>
+        <tr>
+          <td><b>Delete Requested</b></td>
+          <td>{props.booking.deleteRequested ? 'Yes' : 'No'}</td>
+        </tr>
       </table>
     </div>
   )
