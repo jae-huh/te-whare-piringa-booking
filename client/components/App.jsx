@@ -14,6 +14,7 @@ import Schedular from './Schedular'
 import Navigation from './Navigation'
 import Profile from './Profile'
 import Details from './Details'
+import DetailsProfile from './DetailsProfile'
 import Home from './Home'
 import Error from './Error'
 
@@ -48,6 +49,7 @@ class App extends React.Component {
           <Route path='/register' component={Registration} />
           <Route path='/profile' component={Profile} />
           <Route path='/details' component={Details} />
+          <Route path='/detailsprofile' component={DetailsProfile} />
         </div>
       </BrowserRouter>
     )

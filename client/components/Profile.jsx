@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
-import Details from './Details'
+import DetailsProfile from './DetailsProfile'
 import {selectBooking, requestDelete} from '../actions/index'
 
 class Profile extends React.Component {
@@ -55,7 +55,7 @@ class Profile extends React.Component {
               {this.showUserBookings()}
             </tbody>
           </table>
-          {this.props.booking.fullName && <Details />}
+          {this.props.booking.fullName && <DetailsProfile />}
         </div>
       </div>
     )
