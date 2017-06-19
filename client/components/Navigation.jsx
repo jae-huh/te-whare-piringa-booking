@@ -11,7 +11,7 @@ const Navigation = props => {
     <header className="navigation">
       <nav className="">
         <div className="navigation-div">
-          <h2 className=""><Link className="navigation-home-link" to="/">Te Whare Piringa</Link>{props.waiting && <Waiting /> }</h2>
+          <h2 className="navigation-home"><Link className="navigation-home-link" to="/">Te Whare Piringa</Link>{props.waiting && <Waiting /> }</h2>
           <ul className="navigation-list">
             <Link className="navigation-list-link" to="/calendar"><li className="navigation-list-item">Calendar</li></Link>
             <Link className="navigation-list-link" to="/schedule"><li className="navigation-list-item">Schedule</li></Link>
