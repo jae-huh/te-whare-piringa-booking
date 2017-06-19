@@ -125,9 +125,8 @@ function getUsers (id, cb) {
 }
 
 function getDatabase (cb) {
-  MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
+  MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
     if (err) return cb(err)
-    const db = database.db(process.env.DB_NAME)
     cb(null, db)
   })
 }
@@ -180,7 +179,6 @@ function editAlertEmail (data, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('email').drop(() => {
-      console.log(data)
       db.collection('email').save(data, (err, result) => {
         if (err) return cb(err)
         cb(null, result)
