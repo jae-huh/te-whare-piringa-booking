@@ -66,16 +66,8 @@ class Calendar extends React.Component {
     const dateArray = []
     let today = new Date()
     today = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-    let adminStyle = {}
-    if (this.props.admin) {
-      adminStyle = {
-        cursor: 'pointer'
-      }
-    } else {
-      adminStyle = {
-        cursor: 'default'
-      }
-    }
+    const adminStyle = {}
+    this.props.admin ? adminStyle.cursor = 'pointer' : adminStyle.cursor = 'default'
 
     let i = 0
     while (i < firstDay) {
