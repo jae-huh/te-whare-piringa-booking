@@ -30,6 +30,9 @@ const exampleBookings = [
   }
 ]
 
+test('test passing', t => {
+  t.pass()
+})
 // test('data validation tests are return a string', t => {
 //   const expected = 'string'
 //   const actual = typeof validate.validateBookingDetails()
