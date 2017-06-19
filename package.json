@@ -7,7 +7,8 @@
     "dev": "nodemon --watch server & webpack --watch",
     "test": "ava -v test/**/*.test.js",
     "eslint": "eslint src test",
-    "start": "node server"
+    "start": "node server",
+    "debug": "node --inspect server"
   },
   "keywords": [
     "react",
@@ -28,6 +29,7 @@
     "mongodb": "^2.2.28",
     "nodemailer": "^4.0.1",
     "react-big-calendar": "^0.14.0",
+    "react-gmaps": "^1.6.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1"

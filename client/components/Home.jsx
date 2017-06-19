@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Gallery from './Gallery'
 import About from './About'
 import Contact from './Contact'
 
@@ -10,6 +11,7 @@ const Home = () => {
       </div>
       <div className="home-content-div">
         <div className="home-route-content">
+          <Gallery />
           <About />
           <Contact />
         </div>

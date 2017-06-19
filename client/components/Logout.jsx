@@ -4,9 +4,9 @@ import {logout} from '../actions/auth'
 
 function LogoutButton (props) {
   return (
-    <a className="nav-links" style={{cursor: 'pointer'}} onClick={props.logout}>
+    <li className="navigation-list-item" onClick={props.logout}>
       Log Out
-    </a>
+    </li>
   )
 }
 

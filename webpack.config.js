@@ -1,5 +1,6 @@
+require('dotenv').load()
 const path = require('path')
-const LiveReloadPlugin = require('webpack-livereload-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './client/index.js',
@@ -19,9 +20,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
 
-},
+  },
   plugins: [
-    new LiveReloadPlugin()
+    new webpack.EnvironmentPlugin({
+      CALLBACK: process.env.CALLBACK
+    })
   ],
   devtool: 'source-map'
 }

@@ -26,8 +26,9 @@ class Profile extends React.Component {
           <td>{moment(booking.startDate).format('YYYY-MM-DD HH:mm')}</td>
           <td>{moment(booking.endDate).format('YYYY-MM-DD HH:mm')}</td>
           <td>{booking.confirmed ? 'Confirmed' : 'Waiting to be confirmed'}</td>
+          <td>{booking.deleteRequested ? 'Delete Requested' : 'No'}</td>
           <td><button onClick={() => this.saveBookingToStore(booking)}>View</button></td>
-          <td><button onClick={() => this.requestBookingToBeDeleted(booking._id)}>Request Delete</button></td>
+          <td>{!booking.deleteRequested && <button onClick={() => this.requestBookingToBeDeleted(booking._id)}>Request Delete</button>}</td>
         </tr>
       )
     })
@@ -45,6 +46,7 @@ class Profile extends React.Component {
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Confirmation Status</th>
+                <th>Delete Requested</th>
                 <th></th>
                 <th></th>
               </tr>

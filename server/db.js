@@ -1,6 +1,8 @@
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient
 
+const validate = require('./validation')
+
 function anonGetAllBookings (cb) {
   getAllBookings((err, bookings) => {
     bookings = bookings.map(filterOutDetails)
@@ -51,13 +53,23 @@ function checkAdminStatus (authId, cb) {
 }
 
 function userAddBooking (booking, authId, cb) {
-  getDatabase((err, db) => {
+  let dataCheck = validate.validateBookingDetails(booking)
+  if (dataCheck !== 'ok') return cb(dataCheck)
+  getAllBookings((err, bookings) => {
     if (err) return cb(err)
-    db.collection('bookings').save(booking, (err, result) => {
+    dataCheck = validate.checkBookingForOverlap(booking, bookings)
+    if (dataCheck !== 'ok') return dataCheck
+    booking.confirmed = false
+    booking.dateAdded = new Date()
+    booking.deleteRequested = false
+    getDatabase((err, db) => {
       if (err) return cb(err)
-      userGetAllBookings(authId, (err, bookings) => {
+      db.collection('bookings').save(booking, (err, result) => {
         if (err) return cb(err)
-        cb(null, {booking, bookings})
+        userGetAllBookings(authId, (err, bookings) => {
+          if (err) return cb(err)
+          cb(null, {booking, bookings})
+        })
       })
     })
   })
@@ -90,6 +102,9 @@ function requestDelete (req, authId, cb) {
 }
 
 function addUser (user, cb) {
+  const dataCheck = validate.validateUserDetails(user)
+  if (dataCheck !== 'ok') return cb(dataCheck)
+  user.dateAdded = new Date()
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('users').save(user, (err, result) => {
@@ -114,10 +129,6 @@ function getDatabase (cb) {
     if (err) return cb(err)
     const db = database.db('admin')
     cb(null, db)
-     // To be changed before deployment to a database for production
-    // db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
-    //   cb(err, db)
-    // })
   })
 }
 
@@ -155,13 +166,36 @@ function makeUserAdmin (email, cb) {
   })
 }
 
-function validate (obj) {
-  Object.values.map(item => {
-    if (item) {
-      return true
-    } else {
-      return false
-    }
+function newAlertEmail (req, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('email').save(req.body, (err, result) => {
+      if (err) return cb(err)
+      cb(null, result)
+    })
+  })
+}
+
+function editAlertEmail (data, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('email').drop(() => {
+      console.log(data)
+      db.collection('email').save(data, (err, result) => {
+        if (err) return cb(err)
+        cb(null, result)
+      })
+    })
+  })
+}
+
+function getAlertEmail (cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('email').find().toArray((err, result) => {
+      if (err) return cb(err)
+      cb(null, result)
+    })
   })
 }
 
@@ -175,5 +209,8 @@ module.exports = {
   getUserDetails,
   deleteBooking,
   makeUserAdmin,
-  requestDelete
+  requestDelete,
+  newAlertEmail,
+  editAlertEmail,
+  getAlertEmail
 }

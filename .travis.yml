@@ -4,6 +4,7 @@ cache:
   directories:
     - "node_modules"
 before_deploy: "webpack"
+env: CALLBACK="https://thebookingmanager.herokuapp.com"
 deploy:
   provider: heroku
   app: thebookingmanager
