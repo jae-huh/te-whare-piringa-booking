@@ -161,6 +161,39 @@ function makeUserAdmin (email, cb) {
   })
 }
 
+function newAlertEmail (req, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('email').save(req.body, (err, result) => {
+      if (err) return cb(err)
+      cb(null, result)
+    })
+  })
+}
+
+function editAlertEmail (data, cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('email').drop(() => {
+      console.log(data)
+      db.collection('email').save(data, (err, result) => {
+        if (err) return cb(err)
+        cb(null, result)
+      })
+    })
+  })
+}
+
+function getAlertEmail (cb) {
+  getDatabase((err, db) => {
+    if (err) return cb(err)
+    db.collection('email').find().toArray((err, result) => {
+      if (err) return cb(err)
+      cb(null, result)
+    })
+  })
+}
+
 module.exports = {
   anonGetAllBookings,
   userGetAllBookings,
@@ -171,5 +204,8 @@ module.exports = {
   getUserDetails,
   deleteBooking,
   makeUserAdmin,
-  requestDelete
+  requestDelete,
+  newAlertEmail,
+  editAlertEmail,
+  getAlertEmail
 }

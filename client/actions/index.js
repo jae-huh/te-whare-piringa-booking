@@ -7,6 +7,7 @@ export const WAITING = 'WAITING'
 export const NOT_WAITING = 'NOT_WAITING'
 export const ADMINSUCCESS = 'ADMINSUCCESS'
 export const ERROR = 'ERROR'
+export const EMAIL_CHANGED = 'EMAIL_CHANGED'
 
 export function newBooking (data) {
   return dispatch => {
@@ -134,5 +135,24 @@ export function requestDelete (id) {
         return dispatch(receiveBookings(res.body.bookings))
       }
     })
+  }
+}
+
+export function emailAlertChange (email) {
+  return dispatch => {
+    dispatch(gettingData())
+    console.log(email)
+    login('put', '/admin/notificationemail', email)
+    .then(res => {
+      dispatch(receivedData())
+      return dispatch(emailChanged(res))
+    })
+  }
+}
+
+function emailChanged (data) {
+  return {
+    type: EMAIL_CHANGED,
+    data
   }
 }
