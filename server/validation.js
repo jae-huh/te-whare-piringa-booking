@@ -1,5 +1,7 @@
 const moment = require('moment')
 
+const constants = require('./constants')
+
 function validateBookingDetails (booking) {
   if (!booking) return 'No booking details found'
   if (!booking.fullName) return 'Please enter the contact person\'s name'
@@ -19,6 +21,10 @@ function validateBookingDetails (booking) {
   if (endDate < new Date(moment(startDate).add(1, 'hours'))) return 'The minimum booking length is one hour'
   if (!checkEmailFormat(booking.emailAddress)) return 'Please enter a valid email address'
   if (booking.phoneNumber.replace(/[^0-9]/g,"").length < 7) return 'Please enter a valid phone number'
+  if (startDate.getHours() + startDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
+  if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
+  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that ends that early'
+  if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
   return 'ok'
 }
 

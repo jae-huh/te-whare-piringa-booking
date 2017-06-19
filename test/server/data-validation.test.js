@@ -316,3 +316,44 @@ test('message returned if booking overlaps all of another booking', t => {
   const actual = validate.checkBookingForOverlap(booking, exampleBookings)
   t.is(actual, expected, 'function should return a string')
 })
+
+test('error message returned for a booking that starts before 6am', t => {
+  const booking = Object.create(exampleBooking)
+  booking.startDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 2)
+  const expected = 'You cannot make a booking that starts that early'
+  const actual = validate.validateBookingDetails(booking)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned for a booking that starts after 10pm', t => {
+  const booking = Object.create(exampleBooking)
+  booking.startDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), -1)
+  const expected = 'You cannot make a booking that starts that late'
+  const actual = validate.validateBookingDetails(booking)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned for a booking that ends before 6am', t => {
+  const booking = Object.create(exampleBooking)
+  booking.endDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate() + 1, 2)
+  const expected = 'You cannot make a booking that ends that early'
+  const actual = validate.validateBookingDetails(booking)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('error message returned for a booking that ends after 10pm', t => {
+  const booking = Object.create(exampleBooking)
+  booking.endDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 23)
+  const expected = 'You cannot make a booking that ends that late'
+  const actual = validate.validateBookingDetails(booking)
+  t.is(actual, expected, 'function should return a string')
+})
+
+test('user is allowed to book over more than one day', t => {
+  const booking = Object.create(exampleBooking)
+  booking.endDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate() + 4, 16)
+  const expected = 'ok'
+  const actual = validate.validateBookingDetails(booking)
+  t.is(actual, expected, 'function should return a string')
+})
+
