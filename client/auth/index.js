@@ -1,17 +1,17 @@
 import history from '../utils/history'
 import auth0 from 'auth0-js'
 
+
 const localStorage = global.window.localStorage
 
 const auth0Domain = 'luke-davison.au.auth0.com'
 const auth0ClientId = 'WCPEyjdLQW37sKZfBMFYNNisB6oyrGdD'
-const auth0CallbackUrl = 'http://localhost:3000/callback'
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: auth0Domain,
     clientID: auth0ClientId,
-    redirectUri: auth0CallbackUrl,
+    redirectUri: process.env.CALLBACK,
     audience: `https://${auth0Domain}/userinfo`,
     responseType: 'token id_token',
     scope: 'openid'

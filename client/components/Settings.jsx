@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {makeAdmin} from '../actions/index'
+import {makeAdmin, emailAlertChange} from '../actions/index'
 
 class Settings extends React.Component {
   constructor (props) {
@@ -8,6 +8,7 @@ class Settings extends React.Component {
     this.state = {}
     this.handleAdmin = this.handleAdmin.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleEmail = this.handleEmail.bind(this)
   }
 
   handleAdmin (evt) {
@@ -22,13 +23,19 @@ class Settings extends React.Component {
     })
   }
 
+  handleEmail (evt) {
+    evt.preventDefault()
+    this.props.dispatch(emailAlertChange(this.state.alertEmail))
+  }
+
   render () {
     return (
       <div className="settings-container">
         <h2>Settings</h2>
-        <form>
+        <form onSubmit={this.handleEmail}>
+          <strong>Enter email to recieve notifications</strong>
           <p>
-            Email Address<input type="text" />
+            Email Address<input type="text" name="alertEmail" onChange={this.handleChange} required/>
           </p>
           <button>Change</button>
         </form>
