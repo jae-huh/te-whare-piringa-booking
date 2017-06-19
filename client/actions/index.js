@@ -14,6 +14,7 @@ export function newBooking (data) {
     dispatch(gettingData())
     login('post', '/user/addbooking', data)
       .then(res => {
+        if (res.body.error) return dispatch(errorHandler(res.body.error))
         dispatch(bookingPosted(res.body.booking))
         dispatch(receiveBookings(res.body.bookings))
         dispatch(receivedData())

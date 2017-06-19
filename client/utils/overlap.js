@@ -39,8 +39,25 @@ function intervals (startTime, endTime) {
   return result
 }
 
+function numberOfIntervals (startTime, endTime) {
+  const start = moment(startTime, 'YYYY-MM-DD hh:mm')
+  const end = moment(endTime, 'YYYY-MM-DD hh:mm')
+  let result = 0
+  const current = moment(start)
+
+  start.minutes(Math.ceil(start.minutes() / 60) * 60)
+
+  while (current <= end) {
+    result++
+    current.add(60, 'minutes')
+  }
+
+  return result
+}
+
 export {
   compareSlotSelection,
   takenTimesIntoIntervals,
-  intervals
+  intervals,
+  numberOfIntervals
 }
