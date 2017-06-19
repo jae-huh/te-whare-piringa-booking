@@ -1,5 +1,6 @@
 const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './client/index.js',
@@ -19,9 +20,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
 
-},
+  },
   plugins: [
-    new LiveReloadPlugin()
+    new LiveReloadPlugin(),
+    new webpack.EnvironmentPlugin({
+      CALLBACK: 'http://localhost:3000/callback'
+    })
   ],
   devtool: 'source-map'
 }
