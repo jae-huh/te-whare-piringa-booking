@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import {switchDate} from '../actions/calendar'
+import {numberOfIntervals} from '../utils/overlap'
 
 class Calendar extends React.Component {
   constructor (props) {
@@ -66,8 +67,6 @@ class Calendar extends React.Component {
     let today = new Date()
     today = new Date(today.getFullYear(), today.getMonth(), today.getDate())
 
-
-
     let i = 0
     while (i < firstDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth(), 1 - firstDay + i)
@@ -86,6 +85,14 @@ class Calendar extends React.Component {
       if (thisDate.getTime() < today.getTime()) {
         classNames += ' calendar-inactive'
       }
+      // if (isThereABooking(thisDate.getTime(), bookings)) {
+      //   // classNames += ' calendar-booked'
+      // }
+      if (thisDate.getTime() >= today.getTime()) {
+        const thisBusy = howBusyIsIt(thisDate.getTime(), bookings)
+        classNames += [' calendar-orange', +thisBusy].join('')
+      }
+
       dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
@@ -96,21 +103,40 @@ class Calendar extends React.Component {
       dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date next-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
-    isThereABooking(dateArray, bookings)
     return dateArray
   }
 }
 
-function isThereABooking (dates, bookings) {
-  for (let i=0; i < dates.length; i++) {
-    for (let j=0; j < bookings.length; j++) {
-      if (moment(bookings[j].startDate).isSame(dates[i], 'day')) {
-        console.log(bookings[j].startDate)
-        // classNames += ' calendar-booked'
-      }
+// function isThereABooking (date, bookings) {
+//   for (let i = 0; i < bookings.length; i++) {
+//     if (moment(bookings[i].startDate).isSame(date, 'day')) {
+//       return true
+//     }
+//   }
+// }
+
+function howBusyIsIt (date, bookings) {
+  let bookingsToday = 0
+  let hoursUnavailable = 0
+  for (let i = 0; i < bookings.length; i++) {
+    if (moment(bookings[i].startDate).isSame(date, 'day')) {
+      hoursUnavailable = numberOfIntervals(bookings[i].startDate, bookings[i].endDate)
+      return hoursUnavailable
     }
   }
 }
+
+function iAmThisPale (value) {
+  value = value / 16
+  const lightness = ((1 - value) * 50 + 50).toString(10)
+    const redness = ['hsl(25, 100%, ', lightness, '%)'].join('')
+
+  var d = document.createElement('div')
+    d.textContent="t "
+  d.style.backgroundColor = redness
+  document.body.appendChild(d)
+}
+
 //     if (bookings.find(booking => {moment(booking.startDate).isSame(dates[i], 'day')})) {
 //       classNames += ' calendar-booked'
 //       console.log(booking.startDate)

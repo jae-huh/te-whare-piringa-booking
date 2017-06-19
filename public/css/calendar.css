@@ -33,6 +33,74 @@
   background-color: red;
 }
 
+.calendar-orange16 {
+  background-color: hsl(25, 100%, 50%)
+}
+
+.calendar-orange15 {
+  background-color: hsl(25, 100%, 53.125%)
+}
+
+.calendar-orange14 {
+  background-color: hsl(25, 100%, 56.25%)
+}
+
+.calendar-orange13 {
+  background-color: hsl(25, 100%, 59.375%)
+}
+
+.calendar-orange12 {
+  background-color: hsl(25, 100%, 62.5%)
+}
+
+.calendar-orange11 {
+  background-color: hsl(25, 100%, 65.625%)
+}
+
+.calendar-orange10 {
+  background-color: hsl(25, 100%, 68.75%)
+}
+
+.calendar-orange9 {
+  background-color: hsl(25, 100%, 71.875%)
+}
+
+.calendar-orange8 {
+  background-color: hsl(25, 100%, 75%)
+}
+
+.calendar-orange7 {
+  background-color: hsl(25, 100%, 78.125%)
+}
+
+.calendar-orange6 {
+  background-color: hsl(25, 100%, 81.25%)
+}
+
+.calendar-orange5 {
+  background-color: hsl(25, 100%, 84.375%)
+}
+
+.calendar-orange4 {
+  background-color: hsl(25, 100%, 87.5%)
+}
+
+.calendar-orange3 {
+  background-color: hsl(25, 100%, 90.625%)
+}
+
+.calendar-orange2 {
+  background-color: hsl(25, 100%, 93.75%)
+}
+
+.calendar-orange1 {
+  background-color: hsl(25, 100%, 96.875%)
+}
+
+.calendar-orange0 {
+  background-color: hsl(25, 100%, 100%)
+}
+
 .currentDay {
   background-color: #dcecfb;
 }
@@ -60,6 +128,7 @@
 .last-month, .next-month {
   color: #afacac;
 }
+
 
 /*Scheduler styling*/
 .schedule-body {
