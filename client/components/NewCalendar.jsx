@@ -66,12 +66,22 @@ class Calendar extends React.Component {
     const dateArray = []
     let today = new Date()
     today = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+    let adminStyle = {}
+    if (this.props.admin) {
+      adminStyle = {
+        cursor: 'pointer'
+      }
+    } else {
+      adminStyle = {
+        cursor: 'default'
+      }
+    }
 
     let i = 0
     while (i < firstDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth(), 1 - firstDay + i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate} style={this.props.admin && {cursor: 'pointer'}}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate} style={adminStyle}>{thisDate.getDate()} </div>)
       i++
     }
     i = 1
@@ -91,7 +101,7 @@ class Calendar extends React.Component {
         classNames += [' calendar-orange', +thisBusy].join('')
       }
 
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate} style={this.props.admin && {cursor: 'pointer'}}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate} style={adminStyle}> {thisDate.getDate()} </div>)
       i++
     }
     i = 1
