@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import {switchDate} from '../actions/calendar'
+import {numberOfIntervals} from '../utils/overlap'
 
 class Calendar extends React.Component {
   constructor (props) {
@@ -51,14 +52,14 @@ class Calendar extends React.Component {
             <div className='calendar-header'>Saturday</div>
           </div>
           <div className='calendar-date-container' >
-            {this.getDates(this.props.date)}
+            {this.getDates(this.props.date, this.props.bookings)}
           </div>
         </div>
       </div>
     )
   }
 
-  getDates (d) {
+  getDates (d, bookings) {
     const firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay()
     const lastDate = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()
     const lastDay = new Date(d.getFullYear(), d.getMonth(), lastDate).getDay()
@@ -84,6 +85,12 @@ class Calendar extends React.Component {
       if (thisDate.getTime() < today.getTime()) {
         classNames += ' calendar-inactive'
       }
+
+      if (thisDate.getTime() >= today.getTime()) {
+        const thisBusy = howBusyIsIt(thisDate.getTime(), bookings)
+        classNames += [' calendar-orange', +thisBusy].join('')
+      }
+
       dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate} style={this.props.admin && {cursor: 'pointer'}}>{thisDate.getDate()} </div>)
       i++
     }
@@ -98,9 +105,21 @@ class Calendar extends React.Component {
   }
 }
 
+function howBusyIsIt (date, bookings) {
+  let bookingsToday = 0
+  let hoursUnavailable = 0
+  for (let i = 0; i < bookings.length; i++) {
+    if (moment(bookings[i].startDate).isSame(date, 'day')) {
+      hoursUnavailable = numberOfIntervals(bookings[i].startDate, bookings[i].endDate)
+      return hoursUnavailable
+    }
+  }
+}
+
 function mapStateToProps (state) {
   return {
     date: state.display.date,
+    bookings: state.bookings,
     admin: state.user.admin
   }
 }
