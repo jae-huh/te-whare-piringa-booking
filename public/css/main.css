@@ -6,3 +6,9 @@
 td {
   width: 20em;
 }
+
+.wait {
+  margin-left: 25px;
+  width: 35px;
+  height: auto;
+}
