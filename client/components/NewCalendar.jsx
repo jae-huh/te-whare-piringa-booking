@@ -33,13 +33,13 @@ class Calendar extends React.Component {
 
   render () {
     return (
-      <div className='calendar'>
-        <div className='calendar-navbar'>
-          <div className='calendar-previous'><a onClick={this.previousMonth} >Previous Month </a> </div>
-          <div className='calendar-next'><a onClick={this.nextMonth} >Next Month </a> </div>
-        </div>
+      <div className='calendar container'>
         <div className='calendar-title'>
-          <h2>{moment(this.props.date).format('MMMM YYYY')}</h2>
+          <h2>
+            <span className='calendar-previous'><a onClick={this.previousMonth} ><img src='/images/left.png' /></a> </span>
+            {moment(this.props.date).format('MMMM YYYY')}
+            <span className='calendar-next'><a onClick={this.nextMonth} ><img src='/images/right-arrow-icon.png' /></a> </span>
+          </h2>
         </div>
         <div className="calendar-container">
           <div className='calendar-header-container'>
@@ -108,7 +108,18 @@ class Calendar extends React.Component {
     while (i < 7 - lastDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth() + 1, i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date next-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      let classNames = 'calendar-date next-month'
+
+      if (thisDate.getTime() < today.getTime()) {
+        classNames += ' calendar-inactive'
+      }
+
+      if (thisDate.getTime() >= today.getTime()) {
+        const thisBusy = howBusyIsIt(thisDate.getTime(), bookings)
+        classNames += [' calendar-orange', +thisBusy].join('')
+      }
+
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
     return dateArray

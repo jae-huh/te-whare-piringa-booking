@@ -1,5 +1,10 @@
 /*Calendar styling*/
 
+.calendar-title {
+  display: flex;
+  justify-content: center;
+}
+
 .calendar-date-container, .calendar-header-container {
   display: flex;
   flex-direction: row;
@@ -8,17 +13,18 @@
 
 .calendar-date, .calendar-header {
   border-style: solid;
-  width: 13%;
+  width: 14.2857142857%;
   border-color: grey;
   border-width: thin;
 }
 
 .calendar-header {
   text-align: center;
+  max-width: 100%;
 }
 
 .calendar-date {
-  height: 14vh;
+  height: 11.5vh;
   padding: 0.5em;
 }
 
@@ -27,6 +33,10 @@
   color: #ffffff;
   transition: all .35s ease-in;
   cursor: pointer;
+}
+
+.calendar-orange17 {
+  background-color: hsl(25, 100%, 46.875%);
 }
 
 .calendar-orange16 {
