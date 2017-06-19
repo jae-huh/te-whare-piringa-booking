@@ -98,7 +98,18 @@ class Calendar extends React.Component {
     while (i < 7 - lastDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth() + 1, i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date next-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      let classNames = 'calendar-date next-month'
+
+      if (thisDate.getTime() < today.getTime()) {
+        classNames += ' calendar-inactive'
+      }
+
+      if (thisDate.getTime() >= today.getTime()) {
+        const thisBusy = howBusyIsIt(thisDate.getTime(), bookings)
+        classNames += [' calendar-orange', +thisBusy].join('')
+      }
+
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
     return dateArray
