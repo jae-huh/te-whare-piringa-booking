@@ -23,8 +23,13 @@ function validateBookingDetails (booking) {
   if (booking.phoneNumber.replace(/[^0-9]/g,"").length < 7) return 'Please enter a valid phone number'
   if (startDate.getHours() + startDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
   if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
-  console.log(endDate.getHours(), endDate.getMinutes(), constants.openingHour)
-  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that ends that early'
+  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour){
+    return {
+      sum: endDate.getHours() + endDate.getMinutes() / 60,
+      hours: endDate.getHour(),
+      mins: endDate.getMinutes()
+    }
+  }
   if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
   return 'ok'
 }
