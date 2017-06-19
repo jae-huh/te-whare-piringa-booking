@@ -1,5 +1,5 @@
+require('dotenv').load()
 const path = require('path')
-const LiveReloadPlugin = require('webpack-livereload-plugin')
 const webpack = require('webpack')
 
 module.exports = {
@@ -22,9 +22,8 @@ module.exports = {
 
   },
   plugins: [
-    new LiveReloadPlugin(),
     new webpack.EnvironmentPlugin({
-      CALLBACK: 'http://localhost:3000/callback'
+      CALLBACK: process.env.CALLBACK
     })
   ],
   devtool: 'source-map'
