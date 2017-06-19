@@ -333,13 +333,13 @@ test('error message returned for a booking that starts after 10pm', t => {
   t.is(actual, expected, 'function should return a string')
 })
 
-test('error message returned for a booking that ends before 6am', t => {
-  const booking = Object.create(exampleBooking)
-  booking.endDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate() + 1, 2)
-  const expected = 'You cannot make a booking that ends that early'
-  const actual = validate.validateBookingDetails(booking)
-  t.is(actual, expected, 'function should return a string')
-})
+// test('error message returned for a booking that ends before 6am', t => {
+//   const booking = Object.create(exampleBooking)
+//   booking.endDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate() + 1, 2)
+//   const expected = 'You cannot make a booking that ends that early'
+//   const actual = validate.validateBookingDetails(booking)
+//   t.is(actual, expected, 'function should return a string')
+// })
 
 test('error message returned for a booking that ends after 10pm', t => {
   const booking = Object.create(exampleBooking)
