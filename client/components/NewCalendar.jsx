@@ -50,20 +50,22 @@ class Calendar extends React.Component {
             <div className='calendar-header'>Saturday</div>
           </div>
           <div className='calendar-date-container' >
-            {this.getDates(this.props.date)}
+            {this.getDates(this.props.date, this.props.bookings)}
           </div>
         </div>
       </div>
     )
   }
 
-  getDates (d) {
+  getDates (d, bookings) {
     const firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay()
     const lastDate = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()
     const lastDay = new Date(d.getFullYear(), d.getMonth(), lastDate).getDay()
     const dateArray = []
     let today = new Date()
     today = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+
+
 
     let i = 0
     while (i < firstDay) {
@@ -90,13 +92,32 @@ class Calendar extends React.Component {
       dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date next-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
+    isThereABooking(dateArray, bookings)
     return dateArray
   }
 }
 
+function isThereABooking (dates, bookings) {
+  for (let i=0; i < dates.length; i++) {
+    for (let j=0; j < bookings.length; j++) {
+      if (moment(bookings[j].startDate).isSame(dates[i], 'day')) {
+        console.log(bookings[j].startDate)
+        // classNames += ' calendar-booked'
+      }
+    }
+  }
+}
+//     if (bookings.find(booking => {moment(booking.startDate).isSame(dates[i], 'day')})) {
+//       classNames += ' calendar-booked'
+//       console.log(booking.startDate)
+//     }
+//   }
+// }
+
 function mapStateToProps (state) {
   return {
-    date: state.display.date
+    date: state.display.date,
+    bookings: state.bookings
   }
 }
 

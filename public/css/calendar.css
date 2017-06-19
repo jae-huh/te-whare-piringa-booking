@@ -28,6 +28,9 @@
   transition: all .35s ease-in
 }
 
+.calendar-booked {
+  background-color: red;
+}
 
 /*Scheduler styling*/
 .schedule-body {
