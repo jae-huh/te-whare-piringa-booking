@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-function sendNewBookingEmail (req, res) {
+function sendNewBookingEmail (req, res, email) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -9,7 +9,7 @@ function sendNewBookingEmail (req, res) {
     }
   })
   let subject = 'New Booking'
-  let receiver = 'daffron92@gmail.com'
+  let receiver = email
   let sender = 'user@gmail.com'
   const data = req.body
 

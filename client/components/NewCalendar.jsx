@@ -26,7 +26,7 @@ class Calendar extends React.Component {
   selectDate (e) {
     const dateString = e.target.id.substr(3)
     const dateSelected = new Date(moment(dateString, 'YYYY-MM-DD'))
-    if (dateSelected < new Date().setHours(0, 0, 0, 0)) return
+    if (!this.props.admin && dateSelected < new Date().setHours(0, 0, 0, 0)) return
     this.props.switchDate(dateSelected)
     this.props.history.push('/schedule')
   }
@@ -71,7 +71,7 @@ class Calendar extends React.Component {
     while (i < firstDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth(), 1 - firstDay + i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate} style={this.props.admin && {cursor: 'pointer'}}>{thisDate.getDate()} </div>)
       i++
     }
     i = 1
@@ -85,6 +85,7 @@ class Calendar extends React.Component {
       if (thisDate.getTime() < today.getTime()) {
         classNames += ' calendar-inactive'
       }
+
       // if (isThereABooking(thisDate.getTime(), bookings)) {
       //   // classNames += ' calendar-booked'
       // }
@@ -93,7 +94,7 @@ class Calendar extends React.Component {
         classNames += [' calendar-orange', +thisBusy].join('')
       }
 
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate} style={this.props.admin && {cursor: 'pointer'}}>{thisDate.getDate()} </div>)
       i++
     }
     i = 1
@@ -147,7 +148,8 @@ function iAmThisPale (value) {
 function mapStateToProps (state) {
   return {
     date: state.display.date,
-    bookings: state.bookings
+    bookings: state.bookings,
+    admin: state.user.admin
   }
 }
 

@@ -1,6 +1,8 @@
 const moment = require('moment')
 
-function validateBookingDetailsBasic (booking) {
+const constants = require('./constants')
+
+function validateBookingDetails (booking) {
   if (!booking) return 'No booking details found'
   if (!booking.fullName) return 'Please enter the contact person\'s name'
   if (!booking.emailAddress) return 'Please enter a contact email address'
@@ -19,10 +21,14 @@ function validateBookingDetailsBasic (booking) {
   if (endDate < new Date(moment(startDate).add(1, 'hours'))) return 'The minimum booking length is one hour'
   if (!checkEmailFormat(booking.emailAddress)) return 'Please enter a valid email address'
   if (booking.phoneNumber.replace(/[^0-9]/g,"").length < 7) return 'Please enter a valid phone number'
+  if (startDate.getHours() + startDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
+  if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
+  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that ends that early'
+  if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
   return 'ok'
 }
 
-function validateUserDetailsBasic (user) {
+function validateUserDetails (user) {
   if (!user) return 'No booking details found'
   if (!user.fullName) return 'Please enter your full name'
   if (!user.emailAddress) return 'Please enter a contact email address'
@@ -37,7 +43,21 @@ function checkEmailFormat (email) {
   return pattern.test(email)
 }
 
+function checkBookingForOverlap (booking, bookings) {
+  const startDate1 = (new Date(booking.startDate))
+  const endDate1 = (new Date(booking.endDate)).getTime()
+  if (bookings.find(compareHours)) return 'Your request overlaps with another booking'
+  return 'ok'
+
+  function compareHours (existingBooking) {
+    const startDate2 = (new Date(existingBooking.startDate)).getTime()
+    const endDate2 = (new Date(existingBooking.endDate)).getTime()
+    return (endDate1 > startDate2 && (startDate1 < startDate2 || endDate1 <= endDate2)) || (startDate1 < endDate2 && (endDate1 > endDate2 || startDate1 >= startDate2))
+  }
+}
+
 module.exports = {
-  validateBookingDetailsBasic,
-  validateUserDetailsBasic
+  validateBookingDetails,
+  validateUserDetails,
+  checkBookingForOverlap
 }
