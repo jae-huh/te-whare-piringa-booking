@@ -34,7 +34,7 @@ function validateUserDetails (user) {
   if (!user.emailAddress) return 'Please enter a contact email address'
   if (!user.phoneNumber) return 'Please enter a contact phone number'
   if (!checkEmailFormat(user.emailAddress)) return 'Please enter a valid email address'
-  if (user.phoneNumber.replace(/[^0-9]/g,"").length < 7) return 'Please enter a valid phone number'
+  if (user.phoneNumber.replace(/[^0-9]/g, '').length < 7) return 'Please enter a valid phone number'
   return 'ok'
 }
 
