@@ -127,7 +127,7 @@ function getUsers (id, cb) {
 function getDatabase (cb) {
   MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     if (err) return cb(err)
-    const db = database.db('admin')
+    const db = database.db(process.env.DB_NAME)
     cb(null, db)
   })
 }
