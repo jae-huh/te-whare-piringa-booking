@@ -124,10 +124,6 @@ function getDatabase (cb) {
     if (err) return cb(err)
     const db = database.db('admin')
     cb(null, db)
-     // To be changed before deployment to a database for production
-    // db.authenticate(process.env.DB_USER, process.env.DB_PW, (err, result) => {
-    //   cb(err, db)
-    // })
   })
 }
 

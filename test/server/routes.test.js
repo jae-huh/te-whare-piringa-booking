@@ -12,7 +12,7 @@ test('tests are running', t => {
 //   .get('/foo')
 //   const actual = res
 //   t.deepEqual(actual, 200)
- 
+
 // })
 
 test('database responds with data', t => {
