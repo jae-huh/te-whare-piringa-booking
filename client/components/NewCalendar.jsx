@@ -86,9 +86,6 @@ class Calendar extends React.Component {
         classNames += ' calendar-inactive'
       }
 
-      // if (isThereABooking(thisDate.getTime(), bookings)) {
-      //   // classNames += ' calendar-booked'
-      // }
       if (thisDate.getTime() >= today.getTime()) {
         const thisBusy = howBusyIsIt(thisDate.getTime(), bookings)
         classNames += [' calendar-orange', +thisBusy].join('')
@@ -108,14 +105,6 @@ class Calendar extends React.Component {
   }
 }
 
-// function isThereABooking (date, bookings) {
-//   for (let i = 0; i < bookings.length; i++) {
-//     if (moment(bookings[i].startDate).isSame(date, 'day')) {
-//       return true
-//     }
-//   }
-// }
-
 function howBusyIsIt (date, bookings) {
   let bookingsToday = 0
   let hoursUnavailable = 0
@@ -126,24 +115,6 @@ function howBusyIsIt (date, bookings) {
     }
   }
 }
-
-function iAmThisPale (value) {
-  value = value / 16
-  const lightness = ((1 - value) * 50 + 50).toString(10)
-    const redness = ['hsl(25, 100%, ', lightness, '%)'].join('')
-
-  var d = document.createElement('div')
-    d.textContent="t "
-  d.style.backgroundColor = redness
-  document.body.appendChild(d)
-}
-
-//     if (bookings.find(booking => {moment(booking.startDate).isSame(dates[i], 'day')})) {
-//       classNames += ' calendar-booked'
-//       console.log(booking.startDate)
-//     }
-//   }
-// }
 
 function mapStateToProps (state) {
   return {

@@ -29,10 +29,6 @@
   cursor: pointer;
 }
 
-.calendar-booked {
-  background-color: red;
-}
-
 .calendar-orange16 {
   background-color: hsl(25, 100%, 50%)
 }
