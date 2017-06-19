@@ -94,24 +94,26 @@ class Schedular extends React.Component {
           <img src='./images/right-arrow-icon.png' height="70"/>
         </div>
         </div>
-        <div className='schedule-header-container'>
-          <div className='schedule-header time'>Timeslot</div>
-          <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
-        </div>
-        <div className='schedule-columns-container'>
-          <div className='schedule-hours-container'>
-            {this.getHours()}
+        <div className="schedule-body">
+          <div className='schedule-header-container'>
+            <div className='schedule-header time'>Timeslot</div>
+            <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
+            <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
+            <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
           </div>
-          <div className='schedule-column-container yesterday'>
-            {this.getTimeSlots(new Date(moment(this.props.date).subtract(1, 'days')))}
-          </div>
-          <div className='schedule-column-container today'>
-            {this.getTimeSlots(new Date(moment(this.props.date)))}
-          </div>
-          <div className='schedule-column-container tomorrow'>
-            {this.getTimeSlots(new Date(moment(this.props.date).add(1, 'days')))}
+          <div className='schedule-columns-container'>
+            <div className='schedule-hours-container'>
+              {this.getHours()}
+            </div>
+            <div className='schedule-column-container yesterday'>
+              {this.getTimeSlots(new Date(moment(this.props.date).subtract(1, 'days')))}
+            </div>
+            <div className='schedule-column-container today'>
+              {this.getTimeSlots(new Date(moment(this.props.date)))}
+            </div>
+            <div className='schedule-column-container tomorrow'>
+              {this.getTimeSlots(new Date(moment(this.props.date).add(1, 'days')))}
+            </div>
           </div>
         </div>
       </div>
