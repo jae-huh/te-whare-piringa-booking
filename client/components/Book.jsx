@@ -59,13 +59,11 @@ class Book extends React.Component {
       emailAddress: this.state.email || this.props.user.emailAddress,
       phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
       authId: this.props.user.authId,
-      startDate: this.state.dateStart,
-      endDate: this.state.dateEnd,
+      startDate: this.state.dateStart.toString(),
+      endDate: this.state.dateEnd.toString(),
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
-      // these details will be added on the backend - leaving them here for reference
-      // confirmed: false,
-      // dateAdded: new Date(),
+      dateAdded: new Date()
       // deleteRequested: false
     }
     this.props.postNewBooking(data)
@@ -101,7 +99,7 @@ class Book extends React.Component {
         </form>
       : <ModalContainer onClose={this.handleClose}>
           <ModalDialog onClose={this.handleClose}>
-            <h1>You Are Not Logged In</h1>
+            <h3>You Are Not Logged In</h3>
             <p>Please log in or register</p>
           </ModalDialog>
         </ModalContainer>

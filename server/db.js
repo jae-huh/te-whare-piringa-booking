@@ -62,7 +62,6 @@ function userAddBooking (booking, authId, cb) {
     dataCheck = validate.checkBookingForOverlap(booking, bookings)
     if (dataCheck !== 'ok') return dataCheck
     booking.confirmed = false
-    booking.dateAdded = new Date()
     booking.deleteRequested = false
     getDatabase((err, db) => {
       if (err) return cb(err)
