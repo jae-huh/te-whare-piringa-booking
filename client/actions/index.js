@@ -21,22 +21,17 @@ export function newBooking (data) {
         dispatch(bookingPosted(res.body.booking))
         dispatch(receiveBookings(res.body.bookings))
         dispatch(receivedData())
-        sendEmail(res.body.booking)
       })
-  }
-}
-
-function sendEmail (data) {
-  return dispatch => {
-    login('post', '/sendemail', data)
-    .then(f => f)
   }
 }
 
 function sendConfirm (data) {
   return dispatch => {
+    dispatch(gettingData())
     login('post', '/sendconfirm/', data)
-    .then(f => f)
+    .then(f => {
+      dispatch(receivedData())
+    })
   }
 }
 
