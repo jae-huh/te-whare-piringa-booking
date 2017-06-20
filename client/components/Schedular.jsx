@@ -6,6 +6,7 @@ import HoursColumn from './HoursColumn'
 import ScheduleColumns from './ScheduleColumns'
 import {checkBookingForOverlap} from '../utils/vars'
 import {validationError} from '../actions'
+import {switchDate} from '../actions/calendar'
 
 class Schedular extends React.Component {
   constructor (props) {
@@ -15,6 +16,19 @@ class Schedular extends React.Component {
     }
     this.makeNewBooking = this.makeNewBooking.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.previousDay = this.previousDay.bind(this)
+    this.nextDay = this.nextDay.bind(this)
+  }
+
+  previousDay () {
+    const d = this.props.date
+    const newD = new Date(moment(d).subtract(1, 'days'))
+    this.props.switchDate(newD)
+  }
+  nextDay () {
+    const d = this.props.date
+    const newD = new Date(moment(d).add(1, 'days'))
+    this.props.switchDate(newD)
   }
 
   makeNewBooking () {
@@ -49,12 +63,12 @@ class Schedular extends React.Component {
         <div className='schedule-navbar'/>
         <div className='row'>
           <div className='col-md-1'>
-          <img src='./images/left.png' height="70"/>
+          <img src='./images/left.png' height="70" onClick={this.previousDay} />
           </div>
           <div className='col-md-10'>
             </div>
           <div className='col-md-1'>
-          <img src='./images/right-arrow-icon.png' height="70"/>
+          <img src='./images/right-arrow-icon.png' height="70" onClick={this.nextDay} />
         </div>
         </div>
         <div className='schedule-header-container'>
@@ -84,7 +98,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    validationError: message => dispatch(validationError(message))
+    validationError: message => dispatch(validationError(message)),
+    switchDate: date => dispatch(switchDate(date))
   }
 }
 
