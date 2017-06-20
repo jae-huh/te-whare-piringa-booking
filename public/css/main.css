@@ -70,3 +70,7 @@ th {
     background:#666;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
+
+.book-container {
+  min-width: 300px;
+}
