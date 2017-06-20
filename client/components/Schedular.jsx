@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
+import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 import {makeNewBooking} from '../actions/calendar'
 import {compareSlotSelection, takenTimesIntoIntervals, intervals} from '../utils/overlap'
@@ -12,18 +13,20 @@ class Schedular extends React.Component {
       date: null,
       startTime: null,
       endTime: null,
-      mouseDown: false
+      mouseDown: false,
+      modal: false
     }
     this.mousePressed = this.mousePressed.bind(this)
     this.mouseReleased = this.mouseReleased.bind(this)
     this.mouseEnter = this.mouseEnter.bind(this)
     this.submitBooking = this.submitBooking.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
   submitBooking () {
     const chosenSlots = intervals(this.state.startTime, this.state.endTime)
     const takenSlots = takenTimesIntoIntervals(this.props.bookings)
     if ((compareSlotSelection(chosenSlots, takenSlots))) {
-      return alert('That time has already been taken!')
+      return this.setState({modal: true})
     }
 
     this.props.makeNewBooking(this.state.startTime, this.state.endTime)
@@ -66,6 +69,13 @@ class Schedular extends React.Component {
     }
   }
 
+  handleClose () {
+    this.setState({
+      modal: false
+    })
+    // this.props.history.push('/admin')
+  }
+
   render () {
     return (
       <div className='schedule'>
@@ -74,11 +84,19 @@ class Schedular extends React.Component {
           <p>Start Time: <input value={moment(this.state.startTime).format('HH:mm')} /></p>
           <p>End Time: <input value={moment(this.state.endTime).format('HH:mm')} /></p>
           <p><input type='submit' onClick={this.submitBooking} value='Book Now' /></p>
+          {this.state.modal && <ModalContainer onClose={this.handleClose}>
+            <ModalDialog onClose={this.handleClose}>
+              <div>
+                <h3>You have chosen a slot that has already been reserved!</h3>
+                <p>Please select a time that does not already have a booking.</p>
+              </div>
+            </ModalDialog>
+          </ModalContainer>}
         </div>
         <div className='container'>
           <h3>Key:</h3>
           <div className='row'>
-            <div className='col-md-1'>Availible<div className='availible' /></div>
+            <div className='col-md-1'>Available<div className='availible' /></div>
             <div className='col-md-1'>Reserved<div className='reserved-key' /></div>
             <div className='col-md-1'>Booked<div className='booked-key' /></div>
           </div>
