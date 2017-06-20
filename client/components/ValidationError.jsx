@@ -3,15 +3,18 @@ import {connect} from 'react-redux'
 
 function ValidationError (props) {
   return (
-    <p>
-      {props.validationError}
-    </p>
+    <div>
+      {props.validationError &&
+      <p>
+        {props.validationError}
+      </p>}
+    </div>
   )
 }
 
 function mapStateToProps (state) {
   return {
-    validationError: state.validationError
+    validationError: state.errors.message
   }
 }
 

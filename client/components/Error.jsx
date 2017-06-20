@@ -13,6 +13,7 @@ function Error (props) {
     <ModalContainer onClose={handleClose}>
         <ModalDialog onClose={handleClose}>
           <h1>{props.errorMessage}</h1>
+          <h1>{props.validationError}</h1>
         </ModalDialog>
     </ModalContainer>
   )
@@ -20,7 +21,8 @@ function Error (props) {
 
 function mapStateToProps (state) {
   return {
-    errorMessage: state.error
+    errorMessage: state.error,
+    validationError: state.errors.message
   }
 }
 
