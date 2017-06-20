@@ -12,3 +12,11 @@ export function makeNewBooking (dateStart, dateEnd) {
     dateEnd
   }
 }
+
+export function setNewBooking (newDateAndTime) {
+  console.log(newDateAndTime)
+  return {
+    type: 'SET_BOOKING',
+    newDateAndTime
+  }
+}

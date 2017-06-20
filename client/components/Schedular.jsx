@@ -3,49 +3,77 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import NewBookingForm from './NewBookingForm'
-import {makeNewBooking} from '../actions/calendar'
-import {compareSlotSelection, takenTimesIntoIntervals, intervals} from '../utils/overlap'
+import {setNewBooking} from '../actions/calendar'
 
 class Schedular extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      date: null,
-      startTime: null,
-      endTime: null,
-      mouseDown: false
-    }
-    this.mousePressed = this.mousePressed.bind(this)
-    this.mouseReleased = this.mouseReleased.bind(this)
+    this.state = this.newState(this.props.newBooking.startDate, this.props.newBooking.startTime, this.props.newBooking.endDate, this.props.newBooking.endTime, false)
+    this.clicked = this.clicked.bind(this)
     this.mouseEnter = this.mouseEnter.bind(this)
-    this.submitBooking = this.submitBooking.bind(this)
-  }
-  submitBooking () {
-    const chosenSlots = intervals(this.state.startTime, this.state.endTime)
-    const takenSlots = takenTimesIntoIntervals(this.props.bookings)
-    if ((compareSlotSelection(chosenSlots, takenSlots))) {
-      return alert('That time has already been taken!')
-    }
-
-    this.props.makeNewBooking(this.state.startTime, this.state.endTime)
-    this.props.history.push('/book')
   }
 
-  mousePressed (e) {
-    const dateString = e.target.id.substr(4)
-    const startTime = new Date(moment(dateString, 'YYYY-MM-DD-HH-mm'))
+  updateSchedule (startTime, endTime) {
     this.setState({
-      selectedTime: startTime,
       startTime,
-      endTime: new Date(moment(startTime).add(30, 'minutes')),
-      mouseDown: true
+      endTime
     })
   }
 
-  mouseReleased (e) {
-    this.setState({
-      mouseDown: false
-    })
+  clicked (e) {
+    const dateString = e.target.id.substr(4)
+    const date = new Date(moment(dateString, 'YYYY-MM-DD-HH-mm'))
+    if (!this.state.mouseDown) {
+      const startDate = moment(date).format('YYYY/MM/DD')
+      const startTime = moment(date).format('HH:mm')
+      const date2 = new Date(moment(date).add(30, 'minutes'))
+      const endDate = moment(date2).format('YYYY/MM/DD')
+      const endTime = moment(date2).format('HH:mm')
+      this.props.setNewBooking({
+        startDate,
+        startTime,
+        endDate,
+        endTime
+      })
+      this.setState(this.newState(startDate, startTime, endDate, endTime, true))
+    } else {
+      let endDate = moment(date).format('YYYY/MM/DD')
+      let endTime = moment(date).format('HH:mm')
+      let startDate = this.props.newBooking.startDate
+      let startTime = this.props.newBooking.startTime
+      const newState = this.newState(startDate, startTime, endDate, endTime, false)
+      if (newState.startTime > newState.endTime) {
+        let temp = newState.startTime
+        newState.startTime = newState.endTime
+        newState.endTime = temp
+        this.props.setNewBooking({
+          startDate: endDate,
+          startTime: endTime,
+          endDate: startDate,
+          endTime: startTime
+        })
+      } else {
+        this.props.setNewBooking({
+          startDate,
+          startTime,
+          endDate,
+          endTime
+        })
+      }
+      this.setState(newState)
+    }
+  }
+
+  newState (startDate, startTime, endDate, endTime, mouseDown) {
+    let dateString = startDate + '/' + startTime
+    const startDateValue = new Date(moment(dateString, 'YYYY/MM/DD/HH:mm'))
+    dateString = endDate + '/' + endTime
+    const endDateValue = new Date(moment(dateString, 'YYYY/MM/DD/HH:mm'))
+    return {
+      startTime: startDateValue,
+      endTime: endDateValue,
+      mouseDown
+    }
   }
 
   mouseEnter (e) {
@@ -70,7 +98,8 @@ class Schedular extends React.Component {
   render () {
     return (
       <div className='schedule'>
-        {this.props.user.authId && <NewBookingForm startTime={this.state.startTime} endTime={this.state.endTime} />}
+        {this.props.user.authId && <NewBookingForm history={this.props.history}/>}
+        {!this.props.user.authId && <p>Please log in to make a booking</p>}
         <div className='container'>
           <h3>Key:</h3>
           <div className='row'>
@@ -119,7 +148,7 @@ class Schedular extends React.Component {
     const hourArray = []
     for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 2; j++) {
-        let selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
+        let selectedDate = d.setHours(i + 6, j * 3)
         let dateFormatted = moment(selectedDate).format('HH:mm')
         let divContents = ''
         let classNames = 'hour'
@@ -167,7 +196,7 @@ class Schedular extends React.Component {
         if (toDisplay && toDisplay.fullName) {
           ptag = toDisplay.fullName + ' ' + toDisplay.purpose
         }
-        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter}>{ <div>{ptag}</div>}</div>)
+        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onClick={this.clicked} onMouseOver={this.mouseEnter}>{ <div>{ptag}</div>}</div>)
       }
     }
     return dayArray
@@ -178,13 +207,14 @@ function mapStateToProps (state) {
   return {
     date: state.display.date,
     bookings: state.bookings,
-    user: state.user
+    user: state.user,
+    newBooking: state.newBooking
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    makeNewBooking: (dateStart, dateEnd) => dispatch(makeNewBooking(dateStart, dateEnd))
+    setNewBooking: newDateAndTime => dispatch(setNewBooking(newDateAndTime))
   }
 }
 
