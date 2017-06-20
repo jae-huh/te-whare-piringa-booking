@@ -1,20 +1,36 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
-import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 import HoursColumn from './HoursColumn'
 import ScheduleColumns from './ScheduleColumns'
-import {makeNewBooking} from '../actions/calendar'
+import {checkBookingForOverlap} from '../utils/vars'
+import {validationError} from '../actions'
 
 class Schedular extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      modal: false
+    }
     this.makeNewBooking = this.makeNewBooking.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   makeNewBooking () {
-    this.props.history.push('/book')
+    const booking = {startDate: this.props.startTime, endDate: this.props.endDate}
+    const overlap = checkBookingForOverlap(booking, this.props.bookings)
+    if (overlap === 'ok') {
+      this.props.history.push('/book')
+    } else {
+      this.props.validationError(overlap)
+    }
+  }
+
+  handleClose () {
+    this.setState({
+      modal: false
+    })
   }
 
   render () {
@@ -59,13 +75,16 @@ class Schedular extends React.Component {
 function mapStateToProps (state) {
   return {
     user: state.user,
-    date: state.display.date
+    date: state.display.date,
+    startTime: state.newBooking.startTime,
+    endTime: state.newBooking.endTime,
+    bookings: state.bookings
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    makeNewBooking: dispatch(makeNewBooking())
+    validationError: message => dispatch(validationError(message))
   }
 }
 

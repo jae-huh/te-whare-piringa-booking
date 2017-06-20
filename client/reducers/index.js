@@ -11,6 +11,7 @@ import error from './error'
 import waiting from './waiting'
 import newBooking from './newBooking'
 import mouse from './mouse'
+import errors from './errors'
 
 export default combineReducers({
   user,
@@ -23,5 +24,6 @@ export default combineReducers({
   error,
   waiting,
   newBooking,
-  mouse
+  mouse,
+  errors
 })
