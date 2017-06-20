@@ -3,17 +3,23 @@ import {connect} from 'react-redux'
 import {confirm, deleteBooking, selectBooking} from '../actions/index'
 import Setting from './Settings'
 import Details from './Details'
+import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 class AdminPortal extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      showSettings: false
+      showSettings: false,
+      currentFilter: 'unconfirmed',
+      modal: false
     }
     this.handleConfirmClick = this.handleConfirmClick.bind(this)
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
     this.saveBookingToStore = this.saveBookingToStore.bind(this)
     this.settingShow = this.settingShow.bind(this)
+    this.applyFilter = this.applyFilter.bind(this)
+    this.isInFilter = this.isInFilter.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   settingShow () {
@@ -24,66 +30,118 @@ class AdminPortal extends React.Component {
 
   handleConfirmClick (id) {
     this.props.confirm(id)
+    this.setState({
+      modal: false
+    })
   }
 
   handleDeleteClick (id) {
     this.props.deleteBooking(id)
+    this.setState({
+      modal: false
+    })
   }
 
   saveBookingToStore (booking) {
     this.props.selectBooking(booking)
+    this.setState({
+      modal: true
+    })
+  }
+
+  handleClose () {
+    this.setState({
+      modal: false
+    })
+    this.props.history.push('/admin')
+  }
+
+  applyFilter (currentFilter) {
+    this.setState({
+      currentFilter
+    })
+  }
+
+  isInFilter (booking) {
+    const current = this.state.currentFilter
+    if (current === 'unconfirmed' && !booking.confirmed) {
+      return true
+    }
+    if (current === 'confirmed' && booking.confirmed) {
+      return true
+    }
+    if (current === 'delete' && booking.deleteRequested) {
+      return true
+    }
+    if (current === 'all') {
+      return true
+    }
+    return false
   }
 
   render () {
     return (
       <div className="admin-portal container">
-        {this.props.admin ?
-        <div>
-          <h1>Admin Portal</h1>
+        {this.props.admin
+        ? <div>
+          <h2>Welcome, {this.props.user.fullName}</h2>
         <div className="row">
-          <div className="col-md-8 unconfirmed-list">
-            <h2>Unconfirmed Bookings</h2>
-            {this.props.bookings.filter(booking => !booking.confirmed).map(item => {
+          <div className="col-md-1" />
+          <div className="col-md-10">
+            <h2>Bookings</h2>
+            <div>
+              <p>
+                <label htmlFor="Show All">All</label>
+                <input type="radio" name="filter" id="Show All"onChange={() => this.applyFilter('all') } />
+                 &nbsp;&nbsp;&nbsp;
+                <label htmlFor="Show Unconfirmed">Unconfirmed</label>
+                <input type="radio" name="filter" id="Show Unconfirmed"onChange={() => this.applyFilter('unconfirmed')} defaultChecked/>
+                 &nbsp;&nbsp;&nbsp;
+                <label htmlFor="Show Delete Requested">Delete Requested</label>
+                <input type="radio" name="filter" id="Show Delete Requested" onChange={() => this.applyFilter('delete')} />
+                 &nbsp;&nbsp;&nbsp;
+                <label htmlFor="Show Confirmed">Confirmed</label>
+                <input type="radio" name="filter" id="Show Confirmed" onChange={() => this.applyFilter('confirmed')} />
+                </p>
+            </div>
+            <div className="unconfirmed-list">
+            {this.props.bookings.filter(this.isInFilter).map(item => {
               return (
                 <div key={item._id} className="row">
-                  <div className="col-sm-8 list-of-unconfirmed">
-                  {item.fullName}<br />
-                  {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}
+                  <div className="col-sm-9">
+                    <div className="list-of-unconfirmed">
+                    {item.fullName}<hr />
+                    {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}<hr />
+                    {item.startDate.toString().substring(16, 21)} to {item.endDate.toString().substring(16, 21)}
+                    </div>
                   </div>
-                  <div className="col-sm-4 buttons-of-unconfirmed text-center">
-                    <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(item._id) }}></span>
-                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(item._id) }}></span>
+                  <div className="col-sm-3 buttons-of-unconfirmed text-center">
+                    
                     <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
                   </div>
                 </div>
               )
             })}
           </div>
-            <div className="col-md-4 text-center">
-              <button onClick={this.settingShow}>Settings</button>
-              {this.state.showSettings && <Setting />}
-              {this.props.booking.fullName && <Details />}
-            </div>
+          </div>
           </div>
           <div className="row">
-          <div className="col-md-8 delete-list">
-            <h2>Delete Requested Bookings</h2>
-            {this.props.bookings.filter(booking => booking.deleteRequested).map(item => {
-              return (
-                <div key={item._id} className="row">
-                  <div className="col-sm-8 list-of-delete">
-                  {item.fullName}<br />
-                  {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}
+            <div className="col-md-1" />
+            <div className="col-md-10 text-center">
+              <button onClick={this.settingShow} className="setting-btn">Settings</button>
+              {this.state.showSettings && <Setting />}
+              {this.props.booking.fullName && this.state.modal &&
+              <ModalContainer onClose={this.handleClose}>
+                <ModalDialog onClose={this.handleClose}>
+                  <Details />
+                  <div className="modal-admin">
+                    <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>
+                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
                   </div>
-                  <div className="col-sm-4 buttons-of-unconfirmed text-center">
-                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(item._id) }}></span>
-                    <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
-                  </div>
-                </div>
-              )
-            })}
+                  </ModalDialog>
+                </ModalContainer>}
+            </div>
           </div>
-        </div>
         </div>
         : <h1>Not authorised</h1>
         }
@@ -96,7 +154,8 @@ function mapStateToProps (state) {
   return {
     bookings: state.bookings,
     admin: state.user.admin,
-    booking: state.booking
+    booking: state.booking,
+    user: state.user
   }
 }
 
