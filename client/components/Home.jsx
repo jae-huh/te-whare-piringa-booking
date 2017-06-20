@@ -30,27 +30,5 @@ class Home extends React.Component {
     )
   }
 }
-// const Home = () => {
-//   return (
-//     <div className="home-background">
-//       <div className="main-background">
-//         <div className="home-button-box">
-//           <h1>Te Whare Piringa</h1>
-//           <h2>Our Place</h2>
-//           <p>"Tamaki, the most thriving, engaged, and dynamic community"</p>
-//           <Link to="/calendar"><div className="home-book-button"><span className="glyphicon glyphicon-calendar" aria-hidden="true"></span> Book Now</div></Link>
-//         </div>
-//       </div>
-//       <div className="home-content-div">
-//         <div className="home-route-content">
-//           <Hall />
-//           <Gallery />
-//           <About />
-//           <Contact />
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
 
 export default Home
