@@ -58,19 +58,12 @@ class Book extends React.Component {
       emailAddress: this.state.email || this.props.user.emailAddress,
       phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
       authId: this.props.user.authId,
-<<<<<<< HEAD
       startDate: this.state.dateStart.toString(),
       endDate: this.state.dateEnd.toString(),
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
       dateAdded: new Date()
       // deleteRequested: false
-=======
-      startDate: this.state.dateStart.getTime(),
-      endDate: this.state.dateEnd.getTime(),
-      purpose: this.state.purpose,
-      guestNumber: this.state.guestNumber
->>>>>>> 7637f717cff283170e9e08147c46bfe804eb8f82
     }
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
