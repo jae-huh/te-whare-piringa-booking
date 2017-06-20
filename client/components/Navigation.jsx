@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-
 import Login from './Login'
 import Logout from './Logout'
 import Waiting from './Waiting'

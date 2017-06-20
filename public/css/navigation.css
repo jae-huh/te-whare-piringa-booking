@@ -113,7 +113,7 @@
 
   .navigation-list.responsive-menu > a {
     display: block;
-    height: 50px;
+    height: 40px;
     width: 100%;
   }
 
@@ -125,9 +125,9 @@
     background-color: #46075c;
     height: auto;
   }
+  
   .navigation-list-item {
     margin: auto;
     text-align: center;
   }
-
 }
