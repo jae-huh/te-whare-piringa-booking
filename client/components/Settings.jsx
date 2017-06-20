@@ -5,7 +5,8 @@ import {makeAdmin, emailAlertChange} from '../actions/index'
 class Settings extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+    }
     this.handleAdmin = this.handleAdmin.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleEmail = this.handleEmail.bind(this)

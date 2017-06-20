@@ -33,13 +33,13 @@ class Calendar extends React.Component {
 
   render () {
     return (
-      <div className='calendar'>
-        <div className='calendar-navbar'>
-          <div className='calendar-previous'><a onClick={this.previousMonth} >Previous Month </a> </div>
-          <div className='calendar-next'><a onClick={this.nextMonth} >Next Month </a> </div>
-        </div>
+      <div className='calendar container'>
         <div className='calendar-title'>
-          <h2>{moment(this.props.date).format('MMMM YYYY')}</h2>
+          <h2>
+            <span className='calendar-previous'><a onClick={this.previousMonth} ><img src='/images/left.png' /></a> </span>
+            {moment(this.props.date).format('MMMM YYYY')}
+            <span className='calendar-next'><a onClick={this.nextMonth} ><img src='/images/right-arrow-icon.png' /></a> </span>
+          </h2>
         </div>
         <div className="calendar-container">
           <div className='calendar-header-container'>
@@ -66,12 +66,14 @@ class Calendar extends React.Component {
     const dateArray = []
     let today = new Date()
     today = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+    const adminStyle = {}
+    this.props.admin ? adminStyle.cursor = 'pointer' : adminStyle.cursor = 'default'
 
     let i = 0
     while (i < firstDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth(), 1 - firstDay + i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate} style={this.props.admin && {cursor: 'pointer'}}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate} style={adminStyle}>{thisDate.getDate()} </div>)
       i++
     }
     i = 1
@@ -91,14 +93,25 @@ class Calendar extends React.Component {
         classNames += [' calendar-orange', +thisBusy].join('')
       }
 
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate} style={this.props.admin && {cursor: 'pointer'}}>{thisDate.getDate()} </div>)
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate} style={adminStyle}> {thisDate.getDate()} </div>)
       i++
     }
     i = 1
     while (i < 7 - lastDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth() + 1, i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date next-month' onClick={this.selectDate}>{thisDate.getDate()} </div>)
+      let classNames = 'calendar-date next-month'
+
+      if (thisDate.getTime() < today.getTime()) {
+        classNames += ' calendar-inactive'
+      }
+
+      if (thisDate.getTime() >= today.getTime()) {
+        const thisBusy = howBusyIsIt(thisDate.getTime(), bookings)
+        classNames += [' calendar-orange', +thisBusy].join('')
+      }
+
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate}>{thisDate.getDate()} </div>)
       i++
     }
     return dateArray

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
+import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 import HoursColumn from './HoursColumn'
 import ScheduleColumns from './ScheduleColumns'
@@ -12,24 +13,6 @@ class Schedular extends React.Component {
     this.makeNewBooking = this.makeNewBooking.bind(this)
   }
 
-  // mouseEnter (e) {
-  //   if (this.state.mouseDown) {
-  //     const dateString = e.target.id.substr(4)
-  //     const endTime = new Date(moment(dateString, 'YYYY-MM-DD-HH-mm'))
-  //     if (endTime > this.state.selectedTime) {
-  //       this.setState({
-  //         startTime: this.state.selectedTime,
-  //         endTime: new Date(moment(endTime).add(30, 'minutes'))
-  //       })
-  //     }
-  //     if (endTime < this.state.selectedTime) {
-  //       this.setState({
-  //         startTime: endTime,
-  //         endTime: new Date(moment(this.state.selectedTime).add(30, 'minutes'))
-  //       })
-  //     }
-  //   }
-  // }
   makeNewBooking () {
     this.props.history.push('/book')
   }
@@ -42,7 +25,7 @@ class Schedular extends React.Component {
         <div className='container'>
           <h3>Key:</h3>
           <div className='row'>
-            <div className='col-md-1'>Availible<div className='availible' /></div>
+            <div className='col-md-1'>Available<div className='availible' /></div>
             <div className='col-md-1'>Reserved<div className='reserved-key' /></div>
             <div className='col-md-1'>Booked<div className='booked-key' /></div>
           </div>
