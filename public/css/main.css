@@ -17,18 +17,6 @@ th {
   height: auto;
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.details-profile-component {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .setting-btn {
   -webkit-border-radius: 19;
   -moz-border-radius: 19;

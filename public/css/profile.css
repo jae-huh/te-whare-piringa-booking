@@ -1,0 +1,19 @@
+
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details-profile-component {
+  display: flex;
+  /*flex-direction: column;
+  align-items: center;*/
+}
+
+.showUserBookingRow {
+  border-style: solid;
+  border-width: thin;
+  border-radius: 1em;
+}
