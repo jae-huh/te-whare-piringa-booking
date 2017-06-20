@@ -53,6 +53,8 @@ function checkAdminStatus (authId, cb) {
 }
 
 function userAddBooking (booking, authId, cb) {
+  booking.startDate.toString()
+  booking.endDate.toString()
   let dataCheck = validate.validateBookingDetails(booking)
   if (dataCheck !== 'ok') return cb(dataCheck)
   getAllBookings((err, bookings) => {
