@@ -51,7 +51,8 @@ class AdminPortal extends React.Component {
 
   handleClose () {
     this.setState({
-      modal: false
+      modal: false,
+      showSettings: false
     })
     this.props.history.push('/admin')
   }
@@ -129,7 +130,13 @@ class AdminPortal extends React.Component {
             <div className="col-md-1" />
             <div className="col-md-10 text-center">
               <button onClick={this.settingShow} className="setting-btn">Settings</button>
-              {this.state.showSettings && <Setting />}
+              {this.state.showSettings &&
+               <ModalContainer onClose={this.handleClose}>
+                <ModalDialog onClose={this.handleClose}>
+                  <Setting close={this.handleClose}/>
+                </ModalDialog>
+              </ModalContainer>
+              }
               {this.props.booking.fullName && this.state.modal &&
               <ModalContainer onClose={this.handleClose}>
                 <ModalDialog onClose={this.handleClose}>

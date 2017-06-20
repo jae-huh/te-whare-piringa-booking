@@ -64,7 +64,8 @@ class Book extends React.Component {
       startDate: moment(this.state.dateStart),
       endDate: moment(this.state.dateEnd),
       purpose: this.state.purpose,
-      guestNumber: this.state.guestNumber
+      guestNumber: this.state.guestNumber,
+      dateAdded: new Date()
     }
     let message = validateBookingDetails(data)
     if (message !== 'ok') return this.props.validationError(message)
