@@ -48,7 +48,7 @@ class App extends React.Component {
           <Route path='/schedule' component={Schedular} />
           <Route path="/book" component={Book} />
           <Route path='/register' component={Registration} />
-          <Route path='/profile' component={Profile} />
+          <Route path='/profile' component={AdminPortal} />
           <Route path='/details' component={Details} />
           <Route path='/detailsprofile' component={DetailsProfile} />
         </div>
