@@ -11,6 +11,7 @@ const Contact = () => {
           <Maps />
           <div className="contact-information">
             <h2>Address</h2>
+            <p>(Old Scout Hall)</p>
             <p>29 Fenchurch St, Glen Innes, Auckland 1072</p>
             <h2>Phone</h2>
             <p>09-528 3411</p>
