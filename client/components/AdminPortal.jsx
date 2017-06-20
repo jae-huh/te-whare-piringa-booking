@@ -57,7 +57,6 @@ class AdminPortal extends React.Component {
   }
 
   applyFilter (currentFilter) {
-    console.log(currentFilter)
     this.setState({
       currentFilter
     })
