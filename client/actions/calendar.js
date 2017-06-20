@@ -12,3 +12,17 @@ export function makeNewBooking (dateStart, dateEnd) {
     dateEnd
   }
 }
+
+export function setNewBooking (startTime, endTime) {
+  return {
+    type: 'SET_BOOKING',
+    startTime,
+    endTime
+  }
+}
+
+export function clicked () {
+  return {
+    type: 'CLICKED'
+  }
+}

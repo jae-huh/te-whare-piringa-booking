@@ -141,14 +141,18 @@
     margin: 25px!important;
   border: 3px solid #46075C!important;
 }
-.schedule-header-container, .schedule-columns-container {
+.schedule-header-container, .schedule-columns-container, .schedule-columns {
   display: flex;
   flex-direction: row;
 }
 
+.schedule-columns {
+  width: 90%;
+}
+
 .schedule-column-container {
 
-  width: 30%;
+  width: 33.33%;
 }
 .schedule-hours-container{
   width: 10%;

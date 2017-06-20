@@ -40,6 +40,7 @@ class App extends React.Component {
             <Navigation fullName={this.props.user.fullName} />
           )}/>
           {this.props.error && <Error /> }
+          {this.props.errors.validationError && <Error />}
           <Route exact path='/' component={Home} />
           <Route path="/callback" component={Callback} />
           <Route path='/admin' component={AdminPortal} />
@@ -59,7 +60,8 @@ class App extends React.Component {
 function mapStateToProps (state) {
   return {
     user: state.user,
-    error: state.error
+    error: state.error,
+    errors: state.errors
   }
 }
 
