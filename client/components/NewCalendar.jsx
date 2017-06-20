@@ -119,14 +119,13 @@ class Calendar extends React.Component {
 }
 
 function howBusyIsIt (date, bookings) {
-  let bookingsToday = 0
   let hoursUnavailable = 0
   for (let i = 0; i < bookings.length; i++) {
     if (moment(bookings[i].startDate).isSame(date, 'day')) {
-      hoursUnavailable = numberOfIntervals(bookings[i].startDate, bookings[i].endDate)
-      return hoursUnavailable
+      hoursUnavailable += numberOfIntervals(bookings[i].startDate, bookings[i].endDate)
     }
   }
+  return hoursUnavailable
 }
 
 function mapStateToProps (state) {
