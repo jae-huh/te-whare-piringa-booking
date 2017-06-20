@@ -13,10 +13,16 @@ export function makeNewBooking (dateStart, dateEnd) {
   }
 }
 
-export function setNewBooking (newDateAndTime) {
-  console.log(newDateAndTime)
+export function setNewBooking (startTime, endTime) {
   return {
     type: 'SET_BOOKING',
-    newDateAndTime
+    startTime,
+    endTime
+  }
+}
+
+export function clicked () {
+  return {
+    type: 'CLICKED'
   }
 }

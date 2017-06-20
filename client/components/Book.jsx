@@ -15,8 +15,8 @@ class Book extends React.Component {
       fullName: '',
       email: '',
       phoneNumber: '',
-      dateStart: this.props.display.dateStart,
-      dateEnd: this.props.display.dateEnd,
+      dateStart: this.props.startTime,
+      dateEnd: this.props.endTime,
       purpose: null,
       guestNumber: null
     }
@@ -78,13 +78,13 @@ class Book extends React.Component {
           <br />
           Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.user.phoneNumber} onChange={this.handleChange} /><br />
           Start Date and Time:
-       <Datetime value={this.props.display.dateStart}
+       <Datetime value={this.props.startTime}
        onChange={this.handleChangeDateStart}
        timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
        className="datepick"/>
           <br />
           End Date and time:
-           <Datetime value={this.props.display.dateEnd}
+           <Datetime value={this.props.endTime}
        onChange={this.handleChangeDateEnd}
        className="datepick"/>
           <br />
@@ -109,7 +109,8 @@ class Book extends React.Component {
 function mapStateToProps (state) {
   return {
     user: state.user,
-    display: state.display
+    startTime: state.newBooking.startTime,
+    endTime: state.newBooking.endTime
   }
 }
 
