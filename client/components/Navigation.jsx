@@ -13,9 +13,8 @@ const Navigation = props => {
         <div className="navigation-div">
           <h2 className="navigation-home"><Link className="navigation-home-link" to="/">Te Whare Piringa</Link>{props.waiting && <Waiting /> }</h2>
           <ul className="navigation-list">
-            <Link className="navigation-list-link" to="/calendar"><li className="navigation-list-item">Calendar</li></Link>
-            <Link className="navigation-list-link" to="/schedule"><li className="navigation-list-item">Schedule</li></Link>
-            <Link className="navigation-list-link" to="/book"><li className="navigation-list-item">Book</li></Link>
+            <Link className="navigation-list-link" to="/calendar"><li className="navigation-list-item">Book</li></Link>
+            <a className="navigation-list-link" href="/#hall"><li className="navigation-list-item">Hall</li></a>
             <a className="navigation-list-link" href="/#gallery"><li className="navigation-list-item">Gallery</li></a>
             <a className="navigation-list-link" href="/#about"><li className="navigation-list-item">About</li></a>
             <a className="navigation-list-link" href="/#contact"><li className="navigation-list-item">Contact</li></a>
