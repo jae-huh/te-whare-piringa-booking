@@ -53,27 +53,26 @@ function checkAdminStatus (authId, cb) {
 }
 
 function userAddBooking (booking, authId, cb) {
-  booking.startDate.toString()
-  booking.endDate.toString()
-  let dataCheck = validate.validateBookingDetails(booking)
-  if (dataCheck !== 'ok') return cb({validationError: dataCheck})
-  getAllBookings((err, bookings) => {
+  // let dataCheck = validate.validateBookingDetails(booking)
+  // if (dataCheck !== 'ok') return cb({validationError: dataCheck})
+  // getAllBookings((err, bookings) => {
+    // if (err) return cb(err)
+    // dataCheck = validate.checkBookingForOverlap(booking, bookings)
+    // if (dataCheck !== 'ok') return cb({validationError: dataCheck})
+  booking.confirmed = false
+  booking.dateAdded = new Date()
+  booking.deleteRequested = false
+  getDatabase((err, db) => {
     if (err) return cb(err)
-    dataCheck = validate.checkBookingForOverlap(booking, bookings)
-    if (dataCheck !== 'ok') return cb({validationError: dataCheck})
-    booking.confirmed = false
-    booking.deleteRequested = false
-    getDatabase((err, db) => {
+    db.collection('bookings').save(booking, (err, result) => {
       if (err) return cb(err)
-      db.collection('bookings').save(booking, (err, result) => {
+      userGetAllBookings(authId, (err, bookings) => {
         if (err) return cb(err)
-        userGetAllBookings(authId, (err, bookings) => {
-          if (err) return cb(err)
-          cb(null, {booking, bookings})
-        })
+        cb(null, {booking, bookings})
       })
     })
   })
+  // })
 }
 
 function confirmBooking (req, authId, cb) {

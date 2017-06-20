@@ -32,7 +32,7 @@ class Schedular extends React.Component {
   }
 
   makeNewBooking () {
-    const booking = {startDate: this.props.startTime, endDate: this.props.endDate}
+    const booking = {startDate: this.props.startTime, endDate: this.props.endTime}
     const overlap = checkBookingForOverlap(booking, this.props.bookings)
     if (overlap === 'ok') {
       this.props.history.push('/book')
