@@ -83,13 +83,13 @@ class Book extends React.Component {
           <br />
           Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.user.phoneNumber} onChange={this.handleChange} /><br />
           Start Date and Time:
-       <Datetime value={this.props.display.dateStart}
+       <Datetime value={this.state.dateStart}
        onChange={this.handleChangeDateStart}
        timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
        className="datepick"/>
           <br />
           End Date and time:
-           <Datetime value={this.props.display.dateEnd}
+           <Datetime value={this.state.dateEnd}
        onChange={this.handleChangeDateEnd}
        className="datepick"/>
           <br />

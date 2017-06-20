@@ -232,21 +232,17 @@
   border-width: 2px;
   border-style: solid;
 }
-.unconfirmed-list, .delete-list {
-  width: 350px;
-  height: 450px;
+.unconfirmed-list{
+  width: 100%;
+  max-height: 50vmin;
   overflow: scroll;
+  overflow-x: hidden;
 
-}
-
-.buttons-of-unconfirmed :hover {
-  font-size: 25px;
 }
 
 .remove {
   color: red;
   font-size: 18px;
-  margin: 5px;
 }
 
 .confirm {
@@ -257,14 +253,27 @@
 
 .more{
   color: blue;
-  font-size: 18px;
-  margin: 5px
+  font-size: 25px;
+  align-content: center;
+  margin-top: 20px;
 }
+
+.more:hover {
+  font-size: 33px;
+}
+
 .list-of-unconfirmed {
   border: 1px solid grey;
   border-radius: 5px;
+  padding-left: 35px;
 }
+
 .calendar-container {
   margin: 25px;
   border: 3px solid #07839B!important;
+}
+
+hr {
+  margin: 3px;
+  max-width: 30%
 }
