@@ -4,11 +4,27 @@
 }
 
 td {
-  width: 20em;
+  padding: 0 1em
+}
+
+th {
+  padding: 0 1em
 }
 
 .wait {
   margin-left: 25px;
   width: 35px;
   height: auto;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details-profile-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

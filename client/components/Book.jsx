@@ -101,7 +101,7 @@ class Book extends React.Component {
         </form>
       : <ModalContainer onClose={this.handleClose}>
           <ModalDialog onClose={this.handleClose}>
-            <h1>You Are Not Logged In</h1>
+            <h3>You Are Not Logged In</h3>
             <p>Please log in or register</p>
           </ModalDialog>
         </ModalContainer>

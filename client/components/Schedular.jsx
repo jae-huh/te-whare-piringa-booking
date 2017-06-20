@@ -78,7 +78,7 @@ class Schedular extends React.Component {
         <div className='container'>
           <h3>Key:</h3>
           <div className='row'>
-            <div className='col-md-1'>Availible<div className='availible' /></div>
+            <div className='col-md-1'>Available<div className='availible' /></div>
             <div className='col-md-1'>Reserved<div className='reserved-key' /></div>
             <div className='col-md-1'>Booked<div className='booked-key' /></div>
           </div>

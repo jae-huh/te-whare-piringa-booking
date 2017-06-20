@@ -36,27 +36,25 @@ class Profile extends React.Component {
 
   render () {
     return (
-      <div className="profile-container">
-        <h1>Profile</h1>
-        <div>
-          <h2>Your Bookings</h2>
-          <table>
+      <div className='profile-container'>
+        <h1 className='profile-title'>Profile</h1>
+        <h2>Your Bookings</h2>
+        <div className='profile'>
+          <table className='profile-table'>
             <thead>
               <tr>
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Confirmation Status</th>
                 <th>Delete Requested</th>
-                <th></th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
               {this.showUserBookings()}
             </tbody>
           </table>
-          {this.props.booking.fullName && <DetailsProfile />}
         </div>
+        {this.props.booking.fullName && <DetailsProfile />}
       </div>
     )
   }

@@ -7,18 +7,19 @@ import moment from 'moment'
 function DetailsProfile (props) {
 
   return (
-    <div>
-      <table className='detailsTable'>
+    <div className='details-profile-component'>
+      <h2>Booking details</h2>
+      <table className='detailsTableProfile'>
         <tr>
-          <td><b>Request made for: </b></td>
+          <td><b>Request made for</b></td>
           <td>{props.booking.fullName}</td>
         </tr>
         <tr>
-          <td><b>Email</b></td>
+          <td><b>Contact email</b></td>
           <td>{props.booking.emailAddress}</td>
         </tr>
         <tr>
-          <td><b>Phone</b></td>
+          <td><b>Contact number</b></td>
           <td>{props.booking.phoneNumber}</td>
         </tr>
         <tr>
