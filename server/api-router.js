@@ -104,6 +104,10 @@ router.post('/user/addbooking', (req, res) => {
   db.userAddBooking(req.body, authId, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
+    db.getAlertEmail((err, result) => {
+      if (err) return res.json({error: err})
+      email.sendNewBookingEmail(req, res, result[0].email)
+    })
   })
 })
 
@@ -143,13 +147,6 @@ router.get('/user/profile', (req, res) => {
   db.getUsers(req.params.id, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
-  })
-})
-
-router.post('/sendemail', (req, res) => {
-  db.getAlertEmail((err, result) => {
-    if (err) return res.json({error: err})
-    email.sendNewBookingEmail(req, res, result[0].email)
   })
 })
 
