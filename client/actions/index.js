@@ -102,8 +102,8 @@ export function deleteBooking (id) {
     dispatch(gettingData())
     login('delete', `/admin/delete/${id}`)
     .then(res => {
+      dispatch(receivedData())
       if (res.body.result) {
-        dispatch(receivedData())
         return dispatch(receiveBookings(res.body.bookings))
       }
     })
@@ -115,6 +115,7 @@ export function makeAdmin (email) {
     dispatch(gettingData())
     login('put', `/admin/makeadmin/${email}`)
     .then(res => {
+      dispatch(receivedData())
       dispatch(adminSuccess(res))
     })
   }
@@ -139,8 +140,8 @@ export function requestDelete (id) {
     dispatch(gettingData())
     login('put', `/user/requestdelete/${id}`)
     .then(res => {
+      dispatch(receivedData())
       if (res.body.result) {
-        dispatch(receivedData())
         return dispatch(receiveBookings(res.body.bookings))
       }
     })
