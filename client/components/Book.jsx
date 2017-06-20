@@ -58,8 +58,8 @@ class Book extends React.Component {
       emailAddress: this.state.email || this.props.user.emailAddress,
       phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
       authId: this.props.user.authId,
-      startDate: this.state.dateStart,
-      endDate: this.state.dateEnd,
+      startDate: this.state.dateStart.getTime(),
+      endDate: this.state.dateEnd.getTime(),
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber
     }
