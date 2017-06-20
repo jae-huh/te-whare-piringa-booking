@@ -18,9 +18,9 @@ class ScheduleColumn extends React.Component {
       this.props.setNewBooking(date, date2)
     } else {
       if (this.props.startDate > date) {
-        this.props.setNewBooking(date, this.props.startTime)
+        this.props.setNewBooking(date, new Date(moment(this.props.startTime).add(30, 'minutes')))
       } else {
-        this.props.setNewBooking(this.props.startTime, date)
+        this.props.setNewBooking(this.props.startTime, new Date(moment(date).add(30, 'minutes')))
       }
     }
     this.props.clicked()

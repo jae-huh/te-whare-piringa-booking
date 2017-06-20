@@ -68,7 +68,7 @@ class Book extends React.Component {
     }
     let message = validateBookingDetails(data)
     if (message !== 'ok') return this.props.validationError(message)
-    message = checkBookingForOverlap(data)
+    message = checkBookingForOverlap(data, this.props.bookings)
     if (message !== 'ok') return this.props.validationError(message)
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
@@ -117,7 +117,8 @@ function mapStateToProps (state) {
   return {
     user: state.user,
     startTime: state.newBooking.startTime,
-    endTime: state.newBooking.endTime
+    endTime: state.newBooking.endTime,
+    bookings: state.bookings
   }
 }
 

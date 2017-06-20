@@ -12,7 +12,6 @@ function validateBookingDetails (booking) {
   if (!booking.endDate) return 'Please enter the time and date you want the booking until'
   const startDate = new Date(booking.startDate)
   const endDate = new Date(booking.endDate)
-  console.log(startDate)
   if (Object.prototype.toString.call(new Date(startDate)) !== '[object Date]') return 'Please end a start date/time which is in the correct format'
   if (Object.prototype.toString.call(new Date(endDate)) !== '[object Date]') return 'Please end an end date/time which is in the correct format'
   if (startDate < new Date()) return 'You cannot use a start date/time in the past'
