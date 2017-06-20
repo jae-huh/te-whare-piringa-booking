@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux'
 
-import auth0 from './auth0'
 import user from './user'
 import redirectTo from './redirect'
 import booking from './booking'
@@ -10,9 +9,11 @@ import unconfirmed from './unconfirmed'
 import adminSuccess from './adminsuccess'
 import error from './error'
 import waiting from './waiting'
+import newBooking from './newBooking'
+import mouse from './mouse'
+import errors from './errors'
 
 export default combineReducers({
-  auth0,
   user,
   redirectTo,
   booking,
@@ -21,5 +22,8 @@ export default combineReducers({
   unconfirmed,
   adminSuccess,
   error,
-  waiting
+  waiting,
+  newBooking,
+  mouse,
+  errors
 })
