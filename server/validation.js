@@ -13,9 +13,9 @@ function validateBookingDetails (booking) {
   if (!booking.startDate) return 'Please enter the time and date you want the booking from'
   if (!booking.endDate) return 'Please enter the time and date you want the booking until'
   const startDate = new Date(booking.startDate)
-  console.log("startDtae: ", startDate)
-  console.log("endDtae: ", endDate)
+  console.log("startDate: ", startDate)
   const endDate = new Date(booking.endDate)
+  console.log("endDate: ", endDate)
   if (Object.prototype.toString.call(new Date(startDate)) !== '[object Date]') return 'Please end a start date/time which is in the correct format'
   if (Object.prototype.toString.call(new Date(endDate)) !== '[object Date]') return 'Please end an end date/time which is in the correct format'
   if (startDate < new Date()) return 'You cannot use a start date/time in the past'
@@ -29,6 +29,7 @@ function validateBookingDetails (booking) {
   if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
   if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
   if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
+  console.log("line 32")
   return 'ok'
 }
 
