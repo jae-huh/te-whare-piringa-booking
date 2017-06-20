@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {login} from '../api'
 
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
