@@ -50,13 +50,15 @@ function bookingPosted (booking) {
 }
 
 export const receiveBookings = bookings => {
+  bookings = bookings.map(booking => {
+    booking.startDate = new Date(booking.startDate)
+    booking.endDate = new Date(booking.endDate)
+    return booking
+  })
+  bookings.sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
   return {
     type: RECEIVE_BOOKINGS,
-    bookings: bookings.map(booking => {
-      booking.startDate = new Date(booking.startDate)
-      booking.endDate = new Date(booking.endDate)
-      return booking
-    })
+    bookings
   }
 }
 
