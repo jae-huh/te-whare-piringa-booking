@@ -28,6 +28,16 @@ function validateBookingDetails (booking) {
   return 'ok'
 }
 
+function validateAgainstOpenHours (booking) {
+  const startDate = new Date(booking.startDate)
+  const endDate = new Date(booking.endDate)
+  if (startDate.getHours() + startDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
+  if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
+  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You can not make a booking that starts that early'
+  if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
+  return 'ok'
+}
+
 function validateUserDetails (user) {
   if (!user) return 'No booking details found'
   if (!user.fullName) return 'Please enter your full name'
@@ -59,5 +69,6 @@ function checkBookingForOverlap (booking, bookings) {
 module.exports = {
   validateBookingDetails,
   validateUserDetails,
-  checkBookingForOverlap
+  checkBookingForOverlap,
+  validateAgainstOpenHours
 }

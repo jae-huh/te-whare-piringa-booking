@@ -21,27 +21,27 @@ class Registration extends React.Component {
       [e.target.name]: e.target.value
     })
   }
-  handleSubmit () {
+  handleSubmit (e) {
+    e.preventDefault()
     const registrationInfo = {
       fullName: this.state.fullName.trim(),
       phoneNumber: this.state.phoneNumber.trim(),
-      emailAddress: this.state.emailAddress.trim(),
-      authId: this.state.authId,
-      admin: false
+      emailAddress: this.state.emailAddress.trim()
     }
-    this.props.submitRegistration(registrationInfo)
+    this.props.submitRegistration(registrationInfo, () => {
+      this.props.history.push('/calendar')
+    })
   }
   render () {
     return (
       <div className='login-page'>
-        <div>
+        <form onSubmit={this.handleSubmit}>>
           <h2>Please Enter Your Details</h2>
           <p><input className='form-control' name='fullName' onChange={this.handleChange} placeholder='Full Name' /></p>
           <p><input className='form-control' name='emailAddress' onChange={this.handleChange} placeholder='Contact Email Address' /></p>
           <p><input className='form-control' name='phoneNumber' onChange={this.handleChange} placeholder='Contact Phone Number' /></p>
           <p><button className='btn btn-primary' onClick={this.handleSubmit}>Register</button></p>
-        </div>
-        {this.props.redirectTo === 'calendar' && <Redirect to='/calendar' />}
+        </form>
       </div>
     )
   }

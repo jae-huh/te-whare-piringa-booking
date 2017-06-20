@@ -98,7 +98,7 @@ class Book extends React.Component {
           <br />
           <textarea name='purpose' required placeholder='Purpose of hire' onChange={this.handleChange} />
           <br />
-          <input type='number' min='0' name='guestNumber' placeholder='Number of guests' onChange={this.handleChange} required />
+          <input type='number' min='0' name='guestNumber' placeholder='Number of guests' onChange={this.handleChange} />
           <br />
           <input type='submit' value='Book' />
         </form>

@@ -1,4 +1,3 @@
-import moment from 'moment'
 import {login} from '../api'
 
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
@@ -151,7 +150,6 @@ export function requestDelete (id) {
 export function emailAlertChange (email) {
   return dispatch => {
     dispatch(gettingData())
-    console.log(email)
     login('put', '/admin/notificationemail', email)
     .then(res => {
       dispatch(receivedData())

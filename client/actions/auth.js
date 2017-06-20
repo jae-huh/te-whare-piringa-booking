@@ -63,7 +63,7 @@ function loggedIn (user, bookings) {
   }
 }
 
-export function submitRegistration (registrationInfo) {
+export function submitRegistration (registrationInfo, callback) {
   return dispatch => {
     dispatch(gettingData())
     login('post', '/user/adduser', registrationInfo)
@@ -71,6 +71,7 @@ export function submitRegistration (registrationInfo) {
         dispatch(receivedData())
         if (res.body.user) {
           dispatch(loggedIn(res.body.user))
+          callback()
         }
         if (res.body.error) {
           dispatch(registrationFailed(res.body.error))
