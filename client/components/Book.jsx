@@ -4,6 +4,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import {connect} from 'react-redux'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 import {newBooking} from '../actions/index'
+import moment from 'moment'
+import {validateBookingDetails, checkBookingForOverlap} from '../utils/vars'
+import {validationError} from '../actions'
 
 injectTapEventPlugin()
 
@@ -15,11 +18,10 @@ class Book extends React.Component {
       fullName: '',
       email: '',
       phoneNumber: '',
-      dateStart: this.props.display.dateStart,
-      dateEnd: this.props.display.dateEnd,
+      dateStart: this.props.startTime,
+      dateEnd: this.props.endTime,
       purpose: null,
-      guestNumber: null,
-      deleteRequested: false
+      guestNumber: null
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -59,15 +61,16 @@ class Book extends React.Component {
       emailAddress: this.state.email || this.props.user.emailAddress,
       phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
       authId: this.props.user.authId,
-      startDate: this.state.dateStart,
-      endDate: this.state.dateEnd,
+      startDate: moment(this.state.dateStart),
+      endDate: moment(this.state.dateEnd),
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
-      // these details will be added on the backend - leaving them here for reference
-      // confirmed: false,
-      // dateAdded: new Date(),
-      // deleteRequested: false
+      dateAdded: new Date()
     }
+    let message = validateBookingDetails(data)
+    if (message !== 'ok') return this.props.validationError(message)
+    message = checkBookingForOverlap(data, this.props.bookings)
+    if (message !== 'ok') return this.props.validationError(message)
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
   }
@@ -83,13 +86,13 @@ class Book extends React.Component {
           <br />
           Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.user.phoneNumber} onChange={this.handleChange} /><br />
           Start Date and Time:
-       <Datetime value={this.state.dateStart}
+       <Datetime value={this.props.startTime}
        onChange={this.handleChangeDateStart}
        timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
        className="datepick"/>
           <br />
           End Date and time:
-           <Datetime value={this.state.dateEnd}
+           <Datetime value={this.props.endTime}
        onChange={this.handleChangeDateEnd}
        className="datepick"/>
           <br />
@@ -114,7 +117,9 @@ class Book extends React.Component {
 function mapStateToProps (state) {
   return {
     user: state.user,
-    display: state.display
+    startTime: state.newBooking.startTime,
+    endTime: state.newBooking.endTime,
+    bookings: state.bookings
   }
 }
 
@@ -122,7 +127,8 @@ function mapDispatchToProps (dispatch) {
   return {
     postNewBooking: data => {
       dispatch(newBooking(data))
-    }
+    },
+    validationError: message => dispatch(validationError(message))
   }
 }
 

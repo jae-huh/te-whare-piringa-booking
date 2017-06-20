@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {login} from '../api'
 
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
@@ -8,6 +9,8 @@ export const NOT_WAITING = 'NOT_WAITING'
 export const ADMINSUCCESS = 'ADMINSUCCESS'
 export const ERROR = 'ERROR'
 export const EMAIL_CHANGED = 'EMAIL_CHANGED'
+export const VALIDATION_ERROR = 'VALIDATION_ERROR'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
 
 export function newBooking (data) {
   return dispatch => {
@@ -160,5 +163,18 @@ function emailChanged (data) {
   return {
     type: EMAIL_CHANGED,
     data
+  }
+}
+
+export function validationError (message) {
+  return {
+    type: VALIDATION_ERROR,
+    message
+  }
+}
+
+export function clearError () {
+  return {
+    type: CLEAR_ERROR
   }
 }
