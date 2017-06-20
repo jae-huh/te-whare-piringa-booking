@@ -3,8 +3,6 @@ const moment = require('moment')
 const constants = require('./constants')
 
 function validateBookingDetails (booking) {
-  console.log("booking: ", booking)
-  console.log("contants:", constants)
   if (!booking) return 'No booking details found'
   if (!booking.fullName) return 'Please enter the contact person\'s name'
   if (!booking.emailAddress) return 'Please enter a contact email address'
@@ -12,10 +10,8 @@ function validateBookingDetails (booking) {
   if (!booking.purpose) return 'Please enter the purpose for the booking'
   if (!booking.startDate) return 'Please enter the time and date you want the booking from'
   if (!booking.endDate) return 'Please enter the time and date you want the booking until'
-  const startDate = moment(booking.startDate).add(12, 'hours')
-  console.log("startDate: ", startDate)
-  const endDate = moment(booking.endDate).add(12, 'hours')
-  console.log("endDate: ", endDate)
+  const startDate = new Date(booking.startDate)
+  const endDate = new Date(booking.endDate)
   if (Object.prototype.toString.call(new Date(startDate)) !== '[object Date]') return 'Please end a start date/time which is in the correct format'
   if (Object.prototype.toString.call(new Date(endDate)) !== '[object Date]') return 'Please end an end date/time which is in the correct format'
   if (startDate < new Date()) return 'You cannot use a start date/time in the past'
@@ -27,9 +23,8 @@ function validateBookingDetails (booking) {
   if (booking.phoneNumber.replace(/[^0-9]/g,"").length < 7) return 'Please enter a valid phone number'
   if (startDate.getHours() + startDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
   if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
-  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
+  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You can not make a booking that starts that early'
   if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
-  console.log("line 32")
   return 'ok'
 }
 

@@ -4,6 +4,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import {connect} from 'react-redux'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 import {newBooking} from '../actions/index'
+import moment from 'moment'
+import {validateBookingDetails, checkBookingForOverlap} from '../utils/vars'
+import {validationError} from '../actions'
 
 injectTapEventPlugin()
 
@@ -58,13 +61,16 @@ class Book extends React.Component {
       emailAddress: this.state.email || this.props.user.emailAddress,
       phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
       authId: this.props.user.authId,
-      startDate: this.state.dateStart.toString(),
-      endDate: this.state.dateEnd.toString(),
+      startDate: moment(this.state.dateStart),
+      endDate: moment(this.state.dateEnd),
       purpose: this.state.purpose,
       guestNumber: this.state.guestNumber,
       dateAdded: new Date()
-      // deleteRequested: false
     }
+    let message = validateBookingDetails(data)
+    if (message !== 'ok') return this.props.validationError(message)
+    message = checkBookingForOverlap(data, this.props.bookings)
+    if (message !== 'ok') return this.props.validationError(message)
     this.props.postNewBooking(data)
     this.props.history.push('/calendar')
   }
@@ -112,7 +118,8 @@ function mapStateToProps (state) {
   return {
     user: state.user,
     startTime: state.newBooking.startTime,
-    endTime: state.newBooking.endTime
+    endTime: state.newBooking.endTime,
+    bookings: state.bookings
   }
 }
 
@@ -120,7 +127,8 @@ function mapDispatchToProps (dispatch) {
   return {
     postNewBooking: data => {
       dispatch(newBooking(data))
-    }
+    },
+    validationError: message => dispatch(validationError(message))
   }
 }
 
