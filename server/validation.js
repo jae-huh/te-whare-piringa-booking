@@ -12,9 +12,9 @@ function validateBookingDetails (booking) {
   if (!booking.purpose) return 'Please enter the purpose for the booking'
   if (!booking.startDate) return 'Please enter the time and date you want the booking from'
   if (!booking.endDate) return 'Please enter the time and date you want the booking until'
-  const startDate = new Date(booking.startDate)
+  const startDate = moment(booking.startDate).add(12, 'hours')
   console.log("startDate: ", startDate)
-  const endDate = new Date(booking.endDate)
+  const endDate = moment(booking.endDate).add(12, 'hours')
   console.log("endDate: ", endDate)
   if (Object.prototype.toString.call(new Date(startDate)) !== '[object Date]') return 'Please end a start date/time which is in the correct format'
   if (Object.prototype.toString.call(new Date(endDate)) !== '[object Date]') return 'Please end an end date/time which is in the correct format'

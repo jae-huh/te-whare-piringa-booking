@@ -2,9 +2,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
+import {clearError} from '../actions'
+
 function Error (props) {
   function handleClose () {
-    props.history.push('/')
+    props.clearError()
   }
 
   return (
@@ -22,4 +24,10 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(Error)
+function mapDispatchToProps (dispatch) {
+  return {
+    clearError: () => dispatch(clearError())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Error)
