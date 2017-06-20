@@ -31,13 +31,12 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 70%;
+  width: 65%;
   height: 100%;
   margin: 0;
 }
 .navigation-list-titles {
   display: flex;
-  justify-content: left;
   align-items: center;
   width: 300px;
   margin: 0;
@@ -47,7 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90px;
+  width: 70px;
   height: 100%;
   font-weight: bold;
 }
@@ -55,7 +54,7 @@
 .navigation-list-title {
   display: flex;
   text-align: left;
-  width: 90px;
+  width: 70px;
   height: 100%;
   font-weight: bold;
   list-style: none;
@@ -73,4 +72,62 @@
 .navigation-list-link:hover {
   background-color: rgb(206,169,212);
   color: #46075c;
+}
+
+.menu-button {
+  display: none;
+}
+
+@media (max-width: 835px) {
+  .navigation-list a {
+    display: none;
+  }
+
+  .navigation-list .menu-button {
+    float: right;
+    display: block;
+  }
+
+  .menu-button {
+    display: inline-block;
+    color: #ffffff;
+    margin-right: 30px;
+    font-size: 2em;
+    cursor: pointer;
+    align-self: center;
+    position: absolute;
+    right: 0;
+    top: 14px;
+  }
+
+  .navigation-list.responsive-menu {
+    position: absolute;
+    right: 0;
+  }
+
+  .navigation-list.responsive-menu .menu-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .navigation-list.responsive-menu > a {
+    display: block;
+    height: 50px;
+    width: 100%;
+  }
+
+  .navigation-list {
+    display: block;
+    width: 20%;
+    padding: 0;
+    top: 60px;
+    background-color: #46075c;
+    height: auto;
+  }
+  .navigation-list-item {
+    margin: auto;
+    text-align: center;
+  }
+
 }

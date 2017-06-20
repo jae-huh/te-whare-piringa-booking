@@ -65,29 +65,33 @@
 }
 
 .hall-container {
-  background-color: #fae160;
+  background-color: #ebebeb;
   box-shadow: inset 0px 0px 20px 2px rgba(0,0,0,0.75);
 }
 
 .gallery-container {
-  background-color: #f7f4fc;
-  /*box-shadow: inset 0px 0px 20px 2px rgba(0,0,0,0.75);*/
+
 }
 
 .about-container {
-  background-color: #fae160;
+  background-color: #ebebeb;
   box-shadow: inset 0px 0px 20px 2px rgba(0,0,0,0.75);
 }
 
 .contact-container {
-  background-color: #f7f4fc;
+
 }
 
 .section-inner-div {
+  /*background-color: #fff;*/
   width: 60%;
   padding: 0 20px 20px 20px;
   border: 1px solid grey;
   margin: 60px 0;
+}
+
+.home-headings {
+
 }
 
 /*hall*/
