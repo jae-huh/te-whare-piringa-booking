@@ -26,14 +26,10 @@ export function newBooking (data) {
 }
 
 function sendEmail (data) {
-  return dispatch => {
-    dispatch(gettingData())
-    login('post', '/sendemail', data)
-    .then(f => {
-      dispatch(receivedData())
-    })
-  }
+  login('post', '/sendemail', data)
+  .then(f => f)
 }
+
 function sendConfirm (data) {
   return dispatch => {
     dispatch(gettingData())
@@ -42,6 +38,11 @@ function sendConfirm (data) {
       dispatch(receivedData())
     })
   }
+}
+
+function deleteEmail (data) {
+  login('post', '/deleteemail', data)
+  .then(f => f)
 }
 
 function bookingPosted (booking) {
@@ -147,6 +148,8 @@ export function requestDelete (id) {
     login('put', `/user/requestdelete/${id}`)
     .then(res => {
       dispatch(receivedData())
+      const booking = res.body.bookings.find(item => item._id === id)
+      deleteEmail(booking)
       if (res.body.result) {
         return dispatch(receiveBookings(res.body.bookings))
       }
