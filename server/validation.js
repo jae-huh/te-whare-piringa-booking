@@ -24,7 +24,7 @@ function validateBookingDetails (booking) {
   if (startDate.getHours() + startDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
   if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
   if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You can not make a booking that starts that early'
-  if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
+  if (endDate.getHours() + endDate.getMinutes() / 60 > constants.closingHour) return 'You cannot make a booking that ends that late'
   return 'ok'
 }
 

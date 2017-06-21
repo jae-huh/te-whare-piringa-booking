@@ -76,3 +76,7 @@ th {
   max-width: 500px;
   margin: auto;
 }
+
+.book-container {
+  min-width: 300px;
+}

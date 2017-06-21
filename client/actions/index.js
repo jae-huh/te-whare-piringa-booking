@@ -20,22 +20,17 @@ export function newBooking (data) {
         dispatch(bookingPosted(res.body.booking))
         dispatch(receiveBookings(res.body.bookings))
         dispatch(receivedData())
-        sendEmail(res.body.booking)
       })
-  }
-}
-
-function sendEmail (data) {
-  return dispatch => {
-    login('post', '/sendemail', data)
-    .then(f => f)
   }
 }
 
 function sendConfirm (data) {
   return dispatch => {
+    dispatch(gettingData())
     login('post', '/sendconfirm/', data)
-    .then(f => f)
+    .then(f => {
+      dispatch(receivedData())
+    })
   }
 }
 
@@ -49,13 +44,15 @@ function bookingPosted (booking) {
 }
 
 export const receiveBookings = bookings => {
+  bookings = bookings.map(booking => {
+    booking.startDate = new Date(booking.startDate)
+    booking.endDate = new Date(booking.endDate)
+    return booking
+  })
+  bookings.sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
   return {
     type: RECEIVE_BOOKINGS,
-    bookings: bookings.map(booking => {
-      booking.startDate = new Date(booking.startDate)
-      booking.endDate = new Date(booking.endDate)
-      return booking
-    })
+    bookings
   }
 }
 
