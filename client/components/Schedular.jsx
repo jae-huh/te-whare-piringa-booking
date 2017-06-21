@@ -76,9 +76,9 @@ class Schedular extends React.Component {
         </div>
         <div className='schedule-header-container'>
           <div className='schedule-header time'>Timeslot</div>
-          <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
+          <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('dddd DD MMMM YYYY')}</div>
+          <div className='schedule-header'>{moment(this.props.date).format('dddd DD MMMM YYYY')}</div>
+          <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('dddd DD MMMM YYYY')}</div>
         </div>
         <div className='schedule-columns-container'>
           <HoursColumn />

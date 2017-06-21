@@ -71,11 +71,12 @@ export function submitRegistration (registrationInfo, callback) {
         dispatch(receivedData())
         if (res.body.user) {
           dispatch(loggedIn(res.body.user))
-          callback()
+          return true
         }
         if (res.body.error) {
           dispatch(registrationFailed(res.body.error))
-          return console.log(res.body.error)
+          console.log(res.body.error)
+          return false
         }
       })
   }

@@ -28,9 +28,12 @@ class Registration extends React.Component {
       phoneNumber: this.state.phoneNumber.trim(),
       emailAddress: this.state.emailAddress.trim()
     }
-    this.props.submitRegistration(registrationInfo, () => {
-      this.props.history.push('/calendar')
-    })
+    this.props.submitRegistration(registrationInfo)
+      .then(completed => {
+        if (completed) {
+          this.history.push('/calendar')
+        }
+      })
   }
   render () {
     return (
