@@ -205,7 +205,6 @@
   margin: 20px;
   padding: 0 20px;
   transition: padding 1s;
-  /*box-sizing: border-box;*/
 }
 
 .about-info > p {
@@ -220,7 +219,6 @@
 .about-info:hover {
   padding: 0 10px;
   background-color: white;
-  /*box-sizing: border-box;*/
   border-radius: 10px;
   box-shadow: 10px 10px 15px -6px rgba(130,130,130,1);
 }
@@ -247,14 +245,16 @@
 .contact-map {
   border: 7px solid #ebebeb;
   border-radius: 10px;
+  margin: 10px;
+  width: 350px;
 }
 
 .contact-information {
   margin: 10px;
+  width: 350px;
   background-color: #ebebeb;
   border-radius: 20px;
   padding: 20px;
-  /*box-sizing: border-box;*/
 }
 
 .contact-information > h2 {
