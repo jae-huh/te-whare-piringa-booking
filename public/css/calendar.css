@@ -50,12 +50,13 @@
 }
 
 .calendar-busy-bar {
-  width: 80%;
+  width: 90%;
   height: 1.5em;
   background: linear-gradient(to right,
     hsl(25, 100%, 100%), hsl(25, 100%, 46.875%)
     );
   margin: 0 auto;
+  border-radius: .75em;
 }
 
 .busy-indicator {
@@ -64,6 +65,9 @@
   justify-content: center;
 }
 
+.busy-indicator > p {
+  margin: 0, 1em;
+}
 
 .calendar-orange17 {
   background-color: hsl(25, 100%, 46.875%);
