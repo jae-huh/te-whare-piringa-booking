@@ -89,7 +89,6 @@ function confirmBooking (req, authId, cb) {
 }
 
 function requestDelete (booking, authId, cb) {
-  console.log('requesting')
   getDatabase((err, db) => {
     if (err) return cb(err)
     if (booking.confirmed) {
@@ -101,7 +100,6 @@ function requestDelete (booking, authId, cb) {
         })
       })
     } else {
-      console.log('deleting')
       deleteBooking(booking, authId, cb)
     }
   })
@@ -152,7 +150,6 @@ function deleteBooking (booking, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('bookings').remove({_id: ObjectId(booking._id)}, (err, result) => {
-      console.log(result)
       if (err) return cb(err)
       userGetAllBookings(authId, (err, bookings) => {
         if (err) return cb(err)
