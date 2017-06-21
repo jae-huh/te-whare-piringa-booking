@@ -162,8 +162,17 @@
 
 
 /*Scheduler styling*/
+.schedule-container {
+  margin: 2em 7.5em 0 7.5em;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+}
+
 .schedule-body {
-    margin: 25px!important;
+  margin: 25px!important;
   border: 3px solid #46075C!important;
 }
 .schedule-header-container, .schedule-columns-container, .schedule-columns {
@@ -181,20 +190,25 @@
 }
 .schedule-hours-container{
   width: 10%;
+  border-left: 0.05em solid rgba(150,150,150,0.25);
 }
 
 .schedule-header, .slot, .hour {
-  border-color: rgba(150,150,150,0.5);
+  border-color: rgba(150,150,150,0.25);
   border-style: solid;
   width: 100%;
   height: 1.3em;
   font-family: 'Roboto', sans-serif;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
+.schedule-header, .hour {
+  text-align: center
+}
 
 .schedule-header {
   border-width: 0.05em 0.05em 0.05em 0;
+  font-weight: bold;
 }
 
 .schedule-header.time {
@@ -204,6 +218,7 @@
 .full-hour {
   border-width: 0 0.05em 0.05em 0;
   border-style: dotted;
+  border-right: 0.05em solid rgba(150,150,150,0.25);
 }
 
 .half-hour {
@@ -220,21 +235,46 @@
 }
 
 .reserved {
-  background-color: olivedrab;
-  border: none!important;
+  background-color: #FFF0C8;
+  /*border: none!important;*/
 }
 
 .confirmed {
-  background-color: red;
-  border: none!important;
+  background-color: hsla(8, 86%, 64%, .75);
+  /*border: none!important;*/
 }
 
 .datepick {
   max-width: 60%;
 }
 
+.schedule-key {
+  margin-top: 2em;
+}
+
+.key-circles {
+  margin-bottom: 1em;
+}
+
+.login-book {
+  text-align: right;
+  padding-left: 50px;
+}
+
+.setting-btn2 {
+  -webkit-border-radius: .5em;
+  -moz-border-radius: .5em;
+  border-radius: .5em;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 1.25em;
+  background: rgba(69, 6, 91, .7);
+  /*padding: 10px 20px 10px 20px;*/
+  text-decoration: none;
+}
+
 .reserved-key {
-  background-color: olivedrab;
+  background-color: #FFF0C8;
   height: 25px;
   width: 25px;
   border-radius: 50%;
@@ -243,7 +283,7 @@
 }
 
 .booked-key {
-  background-color: red;
+  background-color: hsla(8, 86%, 64%, .75);
   height: 25px;
   width: 25px;
   border-radius: 50%;
@@ -251,7 +291,7 @@
   border-style: solid;
 }
 
-.availible {
+.available {
   height: 25px;
   width: 25px;
   background-color: white;
