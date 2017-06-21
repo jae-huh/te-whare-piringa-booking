@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
-import {switchDate} from '../actions/calendar'
+import {switchDate, setNewBooking} from '../actions/calendar'
 import {numberOfIntervals} from '../utils/overlap'
 
 class Calendar extends React.Component {
@@ -12,6 +12,18 @@ class Calendar extends React.Component {
     this.nextMonth = this.nextMonth.bind(this)
     this.selectDate = this.selectDate.bind(this)
   }
+
+  componentDidMount () {
+    if (window.localStorage.getItem('date')) {
+      this.props.switchDate(new Date(window.localStorage.getItem('date')))
+      this.props.setNewBooking(new Date(window.localStorage.getItem('startTime')), new Date(window.localStorage.getItem('endTime')))
+      window.localStorage.removeItem('startTime')
+      window.localStorage.removeItem('endTime')
+      window.localStorage.removeItem('date')
+      this.props.history.push('/schedule')
+    }
+  }
+
   previousMonth () {
     const d = this.props.date
     const newD = new Date(moment(d).subtract(1, 'months'))
@@ -142,7 +154,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    switchDate: date => dispatch(switchDate(date))
+    switchDate: date => dispatch(switchDate(date)),
+    setNewBooking: (start, end) => dispatch(setNewBooking(start, end))
   }
 }
 

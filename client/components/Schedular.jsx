@@ -56,6 +56,9 @@ class Schedular extends React.Component {
     this.setState({
       modal: false
     })
+    window.localStorage.setItem('date', this.props.date)
+    window.localStorage.setItem('startTime', this.props.startTime)
+    window.localStorage.setItem('endTime', this.props.endTime)
   }
 
   render () {
@@ -134,6 +137,7 @@ function mapDispatchToProps (dispatch) {
   return {
     validationError: message => dispatch(validationError(message)),
     switchDate: date => dispatch(switchDate(date))
+
   }
 }
 
