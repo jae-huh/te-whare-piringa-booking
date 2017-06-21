@@ -54,7 +54,8 @@ class AdminPortal extends React.Component {
   handleClose () {
     this.setState({
       modal: false,
-      showSettings: false
+      showSettings: false,
+      sure: false
     })
     this.props.history.push('/admin')
   }
@@ -179,18 +180,18 @@ class AdminPortal extends React.Component {
                   }
                   {this.props.admin &&
                   <div className="modal-admin">
-                    {!this.props.booking.confirmed && !this.state.sure &&
+                    {!this.state.sure &&
                     <div className="text-center">
-                      <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>
-                      <span className="glyphicon glyphicon-remove remove" onClick={() => this.setState({sure: true})}></span>
+                      {!this.props.booking.confirmed && <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>}
+                      <span className="glyphicon glyphicon-trash remove" onClick={() => this.setState({sure: true})}></span>
                     </div>
                     }
                     {this.state.sure &&
                     <div className="text-center">
                       <p className='sure'>Are you sure you want to delete?</p>
-                      <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
-                      <span className="glyphicon glyphicon-remove remove" onClick={() => this.setState({sure: false})}></span>
-                    </div>
+                      <button className="setting-btn" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}>Yes</button>
+                      <button className="setting-btn" onClick={() => { this.handleClose() }} defaultValue>No</button>
+                      </div>
                     }
                   </div>
                   }
