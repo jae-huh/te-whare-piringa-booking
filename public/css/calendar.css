@@ -222,7 +222,6 @@
   min-height: 1.5em;
   min-width: 2.5em;
   font-family: 'Roboto', sans-serif;
-  /*font-weight: bold;*/
 }
 
 .schedule-header, .hour {
@@ -260,7 +259,6 @@
 
 .reserved {
   background-color: #FFF0C8;
-  /*border: none!important;*/
 }
 
 .confirmed {
@@ -269,7 +267,6 @@
 
 .confirmed {
   background-color: hsla(8, 86%, 64%, .75);
-  /*border: none!important;*/
 }
 
 .datepick {
@@ -300,7 +297,6 @@
   color: #ffffff;
   font-size: 1.25em;
   background: rgba(69, 6, 91, .7);
-  /*padding: 10px 20px 10px 20px;*/
   text-decoration: none;
 }
 
@@ -340,7 +336,6 @@
 }
 
 .key-table {
-  /*margin: auto;*/
   display: flex;
   justify-content: center;
 }
@@ -387,13 +382,10 @@
 
 .remove {
   color: red;
-  /*font-size: 18px;*/
 }
 
 .confirm {
   color: green;
-  /*font-size: 2em;*/
-  /*margin: 5px*/
 }
 
 .confirm, .remove {
