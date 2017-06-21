@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {confirm, deleteBooking, selectBooking} from '../actions/index'
+import {confirm, deleteBooking, selectBooking, requestDelete} from '../actions/index'
 import Setting from './Settings'
 import Details from './Details'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
@@ -82,6 +82,11 @@ class AdminPortal extends React.Component {
     return false
   }
 
+  requestBookingToBeDeleted (id) {
+    this.props.requestDelete(id)
+    this.handleClose()
+  }
+
   render () {
     return (
       <div className="admin-portal container">
@@ -146,6 +151,9 @@ class AdminPortal extends React.Component {
                 <ModalDialog onClose={this.handleClose}>
                   <h3>Details</h3>
                   <Details />
+                  {!this.props.admin &&
+                  <button onClick={() => this.requestBookingToBeDeleted(this.props.booking._id)}>Request Delete</button>
+                  }
                   {this.props.admin &&
                   <div className="modal-admin">
                     <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>
@@ -175,7 +183,8 @@ function mapDispatchToProps (dispatch) {
   return {
     confirm: id => { dispatch(confirm(id)) },
     deleteBooking: id => { dispatch(deleteBooking(id)) },
-    selectBooking: booking => { dispatch(selectBooking(booking)) }
+    selectBooking: booking => { dispatch(selectBooking(booking)) },
+    requestDelete: id => dispatch(requestDelete(id))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPortal)
