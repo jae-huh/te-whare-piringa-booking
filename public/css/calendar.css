@@ -240,6 +240,10 @@
 }
 
 .confirmed {
+  cursor: pointer;
+}
+
+.confirmed {
   background-color: hsla(8, 86%, 64%, .75);
   /*border: none!important;*/
 }
