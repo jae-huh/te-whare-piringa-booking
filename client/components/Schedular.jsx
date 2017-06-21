@@ -62,25 +62,25 @@ class Schedular extends React.Component {
             </div>
           </div>
           <div className='schedule-navbar'/>
-          <div className='row'>
-            <div className='col-md-1'>
-            <img src='./images/left.png' height="70" onClick={this.previousDay} />
+          <div className='row schedule-row'>
+            <div className='col-md-1 schedule-arrow'>
+            <div><img src='./images/left.png' height="70" onClick={this.previousDay} /></div>
             </div>
             <div className='col-md-10'>
+              <div className='schedule-header-container'>
+                <div className='schedule-header time'>Timeslot</div>
+                <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
+                <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
+                <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
               </div>
-            <div className='col-md-1'>
-            <img src='./images/right-arrow-icon.png' height="70" onClick={this.nextDay} />
+              <div className='schedule-columns-container'>
+                <HoursColumn />
+                <ScheduleColumns />
+              </div>
+            </div>
+            <div className='col-md-1 schedule-arrow'>
+            <div><img src='./images/right-arrow-icon.png' height="70" onClick={this.nextDay} /></div>
           </div>
-          </div>
-          <div className='schedule-header-container'>
-            <div className='schedule-header time'>Timeslot</div>
-            <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
-            <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
-            <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
-          </div>
-          <div className='schedule-columns-container'>
-            <HoursColumn />
-            <ScheduleColumns />
           </div>
         </div>
       </div>

@@ -138,13 +138,26 @@
 
 /*Scheduler styling*/
 .schedule-container {
+  /*display: flex;
+  justify-content: center;*/
+  margin: 2em 7.5em 0 7.5em;
+
+}
+
+.schedule-row {
   display: flex;
-  justify-content: center;
-  margin:
+  align-items: center;
+}
+
+.schedule-arrow {
+  /*display: inline-block;
+  vertical-align: middle;
+  float: none*/
 }
 
 .schedule {
-  margin: 15em 7.5em 0 7.5em;
+  /*margin: 15em 7.5em 0 7.5em;*/
+  /*margin*/
 }
 
 .schedule-body {
@@ -166,6 +179,7 @@
 }
 .schedule-hours-container{
   width: 10%;
+  border-left: 0.05em solid rgba(150,150,150,0.5);
 }
 
 .schedule-header, .slot, .hour {
@@ -189,6 +203,7 @@
 .full-hour {
   border-width: 0 0.05em 0.05em 0;
   border-style: dotted;
+  border-right: 0.05em solid rgba(150,150,150,0.5);
 }
 
 .half-hour {
