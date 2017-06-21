@@ -79,6 +79,11 @@
 }
 
 @media (max-width: 835px) {
+  .navigation-home-link {
+    /*font-size: 0.5em;*/
+    width: 240px;
+  }
+
   .navigation-list a {
     display: none;
   }
@@ -119,13 +124,13 @@
 
   .navigation-list {
     display: block;
-    width: 20%;
+    width: 100%;
     padding: 0;
     top: 60px;
     background-color: #46075c;
     height: auto;
   }
-  
+
   .navigation-list-item {
     margin: auto;
     text-align: center;

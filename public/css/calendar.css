@@ -212,6 +212,7 @@
 }
 .schedule-hours-container{
   width: 10%;
+  min-width: 80px;
   border-left: 0.05em solid rgba(150,150,150,0.25);
 }
 
@@ -219,7 +220,8 @@
   border-color: rgba(150,150,150,0.25);
   border-style: solid;
   width: 100%;
-  height: 1.3em;
+  min-height: 1.5em;
+  min-width: 2.5em;
   font-family: 'Roboto', sans-serif;
   /*font-weight: bold;*/
 }
@@ -250,6 +252,7 @@
 
 .time {
   max-width: 10%;
+  min-width: 80px;
 }
 
 .selected {
@@ -286,8 +289,8 @@
 }
 
 .login-book {
-  text-align: right;
-  padding-left: 50px;
+  text-align: center;
+  padding-top: 10px;
 }
 
 .setting-btn2 {
@@ -337,7 +340,29 @@
   overflow-x: hidden;
 }
 
+.key-table {
+  margin: auto;
+}
+
+.schedule-arrow {
+  padding: 10px 0;
+}
+
+.schedule-arrow >img {
+  width: 80%;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.schedule-arrow >img:hover {
+  opacity: 0.7;
+}
+
 @media (max-width: 835px) {
+  .schedule-container {
+    margin: 0;
+  }
+
   .calendar-header {
     font-size: 0.5em;
   }
@@ -348,15 +373,6 @@
 
   .unconfirmed-list{
     max-height: 75vmin;
-  }
-
-  .col-md-10 {
-    width: 380px;
-  }
-
-  .setting-btn2 {
-    position: absolute;
-    top: -40px;
   }
 
   .calendar-busy-bar {
