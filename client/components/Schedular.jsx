@@ -19,7 +19,6 @@ class Schedular extends React.Component {
     this.handleClose = this.handleClose.bind(this)
     this.previousDay = this.previousDay.bind(this)
     this.nextDay = this.nextDay.bind(this)
-    this.nextDay = this.nextDay.bind(this)
     this.askToLogin = this.askToLogin.bind(this)
   }
 
