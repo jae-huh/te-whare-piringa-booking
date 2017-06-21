@@ -75,3 +75,7 @@ th {
 .book-container {
   min-width: 300px;
 }
+
+.sure {
+  color: red;
+}
