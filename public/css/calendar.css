@@ -219,6 +219,26 @@
   max-width: 60%;
 }
 
+.schedule-key {
+  margin-top: 2em;
+}
+
+.key-circles {
+  margin-bottom: 1em;
+}
+
+.setting-btn2 {
+  -webkit-border-radius: .5em;
+  -moz-border-radius: .5em;
+  border-radius: .5em;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 1.25em;
+  background: rgba(69, 6, 91, .7);
+  /*padding: 10px 20px 10px 20px;*/
+  text-decoration: none;
+}
+
 .reserved-key {
   background-color: #FFF0C8;
   height: 25px;
@@ -237,7 +257,7 @@
   border-style: solid;
 }
 
-.availible {
+.available {
   height: 25px;
   width: 25px;
   background-color: white;
@@ -245,6 +265,7 @@
   border-width: 2px;
   border-style: solid;
 }
+
 .unconfirmed-list{
   width: 100%;
   max-height: 50vmin;
