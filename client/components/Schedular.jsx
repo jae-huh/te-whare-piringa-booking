@@ -56,6 +56,9 @@ class Schedular extends React.Component {
     this.setState({
       modal: false
     })
+    window.localStorage.setItem('date', this.props.date)
+    window.localStorage.setItem('startTime', this.props.startTime)
+    window.localStorage.setItem('endTime', this.props.endTime)
   }
 
   render () {
@@ -101,9 +104,9 @@ class Schedular extends React.Component {
               <div className='col-md-10'>
                 <div className='schedule-header-container'>
                   <div className='schedule-header time'>Timeslot</div>
-                  <div className='schedule-header yesterday'>{moment(this.props.date).subtract(1, 'days').format('dddd DD MMMM YYYY')}</div>
-                  <div className='schedule-header'>{moment(this.props.date).format('dddd DD MMMM YYYY')}</div>
-                  <div className='schedule-header tomorrow'>{moment(this.props.date).add(1, 'days').format('dddd DD MMMM YYYY')}</div>
+                  <div className='schedule-header yesterday'>{moment(this.props.date).subtract(1, 'days').format('ddd DD MMM')}</div>
+                  <div className='schedule-header'>{moment(this.props.date).format('ddd DD MMM')}</div>
+                  <div className='schedule-header tomorrow'>{moment(this.props.date).add(1, 'days').format('ddd DD MMM')}</div>
                 </div>
                 <div className='schedule-columns-container'>
                   <HoursColumn />
@@ -134,6 +137,7 @@ function mapDispatchToProps (dispatch) {
   return {
     validationError: message => dispatch(validationError(message)),
     switchDate: date => dispatch(switchDate(date))
+
   }
 }
 
