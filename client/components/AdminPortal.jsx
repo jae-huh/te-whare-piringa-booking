@@ -83,8 +83,7 @@ class AdminPortal extends React.Component {
   render () {
     return (
       <div className="admin-portal container">
-        {this.props.admin
-        ? <div>
+        <div>
           <h2>Welcome, {this.props.user.fullName}</h2>
         <div className="row">
           <div className="col-md-1" />
@@ -129,14 +128,18 @@ class AdminPortal extends React.Component {
           <div className="row">
             <div className="col-md-1" />
             <div className="col-md-10 text-center">
-              <button onClick={this.settingShow} className="setting-btn">Settings</button>
-              {this.state.showSettings &&
-               <ModalContainer onClose={this.handleClose}>
-                <ModalDialog onClose={this.handleClose}>
-                  <Setting close={this.handleClose}/>
-                </ModalDialog>
-              </ModalContainer>
-              }
+              {this.props.admin && (
+                <div>
+                  <button onClick={this.settingShow} className="setting-btn">Settings</button>
+                  {this.state.showSettings &&
+                    <ModalContainer onClose={this.handleClose}>
+                      <ModalDialog onClose={this.handleClose}>
+                        <Setting close={this.handleClose}/>
+                      </ModalDialog>
+                    </ModalContainer>
+                  }
+                </div>
+              )}
               {this.props.booking.fullName && this.state.modal &&
               <ModalContainer onClose={this.handleClose}>
                 <ModalDialog onClose={this.handleClose}>
@@ -150,8 +153,6 @@ class AdminPortal extends React.Component {
             </div>
           </div>
         </div>
-        : <h1>Not authorised</h1>
-        }
       </div>
     )
   }
@@ -159,7 +160,7 @@ class AdminPortal extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    bookings: state.bookings,
+    bookings: state.bookings.filter(booking => booking.authId),
     admin: state.user.admin,
     booking: state.booking,
     user: state.user
