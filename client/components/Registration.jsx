@@ -35,7 +35,7 @@ class Registration extends React.Component {
   render () {
     return (
       <div className='login-page'>
-        <form onSubmit={this.handleSubmit}>>
+        <form onSubmit={this.handleSubmit}>
           <h2>Please Enter Your Details</h2>
           <p><input className='form-control' name='fullName' onChange={this.handleChange} placeholder='Full Name' /></p>
           <p><input className='form-control' name='emailAddress' onChange={this.handleChange} placeholder='Contact Email Address' /></p>
