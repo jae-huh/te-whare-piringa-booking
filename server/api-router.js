@@ -106,7 +106,6 @@ router.post('/user/addbooking', (req, res) => {
     res.json(result)
     db.getAlertEmail((err, result) => {
       if (err) return res.json({error: err})
-      email.sendNewBookingEmail(req, res, result[0].email)
     })
   })
 })
@@ -119,9 +118,9 @@ router.put('/admin/confirm/:id', (req, res) => {
   })
 })
 
-router.put('/user/requestdelete/:id', (req, res) => {
+router.put('/user/requestdelete/', (req, res) => {
   const authId = getUserIdFromToken(req)
-  db.requestDelete(req, authId, (err, result) => {
+  db.requestDelete(req.body, authId, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
@@ -135,9 +134,9 @@ router.put('/admin/makeadmin/:email', (req, res) => {
   })
 })
 
-router.delete('/admin/delete/:id', (req, res) => {
+router.delete('/admin/delete/', (req, res) => {
   const authId = getUserIdFromToken(req)
-  db.deleteBooking(req.params.id, authId, (err, result) => {
+  db.deleteBooking(req.body, authId, (err, result) => {
     if (err) return res.json({error: err})
     res.json(result)
   })
@@ -152,6 +151,20 @@ router.get('/user/profile', (req, res) => {
 
 router.post('/sendconfirm', (req, res) => {
   email.confirmedBookingEmail(req, res)
+})
+
+router.post('/deleteemail', (req, res) => {
+  db.getAlertEmail((err, result) => {
+    if (err) return res.json({error: err})
+    email.deleteRequestedEmail(req, res, result[0].email)
+  })
+})
+
+router.post('/sendemail', (req, res) => {
+  db.getAlertEmail((err, result) => {
+    if (err) return res.json({error: err})
+    email.sendNewBookingEmail(req, res, result[0].email)
+  })
 })
 
 router.post('/admin/notificationemail', (req, res) => {

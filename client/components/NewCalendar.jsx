@@ -36,9 +36,9 @@ class Calendar extends React.Component {
       <div className='calendar container'>
         <div className='calendar-title'>
           <h2>
-            <span className='calendar-previous'><a onClick={this.previousMonth} ><img src='/images/left.png' /></a> </span>
+            <span className='calendar-previous'><a onClick={this.previousMonth} ><img className='calendar-arrows calendar-arrow-left' src='/images/left.png' /></a></span>
             {moment(this.props.date).format('MMMM YYYY')}
-            <span className='calendar-next'><a onClick={this.nextMonth} ><img src='/images/right-arrow-icon.png' /></a> </span>
+            <span className='calendar-next'><a onClick={this.nextMonth} ><img className='calendar-arrows calendar-arrow-right' src='/images/right-arrow-icon.png' /></a></span>
           </h2>
         </div>
         <div className="calendar-container">
@@ -67,13 +67,17 @@ class Calendar extends React.Component {
     let today = new Date()
     today = new Date(today.getFullYear(), today.getMonth(), today.getDate())
     const adminStyle = {}
-    this.props.admin ? adminStyle.cursor = 'pointer' : adminStyle.cursor = 'default'
+    this.props.admin ? adminStyle.cursor = 'pointer' : null
 
     let i = 0
     while (i < firstDay) {
       const thisDate = new Date(d.getFullYear(), d.getMonth(), 1 - firstDay + i)
       const thisDateFormatted = moment(thisDate).format('YYYY-MM-DD')
-      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className='calendar-date last-month' onClick={this.selectDate} style={adminStyle}>{thisDate.getDate()} </div>)
+      let classNames = 'calendar-date last-month'
+      if (thisDate.getTime() > today.getTime()) {
+        classNames += ' future'
+      }
+      dateArray.push(<div key={thisDateFormatted} id={'day' + thisDateFormatted} className={classNames} onClick={this.selectDate} style={adminStyle}>{thisDate.getDate()} </div>)
       i++
     }
     i = 1

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {HashLink} from 'react-router-hash-link'
 
 import Login from './Login'
 import Logout from './Logout'
@@ -33,11 +34,11 @@ class Navigation extends React.Component {
             <span className="glyphicon glyphicon glyphicon-menu-hamburger menu-button" aria-hidden="true" onClick={this.showMenu}></span>
             <ul className="navigation-list" ref="navigationList">
               <Link className="navigation-list-link" to="/calendar"><li className="navigation-list-item">Book</li></Link>
-              <a className="navigation-list-link" href="/#hall"><li className="navigation-list-item">Hall</li></a>
-              <a className="navigation-list-link" href="/#gallery"><li className="navigation-list-item">Gallery</li></a>
-              <a className="navigation-list-link" href="/#about"><li className="navigation-list-item">About</li></a>
-              <a className="navigation-list-link" href="/#contact"><li className="navigation-list-item">Contact</li></a>
-              {this.props.user.fullName && <Link className="navigation-list-link" to="/profile"><li className="navigation-list-item">Profile</li></Link>}
+              <HashLink className="navigation-list-link" to="/#hall"><li className="navigation-list-item">Hall</li></HashLink>
+              <HashLink className="navigation-list-link" to="/#gallery"><li className="navigation-list-item">Gallery</li></HashLink>
+              <HashLink className="navigation-list-link" to="/#about"><li className="navigation-list-item">About</li></HashLink>
+              <HashLink className="navigation-list-link" to="/#contact"><li className="navigation-list-item">Contact</li></HashLink>
+              {this.props.user.fullName && !this.props.user.admin && <Link className="navigation-list-link" to="/profile"><li className="navigation-list-item">Profile</li></Link>}
               {this.props.user.admin && <Link className="navigation-list-link" to="/admin"><li className="navigation-list-item">Admin</li></Link>}
               {!this.props.user.fullName && <a className="navigation-list-link" style={{cursor: 'pointer'}}><Login /></a>}
               {this.props.user.fullName && <a className="navigation-list-link" style={{cursor: 'pointer'}}><Logout /></a>}

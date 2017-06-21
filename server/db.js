@@ -53,26 +53,26 @@ function checkAdminStatus (authId, cb) {
 }
 
 function userAddBooking (booking, authId, cb) {
-  // let dataCheck = validate.validateBookingDetails(booking)
-  // if (dataCheck !== 'ok') return cb({validationError: dataCheck})
-  // getAllBookings((err, bookings) => {
-    // if (err) return cb(err)
-    // dataCheck = validate.checkBookingForOverlap(booking, bookings)
-    // if (dataCheck !== 'ok') return cb({validationError: dataCheck})
-  booking.confirmed = false
-  booking.dateAdded = new Date()
-  booking.deleteRequested = false
-  getDatabase((err, db) => {
+  let dataCheck = validate.validateBookingDetails(booking)
+  if (dataCheck !== 'ok') return cb({message: dataCheck})
+  getAllBookings((err, bookings) => {
     if (err) return cb(err)
-    db.collection('bookings').save(booking, (err, result) => {
+    dataCheck = validate.checkBookingForOverlap(booking, bookings)
+    if (dataCheck !== 'ok') return cb({message: dataCheck})
+    booking.confirmed = false
+    booking.dateAdded = new Date()
+    booking.deleteRequested = false
+    getDatabase((err, db) => {
       if (err) return cb(err)
-      userGetAllBookings(authId, (err, bookings) => {
+      db.collection('bookings').save(booking, (err, result) => {
         if (err) return cb(err)
-        cb(null, {booking, bookings})
+        userGetAllBookings(authId, (err, bookings) => {
+          if (err) return cb(err)
+          cb(null, {booking, bookings})
+        })
       })
     })
   })
-  // })
 }
 
 function confirmBooking (req, authId, cb) {
@@ -88,22 +88,26 @@ function confirmBooking (req, authId, cb) {
   })
 }
 
-function requestDelete (req, authId, cb) {
+function requestDelete (booking, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
-    db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'deleteRequested': true}}, (err, result) => {
-      if (err) return cb(err)
-      userGetAllBookings(authId, (err, bookings) => {
+    if (booking.confirmed) {
+      db.collection('bookings').update({_id: ObjectId(booking._id)}, {$set: {'deleteRequested': true}}, (err, result) => {
         if (err) return cb(err)
-        cb(null, {result, bookings})
+        userGetAllBookings(authId, (err, bookings) => {
+          if (err) return cb(err)
+          cb(null, {result, bookings, sendEmail: true})
+        })
       })
-    })
+    } else {
+      deleteBooking(booking, authId, cb)
+    }
   })
 }
 
 function addUser (user, cb) {
   const dataCheck = validate.validateUserDetails(user)
-  if (dataCheck !== 'ok') return cb({validationError: dataCheck})
+  if (dataCheck !== 'ok') return cb({message: dataCheck})
   user.dateAdded = new Date()
   getDatabase((err, db) => {
     if (err) return cb(err)
@@ -142,10 +146,10 @@ function getUserDetails (authId, cb) {
   })
 }
 
-function deleteBooking (id, authId, cb) {
+function deleteBooking (booking, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
-    db.collection('bookings').remove({_id: ObjectId(id)}, (err, result) => {
+    db.collection('bookings').remove({_id: ObjectId(booking._id)}, (err, result) => {
       if (err) return cb(err)
       userGetAllBookings(authId, (err, bookings) => {
         if (err) return cb(err)

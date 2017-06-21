@@ -32,6 +32,7 @@ class App extends React.Component {
   componentDidMount () {
     handleAuthentication(this.props.checkLogin)
   }
+
   render () {
     return (
       <BrowserRouter history={history} component={App}>

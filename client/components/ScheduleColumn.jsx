@@ -76,6 +76,14 @@ class ScheduleColumn extends React.Component {
               <td>{moment(this.state.booking.dateAdded).format('YYYY-MM-DD HH:mm')}</td>
             </tr>
             <tr>
+              <td><b>Start</b></td>
+              <td>{moment(this.state.booking.startDate).format('YYYY-MM-DD HH:mm')}</td>
+            </tr>
+            <tr>
+              <td><b>End</b></td>
+              <td>{moment(this.state.booking.endDate).format('YYYY-MM-DD HH:mm')}</td>
+            </tr>
+            <tr>
               <td><b>Booking Confirmed</b></td>
               <td>{this.state.booking.confirmed ? 'Yes' : 'No'}</td>
             </tr>
@@ -99,6 +107,7 @@ class ScheduleColumn extends React.Component {
         const selectedDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), i + 6, j * 30)
         let classNames = 'slot'
         let ptag = ''
+        let toDisplay = null
         if (j === 1) {
           classNames += ' half-hour'
         } else {
@@ -118,11 +127,11 @@ class ScheduleColumn extends React.Component {
         })) {
           classNames += ' confirmed'
         }
-        const toDisplay = this.props.bookings.find(booking => {
+        toDisplay = this.props.bookings.find(booking => {
           return booking.startDate.getTime() === selectedDate.getTime()
         })
-        if (toDisplay && toDisplay.fullName) {
-          ptag = toDisplay.fullName + ' ' + toDisplay.purpose
+        if (toDisplay && toDisplay.fullName && !toDisplay.deleteRequested) {
+          ptag = toDisplay.fullName
         }
         dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onClick={ e => this.clicked(e, toDisplay)} onMouseOver={this.mouseEnter}>{<div className='titleofevent'>{ptag}</div>}</div>)
       }
@@ -136,7 +145,7 @@ function mapStateToProps (state) {
     startTime: state.newBooking.startTime,
     endTime: state.newBooking.endTime,
     mouse: state.mouse,
-    bookings: state.bookings
+    bookings: state.bookings.filter(booking => !booking.deleteRequested)
   }
 }
 
