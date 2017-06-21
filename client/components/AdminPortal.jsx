@@ -79,6 +79,9 @@ class AdminPortal extends React.Component {
     if (current === 'all') {
       return true
     }
+    if (current === 'history' && booking.endDate < new Date()) {
+      return true
+    }
     return false
   }
 
@@ -109,6 +112,9 @@ class AdminPortal extends React.Component {
                  &nbsp;&nbsp;&nbsp;
                 <label htmlFor="Show Confirmed">Confirmed</label>
                 <input type="radio" name="filter" id="Show Confirmed" onClick={() => this.applyFilter('confirmed')} />
+                &nbsp;&nbsp;&nbsp;
+                <label htmlFor="Show History">History</label>
+                <input type="radio" name="filter" id="Show History" onClick={() => this.applyFilter('history')} />
                 </p>
             </div>
             <div className="unconfirmed-list">
@@ -156,7 +162,7 @@ class AdminPortal extends React.Component {
                   }
                   {this.props.admin &&
                   <div className="modal-admin">
-                    <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>
+                    {!this.props.booking.confirmed && <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>}
                     <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
                   </div>
                   }
