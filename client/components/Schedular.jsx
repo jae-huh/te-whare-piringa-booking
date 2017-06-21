@@ -63,7 +63,6 @@ class Schedular extends React.Component {
     return (
       <div className='schedule-container'>
         <div className='schedule'>
-
           <div className='container'>
             <div className='row'>
               <div className='col-md-1' />
@@ -72,7 +71,7 @@ class Schedular extends React.Component {
               </div>
             </div>
             <div className='row key-circles'>
-              <div className='col-md-1 col-xs-1'  />
+              <div className='col-md-1 col-xs-1' />
               <div className='col-md-1 col-xs-1'>Available<div className='available' /></div>
               <div className='col-md-1 col-xs-1'>Reserved<div className='reserved-key' /></div>
               <div className='col-md-1 col-xs-1'>Booked<div className='booked-key' /></div>
@@ -88,10 +87,10 @@ class Schedular extends React.Component {
               </div>
             </div>
 
-            <div className='schedule-navbar'/>
+            <div className='schedule-navbar' />
             <div className='row schedule-row'>
               <div className='col-xs-1 schedule-arrow'>
-              <div><img src='./images/left.png' height="70" onClick={this.previousDay} /></div>
+                <div><img src='./images/left.png' height='70' onClick={this.previousDay} /></div>
               </div>
               <div className='col-md-10'>
                 <div className='schedule-header-container'>
@@ -106,8 +105,8 @@ class Schedular extends React.Component {
                 </div>
               </div>
               <div className='col-xs-1 schedule-arrow'>
-              <div><img src='./images/right-arrow-icon.png' height="70" onClick={this.nextDay} /></div>
-            </div>
+                <div><img src='./images/right-arrow-icon.png' height='70' onClick={this.nextDay} /></div>
+              </div>
             </div>
           </div>
         </div>
