@@ -49,6 +49,22 @@
   cursor: pointer;
 }
 
+.calendar-busy-bar {
+  width: 80%;
+  height: 1.5em;
+  background: linear-gradient(to right,
+    hsl(25, 100%, 100%), hsl(25, 100%, 46.875%)
+    );
+  margin: 0 auto;
+}
+
+.busy-indicator {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
 .calendar-orange17 {
   background-color: hsl(25, 100%, 46.875%);
 }
