@@ -69,7 +69,9 @@ class AdminPortal extends React.Component {
       return true
     }
     if (current === 'confirmed' && booking.confirmed) {
-      return true
+      if (booking.startDate > new Date().setHours(0, 0, 0, 0)) {
+        return true
+      }
     }
     if (current === 'delete' && booking.deleteRequested) {
       return true
@@ -116,7 +118,7 @@ class AdminPortal extends React.Component {
                     </div>
                   </div>
                   <div className="col-sm-3 buttons-of-unconfirmed text-center">
-                    
+
                     <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
                   </div>
                 </div>
