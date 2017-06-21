@@ -50,7 +50,7 @@
 }
 
 .calendar-busy-bar {
-  width: 90%;
+  width: 80%;
   height: 1.5em;
   background: linear-gradient(to right,
     hsl(25, 100%, 100%), hsl(25, 100%, 46.875%)
@@ -63,6 +63,8 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin:auto;
+  width: 70%;
 }
 
 .busy-indicator > p {
@@ -302,14 +304,17 @@
 
 .reserved-key {
   background-color: #FFF0C8;
+  margin: auto;
 }
 
 .booked-key {
   background-color: hsla(8, 86%, 64%, .75);
+  margin: auto;
 }
 
 .available-key {
   background-color: white;
+  margin: auto;
 }
 
 .circle {
@@ -333,12 +338,29 @@
 }
 
 @media (max-width: 835px) {
+  .calendar-header {
+    font-size: 0.5em;
+  }
+
   .admin-radio-container {
     flex-direction: column;
   }
 
   .unconfirmed-list{
     max-height: 75vmin;
+  }
+
+  .col-md-10 {
+    width: 380px;
+  }
+
+  .setting-btn2 {
+    position: absolute;
+    top: -40px;
+  }
+
+  .calendar-busy-bar {
+    width: 60%;
   }
 }
 
