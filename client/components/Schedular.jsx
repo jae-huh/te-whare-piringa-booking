@@ -49,37 +49,39 @@ class Schedular extends React.Component {
 
   render () {
     return (
-      <div className='schedule'>
-        {this.props.user.authId && <p><input type='button' onClick={this.makeNewBooking} value='Make a Booking' /></p>}
-        {!this.props.user.authId && <p>Please log in to make a booking</p>}
-        <div className='container'>
-          <h3>Key:</h3>
-          <div className='row'>
-            <div className='col-md-1'>Available<div className='availible' /></div>
-            <div className='col-md-1'>Reserved<div className='reserved-key' /></div>
-            <div className='col-md-1'>Booked<div className='booked-key' /></div>
-          </div>
-        </div>
-        <div className='schedule-navbar'/>
-        <div className='row'>
-          <div className='col-md-1'>
-          <img src='./images/left.png' height="70" onClick={this.previousDay} />
-          </div>
-          <div className='col-md-10'>
+      <div className='schedule-container'>
+        <div className='schedule'>
+          {this.props.user.authId && <p><input type='button' onClick={this.makeNewBooking} value='Make a Booking' /></p>}
+          {!this.props.user.authId && <p>Please log in to make a booking</p>}
+          <div className='container'>
+            <h3>Key:</h3>
+            <div className='row'>
+              <div className='col-md-1'>Available<div className='availible' /></div>
+              <div className='col-md-1'>Reserved<div className='reserved-key' /></div>
+              <div className='col-md-1'>Booked<div className='booked-key' /></div>
             </div>
-          <div className='col-md-1'>
-          <img src='./images/right-arrow-icon.png' height="70" onClick={this.nextDay} />
-        </div>
-        </div>
-        <div className='schedule-header-container'>
-          <div className='schedule-header time'>Timeslot</div>
-          <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
-          <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
-        </div>
-        <div className='schedule-columns-container'>
-          <HoursColumn />
-          <ScheduleColumns />
+          </div>
+          <div className='schedule-navbar'/>
+          <div className='row'>
+            <div className='col-md-1'>
+            <img src='./images/left.png' height="70" onClick={this.previousDay} />
+            </div>
+            <div className='col-md-10'>
+              </div>
+            <div className='col-md-1'>
+            <img src='./images/right-arrow-icon.png' height="70" onClick={this.nextDay} />
+          </div>
+          </div>
+          <div className='schedule-header-container'>
+            <div className='schedule-header time'>Timeslot</div>
+            <div className='schedule-header'>{moment(this.props.date).subtract(1, 'days').format('DD MMMM YYYY')}</div>
+            <div className='schedule-header'>{moment(this.props.date).format('DD MMMM YYYY')}</div>
+            <div className='schedule-header'>{moment(this.props.date).add(1, 'days').format('DD MMMM YYYY')}</div>
+          </div>
+          <div className='schedule-columns-container'>
+            <HoursColumn />
+            <ScheduleColumns />
+          </div>
         </div>
       </div>
     )

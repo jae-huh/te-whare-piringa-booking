@@ -137,8 +137,18 @@
 
 
 /*Scheduler styling*/
+.schedule-container {
+  display: flex;
+  justify-content: center;
+  margin:
+}
+
+.schedule {
+  margin: 15em 7.5em 0 7.5em;
+}
+
 .schedule-body {
-    margin: 25px!important;
+  margin: 25px!important;
   border: 3px solid #46075C!important;
 }
 .schedule-header-container, .schedule-columns-container, .schedule-columns {
