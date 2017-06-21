@@ -76,6 +76,14 @@ class ScheduleColumn extends React.Component {
               <td>{moment(this.state.booking.dateAdded).format('YYYY-MM-DD HH:mm')}</td>
             </tr>
             <tr>
+              <td><b>Start</b></td>
+              <td>{moment(this.state.booking.startDate).format('YYYY-MM-DD HH:mm')}</td>
+            </tr>
+            <tr>
+              <td><b>End</b></td>
+              <td>{moment(this.state.booking.endDate).format('YYYY-MM-DD HH:mm')}</td>
+            </tr>
+            <tr>
               <td><b>Booking Confirmed</b></td>
               <td>{this.state.booking.confirmed ? 'Yes' : 'No'}</td>
             </tr>
@@ -122,7 +130,7 @@ class ScheduleColumn extends React.Component {
           return booking.startDate.getTime() === selectedDate.getTime()
         })
         if (toDisplay && toDisplay.fullName) {
-          ptag = toDisplay.fullName + ' ' + toDisplay.purpose
+          ptag = toDisplay.fullName
         }
         dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onClick={ e => this.clicked(e, toDisplay)} onMouseOver={this.mouseEnter}>{<div className='titleofevent'>{ptag}</div>}</div>)
       }

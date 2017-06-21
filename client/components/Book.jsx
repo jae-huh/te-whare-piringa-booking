@@ -21,7 +21,8 @@ class Book extends React.Component {
       dateStart: this.props.startTime,
       dateEnd: this.props.endTime,
       purpose: null,
-      guestNumber: null
+      guestNumber: null,
+      message: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -29,6 +30,8 @@ class Book extends React.Component {
     this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.message = this.message.bind(this)
+    this.redirect = this.redirect.bind(this)
   }
 
   handleChange (evt) {
@@ -38,7 +41,7 @@ class Book extends React.Component {
   }
 
   handleClose () {
-    this.props.history.push('/calendar')
+    this.props.history.push('/schedule')
   }
 
   handleChangeDateStart (date) {
@@ -72,7 +75,19 @@ class Book extends React.Component {
     message = checkBookingForOverlap(data, this.props.bookings)
     if (message !== 'ok') return this.props.validationError(message)
     this.props.postNewBooking(data)
-    this.props.history.push('/calendar')
+    this.message()
+  }
+
+  redirect () {
+    this.setState({message: ''})
+    this.props.history.push('/schedule')
+  }
+
+  message () {
+    this.setState({
+      message: 'Thankyou, You will be contacted soon'
+    })
+    setTimeout(this.redirect, 4000)
   }
 
   render () {
@@ -80,6 +95,7 @@ class Book extends React.Component {
       <div className='book-container'>
         <ModalContainer onClose={this.handleClose} className='book-container'>
           <ModalDialog onClose={this.handleClose} className='book-container'>
+            {!this.state.message &&
             <form onSubmit={this.handleSubmit}>
               <div className="form-group row">
                 <label className="col-xs-3">Full Name:</label>
@@ -132,6 +148,8 @@ class Book extends React.Component {
               <input type='submit' value='Book' className="setting-btn" />
             </div>
           </form>
+            }
+          {this.state.message && <h3 className="confirm-message">{this.state.message}</h3>}
         </ModalDialog>
       </ModalContainer>
     </div>
