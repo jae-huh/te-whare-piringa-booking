@@ -227,6 +227,11 @@
   margin-bottom: 1em;
 }
 
+.login-book {
+  text-align: right;
+  padding-left: 50px;
+}
+
 .setting-btn2 {
   -webkit-border-radius: .5em;
   -moz-border-radius: .5em;
