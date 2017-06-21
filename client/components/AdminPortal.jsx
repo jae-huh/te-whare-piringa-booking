@@ -118,7 +118,6 @@ class AdminPortal extends React.Component {
                     </div>
                   </div>
                   <div className="col-sm-3 buttons-of-unconfirmed text-center">
-
                     <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
                   </div>
                 </div>
@@ -145,11 +144,14 @@ class AdminPortal extends React.Component {
               {this.props.booking.fullName && this.state.modal &&
               <ModalContainer onClose={this.handleClose}>
                 <ModalDialog onClose={this.handleClose}>
+                  <h3>Details</h3>
                   <Details />
+                  {this.props.admin &&
                   <div className="modal-admin">
                     <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>
                     <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
                   </div>
+                  }
                   </ModalDialog>
                 </ModalContainer>}
             </div>
