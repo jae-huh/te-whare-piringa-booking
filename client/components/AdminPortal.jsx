@@ -175,7 +175,7 @@ class AdminPortal extends React.Component {
                   {!this.props.admin && this.state.sure &&
                   <div className="text-center">
                     <p className="sure">Are you sure?</p>
-                    <button onClick={() => this.requestBookingToBeDeleted(this.props.booking._id)}>Yes, Request Delete</button>
+                    <button onClick={() => this.requestBookingToBeDeleted(this.props.booking)}>Yes, Request Delete</button>
                   </div>
                   }
                   {this.props.admin &&
@@ -189,7 +189,7 @@ class AdminPortal extends React.Component {
                     {this.state.sure &&
                     <div className="text-center">
                       <p className='sure'>Are you sure you want to delete?</p>
-                      <button className="setting-btn" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}>Yes</button>
+                      <button className="setting-btn" onClick={() => { this.handleDeleteClick(this.props.booking) }}>Yes</button>
                       <button className="setting-btn" onClick={() => { this.handleClose() }} defaultValue>No</button>
                       </div>
                     }
