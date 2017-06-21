@@ -58,6 +58,7 @@
     "nodemon": "^1.11.0",
     "prop-types": "^15.5.10",
     "react": "^15.3.0",
+    "react-addons-test-utils": "^15.6.0",
     "react-datetime": "^2.8.10",
     "react-dom": "^15.3.0",
     "react-gmaps": "^1.6.0",

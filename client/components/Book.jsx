@@ -85,7 +85,7 @@ class Book extends React.Component {
 
   message () {
     this.setState({
-      message: 'Thankyou, You will be contacted soon'
+      message: "Thank you for your booking. We'll contact you soon to confirm the details"
     })
     setTimeout(this.redirect, 4000)
   }
@@ -120,7 +120,7 @@ class Book extends React.Component {
                   <div className="col-xs-9">
                     <Datetime value={this.state.dateStart}
                     onChange={this.handleChangeDateStart}
-                    timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
+                    timeConstraints={{hours: {min: 6, max: 22, step: 1}, minutes: {step: 30}}}
                     className="datepick"/>
                   </div>
                 </div>

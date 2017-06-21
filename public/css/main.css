@@ -1,15 +1,18 @@
 .detailsTable {
   text-align: left;
   margin-top: 1.5em;
+  margin-bottom: 1.5em;
 }
 
-td {
+.detailsTable td, .no-mobile td {
   padding: 0 1em
 }
 
-th {
+.detailsTable th, .no-mobile th {
   padding: 0 1em
 }
+
+
 
 .wait {
   margin-left: 25px;

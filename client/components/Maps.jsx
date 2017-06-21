@@ -15,6 +15,7 @@ class Maps extends React.Component {
   render () {
     return (
       <Gmaps
+        className="contact-map"
         width={'350px'}
         height={'350px'}
         lat={coords.lat}

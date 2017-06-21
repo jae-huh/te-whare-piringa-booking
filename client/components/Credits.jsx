@@ -7,10 +7,10 @@ const Credits = () => {
         <div className='credits'>
           <h2 className='credits-heading'>Made with <span className="glyphicon glyphicon-heart credits-icon" aria-hidden="true"> </span> by...</h2>
           <div className="credits-name-list">
-            <h3>Paul Brabet <a href='https://github.com/paul-brabet'><img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></a></h3>
-            <h3>Jack Daffron <a href='https://github.com/daffron'><img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></a></h3>
-            <h3>Luke Davison <a href='https://github.com/luke-davison'><img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></a></h3>
-            <h3>Jae Huh <a href='https://github.com/Jae-Huh'><img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></a></h3>
+            <a href='https://github.com/paul-brabet' target='_blank'><h3>Paul Brabet <img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></h3></a>
+            <a href='https://github.com/daffron' target='_blank'><h3>Jack Daffron <img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></h3></a>
+            <a href='https://github.com/luke-davison' target='_blank'><h3>Luke Davison <img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></h3></a>
+            <a href='https://github.com/Jae-Huh' target='_blank'><h3>Jae Huh <img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></h3></a>
           </div>
           <h2 className="credits-description">as part of Enspiral Dev Academy final project.</h2>
         </div>
