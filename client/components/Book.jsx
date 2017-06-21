@@ -15,9 +15,9 @@ class Book extends React.Component {
     super(props)
     this.state = {
       authId: '',
-      fullName: '',
-      email: '',
-      phoneNumber: '',
+      fullName: this.props.user.fullName,
+      emailAddress: this.props.user.emailAddress,
+      phoneNumber: this.props.user.phoneNumber,
       dateStart: this.props.startTime,
       dateEnd: this.props.endTime,
       purpose: null,
@@ -60,9 +60,9 @@ class Book extends React.Component {
     evt.preventDefault()
 
     const data = {
-      fullName: this.state.fullName || this.props.user.fullName,
-      emailAddress: this.state.email || this.props.user.emailAddress,
-      phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
+      fullName: this.state.fullName,
+      emailAddress: this.state.emailAddress,
+      phoneNumber: this.state.phoneNumber,
       authId: this.props.user.authId,
       startDate: moment(this.state.dateStart),
       endDate: moment(this.state.dateEnd),
@@ -100,25 +100,25 @@ class Book extends React.Component {
               <div className="form-group row">
                 <label className="col-xs-3">Full Name:</label>
                 <div className="col-xs-9">
-                  <input name='fullName' className="form-control col-md-10" placeholder={this.props.user.fullName} onChange={this.handleChange} />
+                  <input name='fullName' className="form-control col-md-10" value={this.state.fullName} onChange={this.handleChange} />
                   </div>
                 </div>
                 <div className="form-group row">
                   <label className="col-xs-3">Email Address:</label>
                   <div className="col-xs-9">
-                    <input type='email' name='email' className="form-control" placeholder={this.props.user.emailAddress} onChange={this.handleChange} />
+                    <input type='email' name='email' className="form-control" value={this.state.emailAddress} onChange={this.handleChange} />
                   </div>
                 </div>
                 <div className="form-group row">
                 <label className="col-xs-3">Contact Number:</label>
                   <div className="col-xs-9">
-                    <input type='tel' name='phoneNumber' className="form-control" placeholder={this.props.user.phoneNumber} onChange={this.handleChange} />
+                    <input type='tel' name='phoneNumber' className="form-control" value={this.state.phoneNumber} onChange={this.handleChange} />
                   </div>
                 </div>
                 <div className="form-group row">
                 <label className="col-xs-3">Start Date and Time:</label>
                   <div className="col-xs-9">
-                    <Datetime value={this.props.startTime}
+                    <Datetime value={this.state.dateStart}
                     onChange={this.handleChangeDateStart}
                     timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
                     className="datepick"/>
@@ -127,7 +127,7 @@ class Book extends React.Component {
                 <div className="form-group row">
                 <label className="col-xs-3">End Date and Time:</label>
                 <div className="col-xs-9">
-                <Datetime value={this.props.endTime}
+                <Datetime value={this.state.dateEnd}
                 onChange={this.handleChangeDateEnd}
                 className="datepick"/>
               </div>
