@@ -1,0 +1,392 @@
+/*Calendar styling*/
+
+.calendar-title {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-title > h2 {
+  font-size: 2.5em;
+}
+
+.calendar-arrows {
+  width: 80px;
+}
+
+@media (max-width: 835px) {
+  .calendar-arrows {
+    width: 50px;
+  }
+}
+
+.calendar-date-container, .calendar-header-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.calendar-date, .calendar-header {
+  border-style: solid;
+  width: 14.2857142857%;
+  border-color: grey;
+  border-width: thin;
+}
+
+.calendar-header {
+  text-align: center;
+  max-width: 100%;
+}
+
+.calendar-date {
+  height: 11.5vh;
+  padding: 0.5em;
+}
+
+.calendar-date:hover {
+  background-color: #0066CC;
+  color: #ffffff;
+  transition: all .35s ease-in;
+  cursor: pointer;
+}
+
+.calendar-busy-bar {
+  width: 90%;
+  height: 1.5em;
+  background: linear-gradient(to right,
+    hsl(25, 100%, 100%), hsl(25, 100%, 46.875%)
+    );
+  margin: 0 auto;
+  border-radius: .75em;
+}
+
+.busy-indicator {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.busy-indicator > p {
+  margin: 0, 1em;
+}
+
+.calendar-orange17 {
+  background-color: hsl(25, 100%, 46.875%);
+}
+
+.calendar-orange16 {
+  background-color: hsl(25, 100%, 50%)
+}
+
+.calendar-orange15 {
+  background-color: hsl(25, 100%, 53.125%)
+}
+
+.calendar-orange14 {
+  background-color: hsl(25, 100%, 56.25%)
+}
+
+.calendar-orange13 {
+  background-color: hsl(25, 100%, 59.375%)
+}
+
+.calendar-orange12 {
+  background-color: hsl(25, 100%, 62.5%)
+}
+
+.calendar-orange11 {
+  background-color: hsl(25, 100%, 65.625%)
+}
+
+.calendar-orange10 {
+  background-color: hsl(25, 100%, 68.75%)
+}
+
+.calendar-orange9 {
+  background-color: hsl(25, 100%, 71.875%)
+}
+
+.calendar-orange8 {
+  background-color: hsl(25, 100%, 75%)
+}
+
+.calendar-orange7 {
+  background-color: hsl(25, 100%, 78.125%)
+}
+
+.calendar-orange6 {
+  background-color: hsl(25, 100%, 81.25%)
+}
+
+.calendar-orange5 {
+  background-color: hsl(25, 100%, 84.375%)
+}
+
+.calendar-orange4 {
+  background-color: hsl(25, 100%, 87.5%)
+}
+
+.calendar-orange3 {
+  background-color: hsl(25, 100%, 90.625%)
+}
+
+.calendar-orange2 {
+  background-color: hsl(25, 100%, 93.75%)
+}
+
+.calendar-orange1 {
+  background-color: hsl(25, 100%, 96.875%)
+}
+
+.calendar-orange0 {
+  background-color: hsl(25, 100%, 100%)
+}
+
+.currentDay {
+  background-color: #dcecfb;
+}
+
+.last-month,
+.calendar-inactive {
+  background-color: #eeeeee;
+}
+
+.future {
+  background-color: #fff;
+}
+
+.last-month:hover,
+.calendar-inactive:hover {
+  background-color: #eeeeee;
+  transition: none;
+  cursor: default;
+}
+
+.calendar-inactive:hover {
+  color: #000000;
+}
+
+.calendar-date.last-month.future:hover {
+  background-color: #0066CC;
+  color: #ffffff;
+  transition: all .35s ease-in;
+  cursor: pointer;
+}
+
+.last-month:hover {
+  color: #afacac;
+}
+
+.last-month, .next-month {
+  color: #afacac;
+}
+
+
+/*Scheduler styling*/
+.schedule-container {
+  margin: 2em 7.5em 0 7.5em;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+}
+
+.schedule-body {
+  margin: 25px!important;
+  border: 3px solid #46075C!important;
+}
+.schedule-header-container, .schedule-columns-container, .schedule-columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.schedule-columns {
+  width: 90%;
+}
+
+.schedule-column-container {
+
+  width: 33.33%;
+}
+.schedule-hours-container{
+  width: 10%;
+  border-left: 0.05em solid rgba(150,150,150,0.25);
+}
+
+.schedule-header, .slot, .hour {
+  border-color: rgba(150,150,150,0.25);
+  border-style: solid;
+  width: 100%;
+  height: 1.3em;
+  font-family: 'Roboto', sans-serif;
+  /*font-weight: bold;*/
+}
+
+.schedule-header, .hour {
+  text-align: center
+}
+
+.schedule-header {
+  border-width: 0.05em 0.05em 0.05em 0;
+  font-weight: bold;
+}
+
+.schedule-header.time {
+  border-width: 0.05em;
+}
+
+.full-hour {
+  border-width: 0 0.05em 0.05em 0;
+  border-style: dotted;
+  border-right: 0.05em solid rgba(150,150,150,0.25);
+}
+
+.half-hour {
+  border-width: 0 0.05em 0.05em 0;
+  border-style: solid;
+}
+
+.time {
+  max-width: 10%;
+}
+
+.selected {
+  background-color: pink;
+}
+
+.reserved {
+  background-color: #FFF0C8;
+  /*border: none!important;*/
+}
+
+.confirmed {
+  cursor: pointer;
+}
+
+.confirmed {
+  background-color: hsla(8, 86%, 64%, .75);
+  /*border: none!important;*/
+}
+
+.datepick {
+  max-width: 60%;
+}
+
+.schedule-key {
+  margin-top: 2em;
+}
+
+.key-circles {
+  margin-bottom: 1em;
+  font-family: 'Roboto', sans-serif!important;
+  text-align: center;
+  font-weight: bold;
+}
+
+.login-book {
+  text-align: right;
+  padding-left: 50px;
+}
+
+.setting-btn2 {
+  -webkit-border-radius: .5em;
+  -moz-border-radius: .5em;
+  border-radius: .5em;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 1.25em;
+  background: rgba(69, 6, 91, .7);
+  /*padding: 10px 20px 10px 20px;*/
+  text-decoration: none;
+}
+
+.reserved-key {
+  background-color: #FFF0C8;
+}
+
+.booked-key {
+  background-color: hsla(8, 86%, 64%, .75);
+}
+
+.available-key {
+  background-color: white;
+}
+
+.circle {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+  text-align: center;
+}
+
+.admin-radio-container {
+  display: flex;
+}
+
+.unconfirmed-list{
+  width: 100%;
+  max-height: 50vmin;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+@media (max-width: 835px) {
+  .admin-radio-container {
+    flex-direction: column;
+  }
+
+  .unconfirmed-list{
+    max-height: 75vmin;
+  }
+}
+
+.remove {
+  color: red;
+  font-size: 18px;
+}
+
+.confirm {
+  color: green;
+  font-size: 18px;
+  margin: 5px
+}
+
+.more{
+  color: blue;
+  font-size: 25px;
+  align-content: center;
+  margin-top: 20px;
+}
+
+.more:hover {
+  font-size: 33px;
+}
+
+.titleofevent:hover {
+  cursor: pointer
+}
+
+.list-of-unconfirmed {
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 10px 40px;
+  background-color: #fafafa;
+}
+
+.list-of-unconfirmed:hover {
+  background-color: #ebebeb;
+  cursor: pointer;
+}
+
+.calendar-container {
+  margin: 25px;
+  border: 3px solid #46075C!important;
+  border-radius: 3px;
+}
+
+hr {
+  margin: 3px;
+  max-width: 30%
+}

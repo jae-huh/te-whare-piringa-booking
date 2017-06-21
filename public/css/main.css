@@ -1,0 +1,88 @@
+.detailsTable {
+  text-align: left;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.detailsTable td, .no-mobile td {
+  padding: 0 1em
+}
+
+.detailsTable th, .no-mobile th {
+  padding: 0 1em
+}
+
+
+
+.wait {
+  margin-left: 25px;
+  width: 35px;
+  height: auto;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details-profile-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.setting-btn {
+  -webkit-border-radius: 19;
+  -moz-border-radius: 19;
+  border-radius: 19px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #45065B;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.setting-btn:hover {
+  background: #ffffff;
+  text-decoration: none;
+  color: #45065B;
+}
+
+.modal-admin {
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.8);*/
+    -webkit-border-radius: 10px;
+    background-color:#45065B;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background:#666;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+.book-container {
+  min-width: 300px;
+}
+
+.sure {
+  color: red;
+}
+
+.margin-upper {
+  margin-top: 4em;
+}
