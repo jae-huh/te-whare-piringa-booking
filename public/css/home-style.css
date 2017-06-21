@@ -3,11 +3,13 @@
 }
 
 .main-background {
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(../images/background.jpeg);
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/background.jpeg');
   height: 700px;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -81,10 +83,12 @@
 }
 
 .contact-container {
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(../images/phone.jpeg);
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/phone.jpeg');
   background-attachment: fixed;
   background-position: top;
   background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
   background-size: cover;
 }
 
@@ -127,10 +131,12 @@
 
 /*gallery*/
 .gallery-container {
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(../images/gallery-background.jpeg);
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/gallery-background.jpeg');
   background-attachment: fixed;
   background-position: top;
   background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
   background-size: cover;
 }
 
@@ -226,11 +232,6 @@
 }
 
 /*contact us*/
-/*.contact-inner-div {
-  background-color: #ebebeb;
-  border-radius: 20px;
-  margin-top: 80px;
-}*/
 
 .contact-heading {
   color: #ffffff;
@@ -276,7 +277,7 @@
 .credits-heading {
   color: #575757;
   font-size: 1.9em;
-  margin: 10px 0;
+  margin: 10px 0 15px 0;
 }
 
 .credits-icon {
@@ -319,6 +320,10 @@
 }
 
 @media (max-width: 835px) {
+  .main-background, .contact-container, .gallery-container {
+    background-attachment: scroll;
+  }
+
   .section-inner-div {
     width: 90%;
   }
@@ -366,13 +371,21 @@
     margin-bottom: 0;
   }
 
+  .contact-information {
+    margin-top: 30px;
+  }
+
   .contact-information > h2 {
-    margin-top: 2em;
+    margin-top: 0;
   }
 
   .credits-name-list {
     flex-direction: column;
     align-items: center;
+  }
+
+  .credits-name-list > a {
+    margin: 3px 0;
   }
 }
 
