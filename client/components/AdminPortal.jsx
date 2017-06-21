@@ -35,8 +35,8 @@ class AdminPortal extends React.Component {
     })
   }
 
-  handleDeleteClick (id) {
-    this.props.deleteBooking(id)
+  handleDeleteClick (booking) {
+    this.props.deleteBooking(booking)
     this.setState({
       modal: false
     })
@@ -65,18 +65,16 @@ class AdminPortal extends React.Component {
 
   isInFilter (booking) {
     const current = this.state.currentFilter
-    if (current === 'unconfirmed' && !booking.confirmed) {
+    if (current === 'unconfirmed' && !booking.confirmed && booking.endDate > new Date()) {
       return true
     }
-    if (current === 'confirmed' && booking.confirmed) {
-      if (booking.startDate > new Date().setHours(0, 0, 0, 0)) {
-        return true
-      }
-    }
-    if (current === 'delete' && booking.deleteRequested) {
+    if (current === 'confirmed' && booking.confirmed && booking.endDate > new Date()) {
       return true
     }
-    if (current === 'all') {
+    if (current === 'delete' && booking.deleteRequested && booking.endDate > new Date()) {
+      return true
+    }
+    if (current === 'all' && booking.endDate > new Date()) {
       return true
     }
     if (current === 'history' && booking.endDate < new Date()) {
@@ -85,8 +83,8 @@ class AdminPortal extends React.Component {
     return false
   }
 
-  requestBookingToBeDeleted (id) {
-    this.props.requestDelete(id)
+  requestBookingToBeDeleted (booking) {
+    this.props.requestDelete(booking)
     this.handleClose()
   }
 
@@ -114,15 +112,22 @@ class AdminPortal extends React.Component {
                    &nbsp;&nbsp;&nbsp;
                  </div>
                 <div>
+                  <input type="radio" name="filter" id="Show Confirmed" onClick={() => this.applyFilter('confirmed')} />
+                  &nbsp;
+                  <label htmlFor="Show Confirmed">Confirmed</label>
+                  &nbsp;&nbsp;&nbsp;
+                </div>
+                <div>
                   <input type="radio" name="filter" id="Show Delete Requested" onClick={() => this.applyFilter('delete')} />
                   &nbsp;
                   <label htmlFor="Show Delete Requested">Delete Requested</label>
                   &nbsp;&nbsp;&nbsp;
                 </div>
                 <div>
-                  <input type="radio" name="filter" id="Show Confirmed" onClick={() => this.applyFilter('confirmed')} />
+                  <input type="radio" name="filter" id="Show History" onClick={() => this.applyFilter('history')} />
                   &nbsp;
-                  <label htmlFor="Show Confirmed">Confirmed</label>
+                  <label htmlFor="Show History">History</label>
+                  &nbsp;
                 </div>
               </p>
             </div>
@@ -167,12 +172,12 @@ class AdminPortal extends React.Component {
                   <h3>Details</h3>
                   <Details />
                   {!this.props.admin &&
-                  <button onClick={() => this.requestBookingToBeDeleted(this.props.booking._id)}>Request Delete</button>
+                  <button onClick={() => this.requestBookingToBeDeleted(this.props.booking)}>Request Delete</button>
                   }
                   {this.props.admin &&
                   <div className="modal-admin">
                     {!this.props.booking.confirmed && <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>}
-                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
+                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking) }}></span>
                   </div>
                   }
                   </ModalDialog>
