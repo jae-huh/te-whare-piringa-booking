@@ -14,7 +14,7 @@ function validateBookingDetails (booking) {
   const endDate = new Date(booking.endDate)
   if (Object.prototype.toString.call(new Date(startDate)) !== '[object Date]') return 'Please end a start date/time which is in the correct format'
   if (Object.prototype.toString.call(new Date(endDate)) !== '[object Date]') return 'Please end an end date/time which is in the correct format'
-  if (startDate < new Date()) return 'You cannot use a start date/time in the past'
+  //if (startDate < new Date()) return 'You cannot use a start date/time in the past'
   if (startDate > endDate) return 'Please enter an end date/time that is after the start date/time'
   if ((startDate.getMinutes() !== 0 && startDate.getMinutes() !== 30) || startDate.getSeconds() !== 0 || startDate.getMilliseconds() !== 0) return 'Please enter a start date/time that is either on the hour or on the half hour'
   if ((endDate.getMinutes() !== 0 && endDate.getMinutes() !== 30) || endDate.getSeconds() !== 0 || endDate.getMilliseconds() !== 0) return 'Please enter an end date/time that is either on the hour or on the half hour'
