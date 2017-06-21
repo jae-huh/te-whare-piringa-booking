@@ -9,10 +9,15 @@ class ScheduleColumn extends React.Component {
     super(props)
     this.state = {
       showDetails: false,
-      booking: {}
+      booking: {},
+      mouseDown: false,
+      selectedTime: null
     }
     this.clicked = this.clicked.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.mousePressed = this.mousePressed.bind(this)
+    this.mouseReleased = this.mouseReleased.bind(this)
+    this.mouseEnter = this.mouseEnter.bind(this)
   }
 
   clicked (e, item) {
@@ -29,7 +34,7 @@ class ScheduleColumn extends React.Component {
         const date2 = new Date(moment(date).add(30, 'minutes'))
         this.props.setNewBooking(date, date2)
       } else {
-        if (this.props.startDate > date) {
+        if (this.props.startTime > date) {
           this.props.setNewBooking(date, new Date(moment(this.props.startTime).add(30, 'minutes')))
         } else {
           this.props.setNewBooking(this.props.startTime, new Date(moment(date).add(30, 'minutes')))
@@ -37,6 +42,36 @@ class ScheduleColumn extends React.Component {
       }
       this.props.clicked()
     }
+  }
+
+  mousePressed (e) {
+    if (!this.props.mouse.clicked) {
+      const dateString = e.target.id.substr(4)
+      const startTime = new Date(moment(dateString, 'YYYY-MM-DD-HH-mm'))
+      this.setState({
+        selectedTime: startTime,
+        mouseDown: true})
+      this.props.setNewBooking(startTime, new Date(moment(startTime).add(30, 'minutes')))
+    }
+  }
+
+  mouseEnter (e) {
+    if (this.state.mouseDown) {
+      const dateString = e.target.id.substr(4)
+      const endTime = new Date(moment(dateString, 'YYYY-MM-DD-HH-mm'))
+      if (endTime > this.state.selectedTime) {
+        this.props.setNewBooking(this.props.startTime, new Date(moment(endTime).add(30, 'minutes')))
+      }
+      if (endTime < this.state.selectedTime) {
+        this.props.setNewBooking(endTime, new Date(moment(this.state.selectedTime).add(30, 'minutes')))
+      }
+    }
+  }
+
+  mouseReleased (e) {
+    this.setState({
+      mouseDown: false
+    })
   }
 
   handleClose () {
@@ -132,7 +167,7 @@ class ScheduleColumn extends React.Component {
         if (toDisplay && toDisplay.fullName && !toDisplay.deleteRequested) {
           ptag = toDisplay.fullName
         }
-        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onClick={ e => this.clicked(e, booking)} onMouseOver={this.mouseEnter}>{<div className='titleofevent'>{ptag}</div>}</div>)
+        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onClick={ e => this.clicked(e, booking)} onMouseDown={this.mousePressed} onMouseUp={this.mouseReleased} onMouseOver={this.mouseEnter}>{<div className='titleofevent'>{ptag}</div>}</div>)
       }
     }
     return dayArray
