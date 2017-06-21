@@ -207,7 +207,6 @@
 }
 
 .schedule-column-container {
-
   width: 33.33%;
 }
 .schedule-hours-container{
@@ -429,13 +428,23 @@
   cursor: pointer;
 }
 
-.calendar-container {
-  margin: 25px;
-  border: 3px solid #46075C!important;
-  border-radius: 3px;
-}
-
 hr {
   margin: 3px;
   max-width: 30%
+}
+
+.schedule-inner-container {
+  padding: 0;
+}
+
+.schedule-header, .schedule-column-container, .schedule-hours-container {
+  border-style: solid;
+  border-color: grey;
+  border-width: thin;
+}
+
+.calendar-container, .schedule-inner-container {
+  margin: 25px;
+  border: 3px solid #46075C!important;
+  border-radius: 3px;
 }
