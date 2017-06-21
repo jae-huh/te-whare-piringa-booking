@@ -41,7 +41,6 @@ function sendConfirm (data) {
 }
 
 function deleteEmail (data) {
-  console.log(data)
   login('post', '/deleteemail', data)
   .then(f => f)
 }
