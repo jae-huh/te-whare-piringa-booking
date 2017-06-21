@@ -3,7 +3,7 @@ import {receiveBookings, WAITING, NOT_WAITING} from './index'
 
 const localStorage = global.window.localStorage
 
-export function checkLogin () {
+export function checkLogin (redirect) {
   return dispatch => {
     dispatch(gettingData())
     if (!localStorage.getItem('id_token')) {
@@ -63,7 +63,7 @@ function loggedIn (user, bookings) {
   }
 }
 
-export function submitRegistration (registrationInfo, callback) {
+export function submitRegistration (registrationInfo, redirect) {
   return dispatch => {
     dispatch(gettingData())
     login('post', '/user/adduser', registrationInfo)
@@ -71,12 +71,11 @@ export function submitRegistration (registrationInfo, callback) {
         dispatch(receivedData())
         if (res.body.user) {
           dispatch(loggedIn(res.body.user))
-          return true
+          redirect('/calendar')
         }
         if (res.body.error) {
           dispatch(registrationFailed(res.body.error))
           console.log(res.body.error)
-          return false
         }
       })
   }

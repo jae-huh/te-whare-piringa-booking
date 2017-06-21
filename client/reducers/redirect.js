@@ -5,7 +5,7 @@ const redirectTo = (state = initialState, action) => {
     case 'LOGGED_IN':
       return 'calendar'
     case 'NO_USER':
-      return 'register'
+      return state //'register'
     default:
       return state
   }
