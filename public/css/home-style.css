@@ -221,6 +221,42 @@
   padding: 5px 10px;
 }
 
+/*credits*/
+.credits-container {
+  background-color: #1f1f1f;
+}
+
+.credits-inner-div {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.credits-heading {
+  color: #575757;
+  font-size: 2.3em;
+}
+
+.credits-icon {
+  color: #f93838;
+}
+
+.credits-name-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #ffffff;
+}
+
+.github-icon {
+  width: 30px;
+}
+
+.credits-description {
+  color: #545454;
+  font-size: 1.2em;
+  text-align: right;
+}
+
 /*so the components are visible without nav bar hiding the top part*/
 .admin-portal, .book-container, .callback-container, .error-container, .calendar, .profile-container, .login-page, .schedule, .settings-container {
   margin-top: 60px;
@@ -276,6 +312,11 @@
 
   .contact-information > h2 {
     margin-top: 2em;
+  }
+
+  .credits-name-list {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
