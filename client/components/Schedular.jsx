@@ -101,9 +101,9 @@ class Schedular extends React.Component {
               <div className='col-md-10'>
                 <div className='schedule-header-container'>
                   <div className='schedule-header time'>Timeslot</div>
-                  <div className='schedule-header yesterday'>{moment(this.props.date).subtract(1, 'days').format('dddd DD MMMM YYYY')}</div>
-                  <div className='schedule-header'>{moment(this.props.date).format('dddd DD MMMM YYYY')}</div>
-                  <div className='schedule-header tomorrow'>{moment(this.props.date).add(1, 'days').format('dddd DD MMMM YYYY')}</div>
+                  <div className='schedule-header yesterday'>{moment(this.props.date).subtract(1, 'days').format('ddd DD MMM')}</div>
+                  <div className='schedule-header'>{moment(this.props.date).format('ddd DD MMM')}</div>
+                  <div className='schedule-header tomorrow'>{moment(this.props.date).add(1, 'days').format('ddd DD MMM')}</div>
                 </div>
                 <div className='schedule-columns-container'>
                   <HoursColumn />
