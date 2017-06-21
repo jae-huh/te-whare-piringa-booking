@@ -5,6 +5,7 @@ import Hall from './Hall'
 import Gallery from './Gallery'
 import About from './About'
 import Contact from './Contact'
+import Credits from './Credits'
 
 class Home extends React.Component {
   componentDidMount () {
@@ -38,6 +39,7 @@ class Home extends React.Component {
             <Gallery />
             <About />
             <Contact />
+            <Credits />
           </div>
         </div>
       </div>
