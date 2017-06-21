@@ -153,6 +153,13 @@ router.post('/sendconfirm', (req, res) => {
   email.confirmedBookingEmail(req, res)
 })
 
+router.post('/deleteemail', (req, res) => {
+  db.getAlertEmail((err, result) => {
+    if (err) return res.json({error: err})
+    email.deleteRequestedEmail(req, res, result[0].email)
+  })
+})
+
 router.post('/sendemail', (req, res) => {
   db.getAlertEmail((err, result) => {
     if (err) return res.json({error: err})
