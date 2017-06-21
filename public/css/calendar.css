@@ -259,12 +259,26 @@
   border-width: 2px;
   border-style: solid;
 }
+
+.admin-radio-container {
+  display: flex;
+}
+
 .unconfirmed-list{
   width: 100%;
   max-height: 50vmin;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
+}
 
+@media (max-width: 835px) {
+  .admin-radio-container {
+    flex-direction: column;
+  }
+
+  .unconfirmed-list{
+    max-height: 75vmin;
+  }
 }
 
 .remove {
@@ -296,7 +310,13 @@
 .list-of-unconfirmed {
   border: 1px solid grey;
   border-radius: 5px;
-  padding-left: 35px;
+  padding: 10px 40px;
+  background-color: #fafafa;
+}
+
+.list-of-unconfirmed:hover {
+  background-color: #ebebeb;
+  cursor: pointer;
 }
 
 .calendar-container {

@@ -97,19 +97,31 @@ class AdminPortal extends React.Component {
           <div className="col-md-10">
             <h2>Bookings</h2>
             <div>
-              <p>
-                <label htmlFor="Show All">All</label>
-                <input type="radio" name="filter" id="Show All" onClick={() => this.applyFilter('all') } />
-                 &nbsp;&nbsp;&nbsp;
-                <label htmlFor="Show Unconfirmed">Unconfirmed</label>
-                <input type="radio" name="filter" id="Show Unconfirmed" onClick={() => this.applyFilter('unconfirmed')} defaultChecked/>
-                 &nbsp;&nbsp;&nbsp;
-                <label htmlFor="Show Delete Requested">Delete Requested</label>
-                <input type="radio" name="filter" id="Show Delete Requested" onClick={() => this.applyFilter('delete')} />
-                 &nbsp;&nbsp;&nbsp;
-                <label htmlFor="Show Confirmed">Confirmed</label>
-                <input type="radio" name="filter" id="Show Confirmed" onClick={() => this.applyFilter('confirmed')} />
-                </p>
+              <p className="admin-radio-container">
+                <div>
+                  <input type="radio" name="filter" id="Show All" onClick={() => this.applyFilter('all') } />
+                  &nbsp;
+                  <label htmlFor="Show All">All</label>
+                  &nbsp;&nbsp;&nbsp;
+                </div>
+                <div>
+                  <input type="radio" name="filter" id="Show Unconfirmed" onClick={() => this.applyFilter('unconfirmed')} defaultChecked/>
+                  &nbsp;
+                  <label htmlFor="Show Unconfirmed">Unconfirmed</label>
+                   &nbsp;&nbsp;&nbsp;
+                 </div>
+                <div>
+                  <input type="radio" name="filter" id="Show Delete Requested" onClick={() => this.applyFilter('delete')} />
+                  &nbsp;
+                  <label htmlFor="Show Delete Requested">Delete Requested</label>
+                  &nbsp;&nbsp;&nbsp;
+                </div>
+                <div>
+                  <input type="radio" name="filter" id="Show Confirmed" onClick={() => this.applyFilter('confirmed')} />
+                  &nbsp;
+                  <label htmlFor="Show Confirmed">Confirmed</label>
+                </div>
+              </p>
             </div>
             <div className="unconfirmed-list">
             {this.props.bookings.filter(this.isInFilter).map(item => {

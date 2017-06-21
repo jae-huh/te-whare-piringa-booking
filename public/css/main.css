@@ -39,6 +39,7 @@ th {
   background: #45065B;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
+  margin-top: 5px;
 }
 
 .setting-btn:hover {
@@ -73,13 +74,4 @@ th {
 
 .book-container {
   min-width: 300px;
-}
-
-.list-of-unconfirmed {
-  padding: 10px;
-}
-
-.list-of-unconfirmed:hover {
-  background-color: #ebebeb;
-  cursor: pointer;
 }
