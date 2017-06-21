@@ -16,12 +16,11 @@ class ScheduleColumn extends React.Component {
   }
 
   clicked (e, item) {
-    console.log(e, item)
     if (item) {
       if (!item.fullName) return
       this.setState({
         showDetails: true,
-       booking: item
+        booking: item
       })
     } else {
       const dateString = e.target.id.substr(4)
@@ -48,7 +47,7 @@ class ScheduleColumn extends React.Component {
 
   render () {
     return (
-    <div className='schedule-column-container tomorrow'>
+    <div className={`schedule-column-container ${this.props.dayClass}`} >
       {this.getTimeSlots(new Date(moment(this.props.date)))}
       {this.state.showDetails &&
        <ModalContainer onClose={this.handleClose}>
