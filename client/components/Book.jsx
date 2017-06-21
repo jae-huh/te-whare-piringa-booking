@@ -121,7 +121,9 @@ class Book extends React.Component {
                     <Datetime value={this.state.dateStart}
                     onChange={this.handleChangeDateStart}
                     timeConstraints={{hours: {min: 6, max: 22, step: 1}, minutes: {step: 30}}}
-                    className="datepick"/>
+                    className="datepick"
+                    dateFormat="DD/MM/YYYY"
+                    timeFormat="HH:mm" />
                   </div>
                 </div>
                 <div className="form-group row">
@@ -129,7 +131,10 @@ class Book extends React.Component {
                 <div className="col-xs-9">
                 <Datetime value={this.state.dateEnd}
                 onChange={this.handleChangeDateEnd}
-                className="datepick"/>
+                timeConstraints={{hours: {min: 6, max: 22, step: 1}, minutes: {step: 30}}}
+                className="datepick"
+                dateFormat="DD/MM/YYYY"
+                timeFormat="HH:mm" />
               </div>
             </div>
               <div className="form-group row">
