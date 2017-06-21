@@ -116,6 +116,10 @@
   background-color: #eeeeee;
 }
 
+.future {
+  background-color: #fff;
+}
+
 .last-month:hover,
 .calendar-inactive:hover {
   background-color: #eeeeee;
@@ -125,6 +129,13 @@
 
 .calendar-inactive:hover {
   color: #000000;
+}
+
+.calendar-date.last-month.future:hover {
+  background-color: #0066CC;
+  color: #ffffff;
+  transition: all .35s ease-in;
+  cursor: pointer;
 }
 
 .last-month:hover {
