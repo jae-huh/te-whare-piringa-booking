@@ -69,7 +69,9 @@ class AdminPortal extends React.Component {
       return true
     }
     if (current === 'confirmed' && booking.confirmed) {
-      return true
+      if (booking.startDate > new Date().setHours(0, 0, 0, 0)) {
+        return true
+      }
     }
     if (current === 'delete' && booking.deleteRequested) {
       return true
