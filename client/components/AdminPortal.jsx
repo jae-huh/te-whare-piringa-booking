@@ -35,8 +35,8 @@ class AdminPortal extends React.Component {
     })
   }
 
-  handleDeleteClick (id) {
-    this.props.deleteBooking(id)
+  handleDeleteClick (booking) {
+    this.props.deleteBooking(booking)
     this.setState({
       modal: false
     })
@@ -85,8 +85,8 @@ class AdminPortal extends React.Component {
     return false
   }
 
-  requestBookingToBeDeleted (id) {
-    this.props.requestDelete(id)
+  requestBookingToBeDeleted (booking) {
+    this.props.requestDelete(booking)
     this.handleClose()
   }
 
@@ -167,12 +167,12 @@ class AdminPortal extends React.Component {
                   <h3>Details</h3>
                   <Details />
                   {!this.props.admin &&
-                  <button onClick={() => this.requestBookingToBeDeleted(this.props.booking._id)}>Request Delete</button>
+                  <button onClick={() => this.requestBookingToBeDeleted(this.props.booking)}>Request Delete</button>
                   }
                   {this.props.admin &&
                   <div className="modal-admin">
                     {!this.props.booking.confirmed && <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>}
-                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
+                    <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking) }}></span>
                   </div>
                   }
                   </ModalDialog>

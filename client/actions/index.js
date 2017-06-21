@@ -103,10 +103,10 @@ export function confirm (id) {
   }
 }
 
-export function deleteBooking (id) {
+export function deleteBooking (booking) {
   return dispatch => {
     dispatch(gettingData())
-    login('delete', `/admin/delete/${id}`)
+    login('delete', '/admin/delete/', booking)
     .then(res => {
       dispatch(receivedData())
       if (res.body.result) {
@@ -141,13 +141,13 @@ export function selectBooking (booking) {
   }
 }
 
-export function requestDelete (id) {
+export function requestDelete (booking) {
   return dispatch => {
     dispatch(gettingData())
-    login('put', `/user/requestdelete/${id}`)
+    login('put', '/user/requestdelete/', booking)
     .then(res => {
       dispatch(receivedData())
-      if (res.body.result) {
+      if (res.body.bookings) {
         return dispatch(receiveBookings(res.body.bookings))
       }
     })
