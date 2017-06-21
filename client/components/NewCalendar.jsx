@@ -36,9 +36,9 @@ class Calendar extends React.Component {
       <div className='calendar container'>
         <div className='calendar-title'>
           <h2>
-            <span className='calendar-previous'><a onClick={this.previousMonth} ><img src='/images/left.png' /></a> </span>
+            <span className='calendar-previous'><a onClick={this.previousMonth} ><img className='calendar-arrows calendar-arrow-left' src='/images/left.png' /></a></span>
             {moment(this.props.date).format('MMMM YYYY')}
-            <span className='calendar-next'><a onClick={this.nextMonth} ><img src='/images/right-arrow-icon.png' /></a> </span>
+            <span className='calendar-next'><a onClick={this.nextMonth} ><img className='calendar-arrows calendar-arrow-right' src='/images/right-arrow-icon.png' /></a></span>
           </h2>
         </div>
         <div className="calendar-container">
