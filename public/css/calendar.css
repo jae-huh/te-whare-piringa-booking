@@ -254,6 +254,9 @@
 
 .key-circles {
   margin-bottom: 1em;
+  font-family: 'Roboto', sans-serif!important;
+  text-align: center;
+  font-weight: bold;
 }
 
 .login-book {
@@ -275,29 +278,33 @@
 
 .reserved-key {
   background-color: #FFF0C8;
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-  border-width: 2px;
-  border-style: solid;
 }
 
 .booked-key {
   background-color: hsla(8, 86%, 64%, .75);
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-  border-width: 2px;
-  border-style: solid;
 }
 
-.available {
+.available-key {
+  background-color: white;
+}
+
+@media screen and (max-width:956px) {
+  .yesterday, .tomorrow {
+    display: none!important;
+  }
+  .today {
+    width: 300px;
+    margin-left: -20%
+  }
+}
+
+.circle {
   height: 25px;
   width: 25px;
-  background-color: white;
   border-radius: 50%;
   border-width: 2px;
   border-style: solid;
+  text-align: center;
 }
 
 .admin-radio-container {
