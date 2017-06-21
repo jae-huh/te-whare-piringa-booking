@@ -106,7 +106,7 @@ class Book extends React.Component {
                 <div className="form-group row">
                   <label className="col-xs-3">Email Address:</label>
                   <div className="col-xs-9">
-                    <input type='email' name='email' className="form-control" value={this.state.emailAddress} onChange={this.handleChange} />
+                    <input type='email' name='emailAddress' className="form-control" value={this.state.emailAddress} onChange={this.handleChange} />
                   </div>
                 </div>
                 <div className="form-group row">
@@ -141,7 +141,7 @@ class Book extends React.Component {
             <div className="form-group row">
               <label className="col-xs-3">Number of Guests:</label>
               <div className="col-xs-9">
-                <input type='number' min='0' name='guestNumber' placeholder='Number of guests' className="form-control number-guest" onChange={this.handleChange} required />
+                <input type='number' min='0' name='guestNumber' placeholder="Type '0' if unknown" className="form-control number-guest" onChange={this.handleChange} required />
               </div>
             </div>
             <div className="form-group row text-center">

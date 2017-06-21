@@ -88,16 +88,20 @@ function confirmBooking (req, authId, cb) {
   })
 }
 
-function requestDelete (req, authId, cb) {
+function requestDelete (booking, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
-    db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'deleteRequested': true}}, (err, result) => {
-      if (err) return cb(err)
-      userGetAllBookings(authId, (err, bookings) => {
+    if (booking.confirmed) {
+      db.collection('bookings').update({_id: ObjectId(booking._id)}, {$set: {'deleteRequested': true}}, (err, result) => {
         if (err) return cb(err)
-        cb(null, {result, bookings})
+        userGetAllBookings(authId, (err, bookings) => {
+          if (err) return cb(err)
+          cb(null, {result, bookings, sendEmail: true})
+        })
       })
-    })
+    } else {
+      deleteBooking(booking, authId, cb)
+    }
   })
 }
 
@@ -142,10 +146,10 @@ function getUserDetails (authId, cb) {
   })
 }
 
-function deleteBooking (id, authId, cb) {
+function deleteBooking (booking, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
-    db.collection('bookings').remove({_id: ObjectId(id)}, (err, result) => {
+    db.collection('bookings').remove({_id: ObjectId(booking._id)}, (err, result) => {
       if (err) return cb(err)
       userGetAllBookings(authId, (err, bookings) => {
         if (err) return cb(err)
