@@ -116,15 +116,15 @@ class ScheduleColumn extends React.Component {
         if (selectedDate >= this.props.startTime && selectedDate < this.props.endTime) {
           classNames += ' selected'
         }
-        if (this.props.bookings.find(booking => {
-          return booking.startDate <= selectedDate && booking.endDate > selectedDate && booking.confirmed === false
-        })) {
-          classNames += ' reserved'
-        }
-        if (this.props.bookings.find(booking => {
-          return booking.startDate <= selectedDate && booking.endDate > selectedDate && booking.confirmed === true
-        })) {
-          classNames += ' confirmed'
+        const booking = this.props.bookings.find(booking => {
+          return booking.startDate <= selectedDate && booking.endDate > selectedDate
+        })
+        if (booking) {
+          if (booking.confirmed) {
+            classNames += ' confirmed'
+          } else {
+            classNames += ' reserved'
+          }
         }
         toDisplay = this.props.bookings.find(booking => {
           return booking.startDate.getTime() === selectedDate.getTime()
@@ -132,7 +132,7 @@ class ScheduleColumn extends React.Component {
         if (toDisplay && toDisplay.fullName && !toDisplay.deleteRequested) {
           ptag = toDisplay.fullName
         }
-        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onClick={ e => this.clicked(e, toDisplay)} onMouseOver={this.mouseEnter}>{<div className='titleofevent'>{ptag}</div>}</div>)
+        dayArray.push(<div key={dateFormatted} id={'slot' + dateFormatted} className={classNames} onClick={ e => this.clicked(e, booking)} onMouseOver={this.mouseEnter}>{<div className='titleofevent'>{ptag}</div>}</div>)
       }
     }
     return dayArray
