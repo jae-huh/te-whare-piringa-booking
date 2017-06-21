@@ -293,12 +293,20 @@
 }
 
 @media screen and (max-width:956px) {
-  .yesterday, .tomorrow {
-    display: none!important;
-  }
-  .today {
-    width: 300px;
-    margin-left: -20%
+ .schedule-navbar, .schedule-columns-container, .schedule-header-container, .schedule-key, .schedule-arrow, .no-mobile {
+   display: none;
+ }
+
+ .message {
+   margin-top: 150px;
+   text-align: center;
+ }
+ 
+}
+
+@media screen and (min-width: 957px) {
+  .message {
+    display: none;
   }
 }
 

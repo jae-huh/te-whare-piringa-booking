@@ -68,7 +68,7 @@ class Schedular extends React.Component {
             <div className='row key-circles margin-upper'>
               <div className='col-xs-1' />
               <div className="col-xs-3">
-              <table>
+              <table className="no-mobile">
                 <tr>
                   <td>Available</td>
                   <td>Reserved</td>
