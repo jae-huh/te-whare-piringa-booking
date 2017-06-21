@@ -15,13 +15,14 @@ class Book extends React.Component {
     super(props)
     this.state = {
       authId: '',
-      fullName: '',
-      email: '',
-      phoneNumber: '',
+      fullName: this.props.user.fullName,
+      emailAddress: this.props.user.emailAddress,
+      phoneNumber: this.props.user.phoneNumber,
       dateStart: this.props.startTime,
       dateEnd: this.props.endTime,
       purpose: null,
-      guestNumber: null
+      guestNumber: null,
+      message: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -29,6 +30,8 @@ class Book extends React.Component {
     this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.message = this.message.bind(this)
+    this.redirect = this.redirect.bind(this)
   }
 
   handleChange (evt) {
@@ -38,7 +41,7 @@ class Book extends React.Component {
   }
 
   handleClose () {
-    this.props.history.push('/')
+    this.props.history.push('/schedule')
   }
 
   handleChangeDateStart (date) {
@@ -57,9 +60,9 @@ class Book extends React.Component {
     evt.preventDefault()
 
     const data = {
-      fullName: this.state.fullName || this.props.user.fullName,
-      emailAddress: this.state.email || this.props.user.emailAddress,
-      phoneNumber: this.state.phoneNumber || this.props.user.phoneNumber,
+      fullName: this.state.fullName,
+      emailAddress: this.state.emailAddress,
+      phoneNumber: this.state.phoneNumber,
       authId: this.props.user.authId,
       startDate: moment(this.state.dateStart),
       endDate: moment(this.state.dateEnd),
@@ -72,44 +75,84 @@ class Book extends React.Component {
     message = checkBookingForOverlap(data, this.props.bookings)
     if (message !== 'ok') return this.props.validationError(message)
     this.props.postNewBooking(data)
-    this.props.history.push('/calendar')
+    this.message()
+  }
+
+  redirect () {
+    this.setState({message: ''})
+    this.props.history.push('/schedule')
+  }
+
+  message () {
+    this.setState({
+      message: 'Thankyou, You will be contacted soon'
+    })
+    setTimeout(this.redirect, 4000)
   }
 
   render () {
     return (
       <div className='book-container'>
-      {this.props.user.authId
-        ? <form onSubmit={this.handleSubmit}>
-          Full Name: <input name='fullName' placeholder={this.props.user.fullName} onChange={this.handleChange} />
-          <br />
-          Email Address: <input type='email' name='email' placeholder={this.props.user.emailAddress} onChange={this.handleChange} />
-          <br />
-          Contact Number: <input type='tel' name='phoneNumber' placeholder={this.props.user.phoneNumber} onChange={this.handleChange} /><br />
-          Start Date and Time:
-       <Datetime value={this.props.startTime}
-       onChange={this.handleChangeDateStart}
-       timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
-       className="datepick"/>
-          <br />
-          End Date and time:
-           <Datetime value={this.props.endTime}
-       onChange={this.handleChangeDateEnd}
-       className="datepick"/>
-          <br />
-          <textarea name='purpose' required placeholder='Purpose of hire' onChange={this.handleChange} />
-          <br />
-          <input type='number' min='0' name='guestNumber' placeholder='Number of guests' onChange={this.handleChange} required />
-          <br />
-          <input type='submit' value='Book' />
-        </form>
-      : <ModalContainer onClose={this.handleClose}>
-          <ModalDialog onClose={this.handleClose}>
-            <h3>You Are Not Logged In</h3>
-            <p>Please log in or register</p>
-          </ModalDialog>
-        </ModalContainer>
-      }
-      </div>
+        <ModalContainer onClose={this.handleClose} className='book-container'>
+          <ModalDialog onClose={this.handleClose} className='book-container'>
+            {!this.state.message &&
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group row">
+                <label className="col-xs-3">Full Name:</label>
+                <div className="col-xs-9">
+                  <input name='fullName' className="form-control col-md-10" value={this.state.fullName} onChange={this.handleChange} />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-xs-3">Email Address:</label>
+                  <div className="col-xs-9">
+                    <input type='email' name='email' className="form-control" value={this.state.emailAddress} onChange={this.handleChange} />
+                  </div>
+                </div>
+                <div className="form-group row">
+                <label className="col-xs-3">Contact Number:</label>
+                  <div className="col-xs-9">
+                    <input type='tel' name='phoneNumber' className="form-control" value={this.state.phoneNumber} onChange={this.handleChange} />
+                  </div>
+                </div>
+                <div className="form-group row">
+                <label className="col-xs-3">Start Date and Time:</label>
+                  <div className="col-xs-9">
+                    <Datetime value={this.state.dateStart}
+                    onChange={this.handleChangeDateStart}
+                    timeConstraints={{hours: {min: 6, max: 22, step: 1}}}
+                    className="datepick"/>
+                  </div>
+                </div>
+                <div className="form-group row">
+                <label className="col-xs-3">End Date and Time:</label>
+                <div className="col-xs-9">
+                <Datetime value={this.state.dateEnd}
+                onChange={this.handleChangeDateEnd}
+                className="datepick"/>
+              </div>
+            </div>
+              <div className="form-group row">
+                <label className="col-xs-3">Purpose:</label>
+                <div className="col-xs-9">
+                  <textarea name='purpose' required placeholder='Purpose of hire' className="form-control" onChange={this.handleChange} />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-xs-3">Number of Guests:</label>
+              <div className="col-xs-9">
+                <input type='number' min='0' name='guestNumber' placeholder='Number of guests' className="form-control number-guest" onChange={this.handleChange} required />
+              </div>
+            </div>
+            <div className="form-group row text-center">
+              <input type='submit' value='Book' className="setting-btn" />
+            </div>
+          </form>
+            }
+          {this.state.message && <h3 className="confirm-message">{this.state.message}</h3>}
+        </ModalDialog>
+      </ModalContainer>
+    </div>
     )
   }
 }

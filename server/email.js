@@ -50,6 +50,7 @@ function confirmedBookingEmail (req, res) {
   let receiver = req.body.emailAddress
   let sender = 'Te Whare Piranga'
   const data = req.body
+  console.log("data: ", data)
 
   let mailOptions = {
     from: sender,

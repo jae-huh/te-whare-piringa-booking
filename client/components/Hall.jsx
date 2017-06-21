@@ -22,7 +22,7 @@ const Hall = () => {
             </ul>
           </div>
           <div className='hall-info'>
-            <h2 className='hall-info-heading'>What happens at Te Whare Piringa?</h2>
+            <h2 className='hall-info-heading'>What happens at Te Whare Piringa</h2>
             <ul>
               <li><a href='https://www.aucklandchamber.co.nz/business-support/find-staff/employment-programmes/career-start/' target='_blank'>Career Start</a> - youth employment programme</li>
               <li><a href='http://www.communicare.org.nz/friendship-centres/' target='_blank'>Communicare</a> - for the elderlies</li>

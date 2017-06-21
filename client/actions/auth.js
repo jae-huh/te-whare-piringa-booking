@@ -3,7 +3,7 @@ import {receiveBookings, WAITING, NOT_WAITING} from './index'
 
 const localStorage = global.window.localStorage
 
-export function checkLogin () {
+export function checkLogin (redirect) {
   return dispatch => {
     dispatch(gettingData())
     if (!localStorage.getItem('id_token')) {
@@ -19,6 +19,7 @@ export function checkLogin () {
         .then(res => {
           if (!res.body.user) {
             res.body.error && console.log(res.body.error)
+            dispatch(receivedData())
             return dispatch(noUserExists())
           }
           dispatch(loggedIn(res.body.user))
@@ -62,25 +63,21 @@ function loggedIn (user, bookings) {
   }
 }
 
-export function submitRegistration (registrationInfo) {
+export function submitRegistration (registrationInfo, redirect) {
   return dispatch => {
-    dispatch(checkingRegistration())
+    dispatch(gettingData())
     login('post', '/user/adduser', registrationInfo)
       .then(res => {
+        dispatch(receivedData())
         if (res.body.user) {
           dispatch(loggedIn(res.body.user))
+          redirect('/calendar')
         }
         if (res.body.error) {
           dispatch(registrationFailed(res.body.error))
-          return console.log(res.body.error)
+          console.log(res.body.error)
         }
       })
-  }
-}
-
-function checkingRegistration () {
-  return {
-    type: 'SENDING_REGISTRATION'
   }
 }
 
@@ -97,8 +94,10 @@ export function logout () {
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     dispatch(loggedOut())
+    dispatch(gettingData())
     getAllBookings()
       .then(res => {
+        dispatch(receivedData())
         return dispatch(receiveBookings(res.body.bookings))
       })
   }

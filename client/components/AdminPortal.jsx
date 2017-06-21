@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {confirm, deleteBooking, selectBooking} from '../actions/index'
+import {confirm, deleteBooking, selectBooking, requestDelete} from '../actions/index'
 import Setting from './Settings'
 import Details from './Details'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog'
@@ -69,7 +69,9 @@ class AdminPortal extends React.Component {
       return true
     }
     if (current === 'confirmed' && booking.confirmed) {
-      return true
+      if (booking.startDate > new Date().setHours(0, 0, 0, 0)) {
+        return true
+      }
     }
     if (current === 'delete' && booking.deleteRequested) {
       return true
@@ -80,11 +82,15 @@ class AdminPortal extends React.Component {
     return false
   }
 
+  requestBookingToBeDeleted (id) {
+    this.props.requestDelete(id)
+    this.handleClose()
+  }
+
   render () {
     return (
       <div className="admin-portal container">
-        {this.props.admin
-        ? <div>
+        <div>
           <h2>Welcome, {this.props.user.fullName}</h2>
         <div className="row">
           <div className="col-md-1" />
@@ -117,7 +123,6 @@ class AdminPortal extends React.Component {
                     </div>
                   </div>
                   <div className="col-sm-3 buttons-of-unconfirmed text-center">
-                    
                     <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
                   </div>
                 </div>
@@ -129,29 +134,37 @@ class AdminPortal extends React.Component {
           <div className="row">
             <div className="col-md-1" />
             <div className="col-md-10 text-center">
-              <button onClick={this.settingShow} className="setting-btn">Settings</button>
-              {this.state.showSettings &&
-               <ModalContainer onClose={this.handleClose}>
-                <ModalDialog onClose={this.handleClose}>
-                  <Setting close={this.handleClose}/>
-                </ModalDialog>
-              </ModalContainer>
-              }
+              {this.props.admin && (
+                <div>
+                  <button onClick={this.settingShow} className="setting-btn">Settings</button>
+                  {this.state.showSettings &&
+                    <ModalContainer onClose={this.handleClose}>
+                      <ModalDialog onClose={this.handleClose}>
+                        <Setting close={this.handleClose}/>
+                      </ModalDialog>
+                    </ModalContainer>
+                  }
+                </div>
+              )}
               {this.props.booking.fullName && this.state.modal &&
               <ModalContainer onClose={this.handleClose}>
                 <ModalDialog onClose={this.handleClose}>
+                  <h3>Details</h3>
                   <Details />
+                  {!this.props.admin &&
+                  <button onClick={() => this.requestBookingToBeDeleted(this.props.booking._id)}>Request Delete</button>
+                  }
+                  {this.props.admin &&
                   <div className="modal-admin">
                     <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>
                     <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
                   </div>
+                  }
                   </ModalDialog>
                 </ModalContainer>}
             </div>
           </div>
         </div>
-        : <h1>Not authorised</h1>
-        }
       </div>
     )
   }
@@ -159,7 +172,7 @@ class AdminPortal extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    bookings: state.bookings,
+    bookings: state.bookings.filter(booking => booking.authId),
     admin: state.user.admin,
     booking: state.booking,
     user: state.user
@@ -170,7 +183,8 @@ function mapDispatchToProps (dispatch) {
   return {
     confirm: id => { dispatch(confirm(id)) },
     deleteBooking: id => { dispatch(deleteBooking(id)) },
-    selectBooking: booking => { dispatch(selectBooking(booking)) }
+    selectBooking: booking => { dispatch(selectBooking(booking)) },
+    requestDelete: id => dispatch(requestDelete(id))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPortal)

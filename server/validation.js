@@ -21,10 +21,16 @@ function validateBookingDetails (booking) {
   if (endDate < new Date(moment(startDate).add(1, 'hours'))) return 'The minimum booking length is one hour'
   if (!checkEmailFormat(booking.emailAddress)) return 'Please enter a valid email address'
   if (booking.phoneNumber.replace(/[^0-9]/g,"").length < 7) return 'Please enter a valid phone number'
+  return 'ok'
+}
+
+function validateAgainstOpenHours (booking) {
+  const startDate = new Date(booking.startDate)
+  const endDate = new Date(booking.endDate)
   if (startDate.getHours() + startDate.getMinutes() / 60 < constants.openingHour) return 'You cannot make a booking that starts that early'
   if (startDate.getHours() + startDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that starts that late'
-  if (endDate.getHours() + endDate.getMinutes() / 60 < constants.openingHour) return 'You can not make a booking that starts that early'
-  if (endDate.getHours() + endDate.getMinutes() / 60 >= constants.closingHour) return 'You cannot make a booking that ends that late'
+  if (endDate.getHours() + endDate.getMinutes() / 60 <= constants.openingHour) return 'You can not make a booking that starts that early'
+  if (endDate.getHours() + endDate.getMinutes() / 60 > constants.closingHour) return 'You cannot make a booking that ends that late'
   return 'ok'
 }
 
@@ -44,6 +50,7 @@ function checkEmailFormat (email) {
 }
 
 function checkBookingForOverlap (booking, bookings) {
+  bookings = bookings.filter(booking => !booking.deleteRequested)
   const startDate1 = (new Date(booking.startDate))
   const endDate1 = (new Date(booking.endDate)).getTime()
   if (bookings.find(compareHours)) return 'Your request overlaps with another booking'
@@ -59,5 +66,6 @@ function checkBookingForOverlap (booking, bookings) {
 module.exports = {
   validateBookingDetails,
   validateUserDetails,
-  checkBookingForOverlap
+  checkBookingForOverlap,
+  validateAgainstOpenHours
 }

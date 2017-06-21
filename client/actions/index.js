@@ -1,4 +1,3 @@
-import moment from 'moment'
 import {login} from '../api'
 
 export const BOOKINGPOSTED = 'BOOKINGPOSTED'
@@ -28,15 +27,20 @@ export function newBooking (data) {
 
 function sendEmail (data) {
   return dispatch => {
+    dispatch(gettingData())
     login('post', '/sendemail', data)
-    .then(f => f)
+    .then(f => {
+      dispatch(receivedData())
+    })
   }
 }
-
 function sendConfirm (data) {
   return dispatch => {
+    dispatch(gettingData())
     login('post', '/sendconfirm/', data)
-    .then(f => f)
+    .then(f => {
+      dispatch(receivedData())
+    })
   }
 }
 
@@ -50,13 +54,15 @@ function bookingPosted (booking) {
 }
 
 export const receiveBookings = bookings => {
+  bookings = bookings.map(booking => {
+    booking.startDate = new Date(booking.startDate)
+    booking.endDate = new Date(booking.endDate)
+    return booking
+  })
+  bookings.sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
   return {
     type: RECEIVE_BOOKINGS,
-    bookings: bookings.map(booking => {
-      booking.startDate = new Date(booking.startDate)
-      booking.endDate = new Date(booking.endDate)
-      return booking
-    })
+    bookings
   }
 }
 
@@ -102,8 +108,8 @@ export function deleteBooking (id) {
     dispatch(gettingData())
     login('delete', `/admin/delete/${id}`)
     .then(res => {
+      dispatch(receivedData())
       if (res.body.result) {
-        dispatch(receivedData())
         return dispatch(receiveBookings(res.body.bookings))
       }
     })
@@ -115,6 +121,7 @@ export function makeAdmin (email) {
     dispatch(gettingData())
     login('put', `/admin/makeadmin/${email}`)
     .then(res => {
+      dispatch(receivedData())
       dispatch(adminSuccess(res))
     })
   }
@@ -139,8 +146,8 @@ export function requestDelete (id) {
     dispatch(gettingData())
     login('put', `/user/requestdelete/${id}`)
     .then(res => {
+      dispatch(receivedData())
       if (res.body.result) {
-        dispatch(receivedData())
         return dispatch(receiveBookings(res.body.bookings))
       }
     })
@@ -150,7 +157,6 @@ export function requestDelete (id) {
 export function emailAlertChange (email) {
   return dispatch => {
     dispatch(gettingData())
-    console.log(email)
     login('put', '/admin/notificationemail', email)
     .then(res => {
       dispatch(receivedData())

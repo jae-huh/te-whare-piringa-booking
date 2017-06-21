@@ -116,6 +116,10 @@
   background-color: #eeeeee;
 }
 
+.future {
+  background-color: #fff;
+}
+
 .last-month:hover,
 .calendar-inactive:hover {
   background-color: #eeeeee;
@@ -125,6 +129,13 @@
 
 .calendar-inactive:hover {
   color: #000000;
+}
+
+.calendar-date.last-month.future:hover {
+  background-color: #0066CC;
+  color: #ffffff;
+  transition: all .35s ease-in;
+  cursor: pointer;
 }
 
 .last-month:hover {
@@ -184,9 +195,7 @@
 .half-hour {
   border-width: 0 0.05em 0.05em 0;
   border-style: solid;
-  border-style:
 }
-
 
 .time {
   max-width: 10%;
@@ -207,7 +216,7 @@
 }
 
 .datepick {
-  max-width: 20%;
+  max-width: 60%;
 }
 
 .reserved-key {
@@ -266,6 +275,10 @@
   font-size: 33px;
 }
 
+.titleofevent:hover {
+  cursor: pointer
+}
+
 .list-of-unconfirmed {
   border: 1px solid grey;
   border-radius: 5px;
@@ -274,7 +287,8 @@
 
 .calendar-container {
   margin: 25px;
-  border: 3px solid #07839B!important;
+  border: 3px solid #46075C!important;
+  border-radius: 3px;
 }
 
 hr {
