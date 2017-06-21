@@ -189,8 +189,8 @@ class AdminPortal extends React.Component {
                     {this.state.sure &&
                     <div className="text-center">
                       <p className='sure'>Are you sure you want to delete?</p>
-                      <button className="setting-btn" onClick={() => { this.handleDeleteClick(this.props.booking) }}>Yes</button>
-                      <button className="setting-btn" onClick={() => { this.handleClose() }} defaultValue>No</button>
+                      <button className="setting-button" onClick={() => { this.handleDeleteClick(this.props.booking) }}>Yes</button>
+                      <button className="setting-button" onClick={() => { this.handleClose() }} defaultValue>No</button>
                       </div>
                     }
                   </div>
