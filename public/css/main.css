@@ -74,3 +74,12 @@ th {
 .book-container {
   min-width: 300px;
 }
+
+.list-of-unconfirmed {
+  padding: 10px;
+}
+
+.list-of-unconfirmed:hover {
+  background-color: #ebebeb;
+  cursor: pointer;
+}

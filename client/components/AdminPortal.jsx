@@ -110,17 +110,17 @@ class AdminPortal extends React.Component {
             {this.props.bookings.filter(this.isInFilter).map(item => {
               return (
                 <div key={item._id} className="row">
-                  <div className="col-sm-9">
-                    <div className="list-of-unconfirmed">
+                  <div className="col-sm-12">
+                    <div className="list-of-unconfirmed" onClick={() => { this.saveBookingToStore(item) }}>
                     {item.fullName}<hr />
                     {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}<hr />
                     {item.startDate.toString().substring(16, 21)} to {item.endDate.toString().substring(16, 21)}
                     </div>
                   </div>
-                  <div className="col-sm-3 buttons-of-unconfirmed text-center">
+                  {/* <div className="col-sm-3 buttons-of-unconfirmed text-center">
                     <span className="glyphicon glyphicon-plus more" onClick={() => { this.saveBookingToStore(item) }}></span>
+                  </div> */}
                   </div>
-                </div>
               )
             })}
           </div>
