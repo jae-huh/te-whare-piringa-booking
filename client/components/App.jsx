@@ -45,6 +45,7 @@ class App extends React.Component {
           <Route path="/callback" component={Callback} />
           <Route path='/admin' component={AdminPortal} />
           <Route path='/calendar' component={NewCalendar} />
+          <h1 className="message">Please use a bigger screen to see schedule</h1>
           <Route path='/schedule' component={Schedular} />
           <Route path="/book" component={Book} />
           <Route path='/register' component={Registration} />
