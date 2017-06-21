@@ -79,6 +79,9 @@ class AdminPortal extends React.Component {
     if (current === 'all') {
       return true
     }
+    if (current === 'history' && booking.endDate < new Date()) {
+      return true
+    }
     return false
   }
 
@@ -168,7 +171,7 @@ class AdminPortal extends React.Component {
                   }
                   {this.props.admin &&
                   <div className="modal-admin">
-                    <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>
+                    {!this.props.booking.confirmed && <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>}
                     <span className="glyphicon glyphicon-remove remove" onClick={() => { this.handleDeleteClick(this.props.booking._id) }}></span>
                   </div>
                   }
