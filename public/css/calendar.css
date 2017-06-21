@@ -207,7 +207,6 @@
 }
 
 .schedule-column-container {
-
   width: 33.33%;
 }
 .schedule-hours-container{
@@ -223,7 +222,6 @@
   min-height: 1.5em;
   min-width: 2.5em;
   font-family: 'Roboto', sans-serif;
-  /*font-weight: bold;*/
 }
 
 .schedule-header, .hour {
@@ -261,7 +259,6 @@
 
 .reserved {
   background-color: #FFF0C8;
-  /*border: none!important;*/
 }
 
 .confirmed {
@@ -270,7 +267,6 @@
 
 .confirmed {
   background-color: hsla(8, 86%, 64%, .75);
-  /*border: none!important;*/
 }
 
 .datepick {
@@ -301,7 +297,6 @@
   color: #ffffff;
   font-size: 1.25em;
   background: rgba(69, 6, 91, .7);
-  /*padding: 10px 20px 10px 20px;*/
   text-decoration: none;
 }
 
@@ -341,7 +336,6 @@
 }
 
 .key-table {
-  /*margin: auto;*/
   display: flex;
   justify-content: center;
 }
@@ -388,13 +382,10 @@
 
 .remove {
   color: red;
-  /*font-size: 18px;*/
 }
 
 .confirm {
   color: green;
-  /*font-size: 2em;*/
-  /*margin: 5px*/
 }
 
 .confirm, .remove {
@@ -429,13 +420,23 @@
   cursor: pointer;
 }
 
-.calendar-container {
-  margin: 25px;
-  border: 3px solid #46075C!important;
-  border-radius: 3px;
-}
-
 hr {
   margin: 3px;
   max-width: 30%
+}
+
+.schedule-inner-container {
+  padding: 0;
+}
+
+.schedule-header, .schedule-column-container, .schedule-hours-container {
+  border-style: solid;
+  border-color: grey;
+  border-width: thin;
+}
+
+.calendar-container, .schedule-inner-container {
+  margin: 25px;
+  border: 3px solid #46075C!important;
+  border-radius: 3px;
 }

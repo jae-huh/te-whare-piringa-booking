@@ -101,7 +101,7 @@ class Schedular extends React.Component {
               <div className='col-xs-2 col-md-1 schedule-arrow'>
                 <img src='./images/left.png' className='img-fluid' onClick={this.previousDay} />
               </div>
-              <div className='col-md-10'>
+              <div className='col-md-10 schedule-inner-container'>
                 <div className='schedule-header-container'>
                   <div className='schedule-header time'>Timeslot</div>
                   <div className='schedule-header yesterday'>{moment(this.props.date).subtract(1, 'days').format('ddd DD MMM')}</div>
