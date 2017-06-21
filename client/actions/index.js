@@ -20,10 +20,20 @@ export function newBooking (data) {
         dispatch(bookingPosted(res.body.booking))
         dispatch(receiveBookings(res.body.bookings))
         dispatch(receivedData())
+        sendEmail(res.body.booking)
       })
   }
 }
 
+function sendEmail (data) {
+  return dispatch => {
+    dispatch(gettingData())
+    login('post', '/sendemail', data)
+    .then(f => {
+      dispatch(receivedData())
+    })
+  }
+}
 function sendConfirm (data) {
   return dispatch => {
     dispatch(gettingData())
