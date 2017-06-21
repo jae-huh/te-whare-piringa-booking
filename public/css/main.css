@@ -4,13 +4,15 @@
   margin-bottom: 1.5em;
 }
 
-.detailsTable td {
+.detailsTable td, .no-mobile td {
   padding: 0 1em
 }
 
-.detailsTable th {
+.detailsTable th, .no-mobile th {
   padding: 0 1em
 }
+
+
 
 .wait {
   margin-left: 25px;

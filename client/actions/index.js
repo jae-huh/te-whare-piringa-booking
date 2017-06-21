@@ -31,13 +31,8 @@ function sendEmail (data) {
 }
 
 function sendConfirm (data) {
-  return dispatch => {
-    dispatch(gettingData())
-    login('post', '/sendconfirm/', data)
-    .then(f => {
-      dispatch(receivedData())
-    })
-  }
+  login('post', '/sendconfirm/', data)
+    .then(f => f)
 }
 
 function deleteEmail (data) {
