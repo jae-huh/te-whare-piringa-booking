@@ -341,7 +341,13 @@
 }
 
 .key-table {
-  margin: auto;
+  /*margin: auto;*/
+  display: flex;
+  justify-content: center;
+}
+
+.schedule-indicator {
+  width: 80px;
 }
 
 .schedule-arrow {
@@ -382,13 +388,18 @@
 
 .remove {
   color: red;
-  font-size: 18px;
+  /*font-size: 18px;*/
 }
 
 .confirm {
   color: green;
-  font-size: 18px;
-  margin: 5px
+  /*font-size: 2em;*/
+  /*margin: 5px*/
+}
+
+.confirm, .remove {
+  margin: 0 20px;
+  font-size: 1.8em;
 }
 
 .more{

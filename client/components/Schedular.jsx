@@ -70,20 +70,20 @@ class Schedular extends React.Component {
             </div>
             <div className='row key-circles margin-upper'>
               <div className="col-xs-12">
-              <table className="key-table">
-                <tbody>
-                  <tr>
-                    <td>Available</td>
-                    <td>Reserved</td>
-                    <td>Booked</td>
-                  </tr>
-                  <tr>
-                    <td><div className='available-key circle' /></td>
-                    <td><div className='reserved-key circle' /></td>
-                    <td><div className='booked-key circle' /></td>
-                  </tr>
-                </tbody>
-              </table>
+                <table className="key-table">
+                  <tbody>
+                    <tr>
+                      <td className='schedule-indicator'>Available</td>
+                      <td className='schedule-indicator'>Reserved</td>
+                      <td className='schedule-indicator'>Booked</td>
+                    </tr>
+                    <tr>
+                      <td><div className='available-key circle' /></td>
+                      <td><div className='reserved-key circle' /></td>
+                      <td><div className='booked-key circle' /></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
               <div className='col-xs-12 login-book'>
                 {this.props.user.authId && <p><input type='button' onClick={this.makeNewBooking} value='Request booking' className='setting-btn2' /></p>}
@@ -101,7 +101,7 @@ class Schedular extends React.Component {
               <div className='col-xs-2 col-md-1 schedule-arrow'>
                 <img src='./images/left.png' className='img-fluid' onClick={this.previousDay} />
               </div>
-              <div className='col-xs-8 col-md-10 schedule-responsive'>
+              <div className='col-md-10'>
                 <div className='schedule-header-container'>
                   <div className='schedule-header time'>Timeslot</div>
                   <div className='schedule-header yesterday'>{moment(this.props.date).subtract(1, 'days').format('ddd DD MMM')}</div>
