@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {makeAdmin, emailAlertChange} from '../actions/index'
-import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 class Settings extends React.Component {
   constructor (props) {
