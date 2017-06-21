@@ -26,14 +26,10 @@ export function newBooking (data) {
 }
 
 function sendEmail (data) {
-  return dispatch => {
-    dispatch(gettingData())
-    login('post', '/sendemail', data)
-    .then(f => {
-      dispatch(receivedData())
-    })
-  }
+  login('post', '/sendemail', data)
+  .then(f => f)
 }
+
 function sendConfirm (data) {
   return dispatch => {
     dispatch(gettingData())
@@ -42,6 +38,12 @@ function sendConfirm (data) {
       dispatch(receivedData())
     })
   }
+}
+
+function deleteEmail (data) {
+  console.log(data)
+  login('post', '/deleteemail', data)
+  .then(f => f)
 }
 
 function bookingPosted (booking) {
@@ -147,6 +149,9 @@ export function requestDelete (booking) {
     login('put', '/user/requestdelete/', booking)
     .then(res => {
       dispatch(receivedData())
+      if (res.body.sendEmail) {
+        deleteEmail(booking)
+      }
       if (res.body.bookings) {
         return dispatch(receiveBookings(res.body.bookings))
       }
