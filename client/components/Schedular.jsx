@@ -64,28 +64,28 @@ class Schedular extends React.Component {
   render () {
     return (
       <div className='schedule-container'>
-        <div className='schedule row'>
+        <div className='schedule'>
           <div className='container'>
               <div className='col-md-2' />
             </div>
             <div className='row key-circles margin-upper'>
-              <div className='col-xs-1' />
-              <div className="col-xs-3">
-              <table className="no-mobile">
-                <tr>
-                  <td>Available</td>
-                  <td>Reserved</td>
-                  <td>Booked</td>
-                </tr>
-                <tr>
-                  <td><div className='available-key circle' /></td>
-                  <td><div className='reserved-key circle' /></td>
-                  <td><div className='booked-key circle' /></td>
-                </tr>
-              </table>
+              <div className="col-xs-12">
+                <table className="key-table">
+                  <tbody>
+                    <tr>
+                      <td className='schedule-indicator'>Available</td>
+                      <td className='schedule-indicator'>Reserved</td>
+                      <td className='schedule-indicator'>Booked</td>
+                    </tr>
+                    <tr>
+                      <td><div className='available-key circle' /></td>
+                      <td><div className='reserved-key circle' /></td>
+                      <td><div className='booked-key circle' /></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div className='col-md-5 col-xs-5' />
-              <div className='col-xs-1 login-book'>
+              <div className='col-xs-12 login-book'>
                 {this.props.user.authId && <p><input type='button' onClick={this.makeNewBooking} value='Request booking' className='setting-btn2' /></p>}
                 {!this.props.user.authId && <p><input type='button' onClick={this.askToLogin} value='Request booking' className='setting-btn2' /></p>}
                 {this.state.modal && <ModalContainer onClose={this.handleClose} className='book-container'>
@@ -97,9 +97,9 @@ class Schedular extends React.Component {
             </div>
 
             <div className='schedule-navbar' />
-            <div className='row schedule-row'>
-              <div className='col-xs-1 schedule-arrow'>
-                <div><img src='./images/left.png' height='70' onClick={this.previousDay} /></div>
+            <div className='schedule-row'>
+              <div className='col-xs-2 col-md-1 schedule-arrow'>
+                <img src='./images/left.png' className='img-fluid' onClick={this.previousDay} />
               </div>
               <div className='col-md-10'>
                 <div className='schedule-header-container'>
@@ -113,8 +113,8 @@ class Schedular extends React.Component {
                   <ScheduleColumns />
                 </div>
               </div>
-              <div className='col-xs-1 schedule-arrow'>
-                <div><img src='./images/right-arrow-icon.png' height='70' onClick={this.nextDay} /></div>
+              <div className='col-xs-2 col-md-1 schedule-arrow'>
+                <img src='./images/right-arrow-icon.png' className='img-fluid' onClick={this.nextDay} />
             </div>
           </div>
         </div>
