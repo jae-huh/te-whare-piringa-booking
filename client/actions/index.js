@@ -143,6 +143,7 @@ export function selectBooking (booking) {
 }
 
 export function requestDelete (booking) {
+  console.log(booking)
   return dispatch => {
     dispatch(gettingData())
     login('put', '/user/requestdelete/', booking)
