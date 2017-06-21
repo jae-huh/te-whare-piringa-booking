@@ -91,12 +91,19 @@ function confirmBooking (req, authId, cb) {
 function requestDelete (req, authId, cb) {
   getDatabase((err, db) => {
     if (err) return cb(err)
-    db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'deleteRequested': true}}, (err, result) => {
+    checkAdminStatus(authId, (err, admin) => {
       if (err) return cb(err)
-      userGetAllBookings(authId, (err, bookings) => {
-        if (err) return cb(err)
-        cb(null, {result, bookings})
-      })
+      if (!admin) {
+        db.collection('bookings').update({_id: ObjectId(req.params.id)}, {$set: {'deleteRequested': true}}, (err, result) => {
+          if (err) return cb(err)
+          userGetAllBookings(authId, (err, bookings) => {
+            if (err) return cb(err)
+            cb(null, {result, bookings})
+          })
+        })
+      } else {
+        deleteBooking(req.params.id, authId, cb)
+      }
     })
   })
 }
