@@ -5,8 +5,8 @@ import Maps from './Maps'
 const Contact = () => {
   return (
     <section className='contact-container section-container' id='contact'>
-      <div className='section-inner-div'>
-        <h1 className='home-headings'>Contact Us</h1>
+      <div className='section-inner-div contact-inner-div'>
+        <h1 className='home-headings contact-heading'>Contact Us</h1>
         <div className='contact'>
           <Maps />
           <div className="contact-information">

@@ -1,13 +1,14 @@
 .detailsTable {
   text-align: left;
   margin-top: 1.5em;
+  margin-bottom: 1.5em;
 }
 
-td {
+.detailsTable td {
   padding: 0 1em
 }
 
-th {
+.detailsTable th {
   padding: 0 1em
 }
 
@@ -78,4 +79,8 @@ th {
 
 .sure {
   color: red;
+}
+
+.margin-upper {
+  margin-top: 4em;
 }

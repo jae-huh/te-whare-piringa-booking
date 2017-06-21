@@ -4,7 +4,7 @@ const Gallery = () => {
   return (
     <section className='gallery-container section-container' id='gallery'>
       <div className='section-inner-div'>
-        <h1 className='home-headings'>Gallery</h1>
+        <h1 className='home-headings gallery-heading'>Gallery</h1>
         <div className='gallery'>
           {/* image 1 */}
           <div className='gallery-image-container'>
