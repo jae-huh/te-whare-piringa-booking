@@ -14,8 +14,10 @@ export default class Auth {
     redirectUri: process.env.CALLBACK,
     audience: `https://${auth0Domain}/userinfo`,
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid',
+    logo: 'images/logo2.png'
   })
+  
 
   constructor() {
     this.login = this.login.bind(this);
@@ -29,6 +31,7 @@ export default class Auth {
   }
 
   handleAuthentication (cb) {
+    this.auth0.icon = 'http://thebookingmanager.herokuapp.com/images/logo2.png'
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
