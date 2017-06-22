@@ -53,6 +53,9 @@ class Calendar extends React.Component {
             <span className='calendar-next'><a onClick={this.nextMonth} ><img className='calendar-arrows calendar-arrow-right' src='/images/right-arrow-icon.png' /></a></span>
           </h2>
         </div>
+        <div className='busy-indicator'>
+          <p>Free</p><div className='calendar-busy-bar'></div><p>Booked out</p>
+        </div>
         <div className="calendar-container">
           <div className='calendar-header-container'>
             <div className='calendar-header'>Sunday</div>

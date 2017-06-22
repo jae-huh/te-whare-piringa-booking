@@ -32,7 +32,7 @@ class Navigation extends React.Component {
           <div className="navigation-div">
             <h2 className="navigation-home"><Link className="navigation-home-link" to="/">Te Whare Piringa</Link>{this.props.waiting && <Waiting /> }</h2>
             <span className="glyphicon glyphicon glyphicon-menu-hamburger menu-button" aria-hidden="true" onClick={this.showMenu}></span>
-            <ul className="navigation-list" ref="navigationList">
+            <ul className="navigation-list" ref="navigationList" onClick={this.showMenu}>
               <Link className="navigation-list-link" to="/calendar"><li className="navigation-list-item">Book</li></Link>
               <HashLink className="navigation-list-link" to="/#hall"><li className="navigation-list-item">Hall</li></HashLink>
               <HashLink className="navigation-list-link" to="/#gallery"><li className="navigation-list-item">Gallery</li></HashLink>

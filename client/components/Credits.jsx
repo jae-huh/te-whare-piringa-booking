@@ -12,7 +12,7 @@ const Credits = () => {
             <a href='https://github.com/luke-davison' target='_blank'><h3>Luke Davison <img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></h3></a>
             <a href='https://github.com/Jae-Huh' target='_blank'><h3>Jae Huh <img className="github-icon" src="/images/GitHub-Mark-Light-64px.png" /></h3></a>
           </div>
-          <h2 className="credits-description">as part of Enspiral Dev Academy final project.</h2>
+          <h2 className="credits-description">at Enspiral Dev Academy.</h2>
         </div>
       </div>
     </section>
