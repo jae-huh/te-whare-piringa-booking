@@ -109,6 +109,7 @@ function addUser (user, cb) {
   const dataCheck = validate.validateUserDetails(user)
   if (dataCheck !== 'ok') return cb({message: dataCheck})
   user.dateAdded = new Date()
+  user.admin = false
   getDatabase((err, db) => {
     if (err) return cb(err)
     db.collection('users').save(user, (err, result) => {
