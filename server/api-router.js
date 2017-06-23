@@ -79,13 +79,13 @@ router.get('/user/getbookings', (req, res) => {
   const authId = getUserIdFromToken(req)
   db.adminGetAllBookings((err, result) => {
     if (err) return res.json({error: err})
-    const output = result.map(item => {
-      if (item.authId === authId) {
-        return item
+    const output = result.map(booking => {
+      if (booking.authId === authId) {
+        return booking
       }
       return {
-        startDate: item.startDate,
-        endDate: item.endDate
+        startDate: booking.startDate,
+        endDate: booking.endDate
       }
     })
     res.json(output)
