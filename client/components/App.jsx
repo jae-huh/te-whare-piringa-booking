@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Route, BrowserRouter} from 'react-router-dom'
+import {Route, Router} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import Auth from '../auth'
@@ -34,7 +34,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <BrowserRouter history={history} component={App}>
+      <Router history={history} component={App}>
         <div>
           <Route path='/' render={props => (
             <Navigation fullName={this.props.user.fullName} />
@@ -52,7 +52,7 @@ class App extends React.Component {
           <Route path='/details' component={Details} />
           <Route path='/detailsprofile' component={DetailsProfile} />
         </div>
-      </BrowserRouter>
+      </Router>
     )
   }
 }

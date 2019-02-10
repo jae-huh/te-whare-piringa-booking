@@ -9,7 +9,7 @@ import App from './components/App'
 
 let store = createStore(reducers, compose(
   applyMiddleware(thunkMiddleware),
-  window.devToolsExtension ? window.devToolsExtension() : f => f
+  window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
 ))
 
 document.addEventListener('DOMContentLoaded', () => {

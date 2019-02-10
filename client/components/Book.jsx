@@ -1,12 +1,12 @@
 import React from 'react'
+import moment from 'moment'
+import {connect} from 'react-redux'
 import Datetime from 'react-datetime'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import {connect} from 'react-redux'
-import {ModalContainer, ModalDialog} from 'react-modal-dialog'
-import {newBooking} from '../actions/index'
-import moment from 'moment'
-import {validateBookingDetails, checkBookingForOverlap} from '../utils/vars'
-import {validationError} from '../actions'
+// import {ModalContainer, ModalDialog} from 'react-modal-dialog'
+
+import {newBooking, validationError} from '../actions'
+import {validateBookingDetails, checkBookingForOverlap} from '../../shared/validation'
 
 injectTapEventPlugin()
 
@@ -93,8 +93,8 @@ class Book extends React.Component {
   render () {
     return (
       <div className='book-container'>
-        <ModalContainer onClose={this.handleClose} className='book-container'>
-          <ModalDialog onClose={this.handleClose} className='book-container'>
+        {/* <ModalContainer onClose={this.handleClose} className='book-container'> */}
+          {/* <ModalDialog onClose={this.handleClose} className='book-container'> */}
             {!this.state.message &&
             <form onSubmit={this.handleSubmit}>
               <div className="form-group row">
@@ -155,8 +155,8 @@ class Book extends React.Component {
           </form>
             }
           {this.state.message && <h3 className="confirm-message">{this.state.message}</h3>}
-        </ModalDialog>
-      </ModalContainer>
+        {/* </ModalDialog> */}
+      {/* </ModalContainer> */}
     </div>
     )
   }

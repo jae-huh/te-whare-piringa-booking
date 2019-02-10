@@ -31,6 +31,7 @@ function intervals (startTime, endTime) {
 
   const current = moment(start)
 
+  // eslint-disable-next-line no-unmodified-loop-condition
   while (current <= end) {
     result.push(current.format('YYYY-MM-DD HH:mm'))
     current.add(30, 'minutes')
@@ -47,6 +48,7 @@ function numberOfIntervals (startTime, endTime) {
 
   start.minutes(Math.ceil(start.minutes() / 60) * 60)
 
+  // eslint-disable-next-line no-unmodified-loop-condition
   while (current <= end) {
     result++
     current.add(60, 'minutes')
