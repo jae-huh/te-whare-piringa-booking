@@ -1,14 +1,8 @@
-# Booking System
+# Te Whare Piringa Booking System
 
-Built by [Luke Davison](https://github.com/luke-davison), [Jae Huh](https://github.com/Jae-Huh), [Paul Brabet](https://github.com/paul-brabet) and [Jack Daffron](https://github.com/daffron)
+Te Whare Piringa needed a booking system for its hall that would allow members of the community to see what times the hall was available to be booked and what times had already been booked.  This was driven by a need for members to be able to book times themselves directly (which should reduce double booking mistakes) and see what times the hall was booked without also seeing who held the booking.
 
-This project was created as our final project for our studies at Enspiral Dev Academy Auckland.
-
-A community organisation had expressed a need for a booking system for its hall that would allow potential hall users to see what times the hall was available to be booked and what times had already been booked.  This was driven by a need for users to be able to book times themselves directly (which should reduce double booking mistakes) and a need for users to be able to see what times the hall was booked without also seeing who had booked.
-
-The project was started on 15 June 2017 and "finished" on 21 June 2017".
-
-## Setup
+## Dev Environment Setup
 
 First clone the repo down and install the node modules with `npm install`.
 
@@ -18,14 +12,12 @@ Rename `.env.example` to `.env` and edit it to have the correct values.
 
 Start the MongoDB database using `docker-compose up`.
 
-## Todos
+## Built by
 
-1. Update all dependencies
-1. Replace `react-modal-dialog` with `react-modal`
-1. Refactor `api-router.js` into multiple route modules
-1. Fix Google Maps on the homepage
-1. Ava :arrow_right: Jest
-1. Refactor `client/actions/index.js`
-1. Update the README file
-1. Sanitise exceptions
-1. Make sure email is sent when booking is added
+* [Luke Davison](https://github.com/luke-davison)
+* [Jae Huh](https://github.com/Jae-Huh)
+* [Paul Brabet](https://github.com/paul-brabet)
+* [Jack Daffron](https://github.com/daffron)
+* [Don Smith](https://github.com/don-smith)
+
+This project was intially created as a final project while studying at Enspiral Dev Academy in Auckland. The project was started on 15 June 2017 and the initial build was "finished" on 21 June 2017.
