@@ -1,13 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import moment from 'moment'
-import {ModalContainer, ModalDialog} from 'react-modal-dialog'
+import {connect} from 'react-redux'
 
 import HoursColumn from './HoursColumn'
-import ScheduleColumns from './ScheduleColumns'
-import {checkBookingForOverlap, validateAgainstOpenHours} from '../utils/vars'
 import {validationError} from '../actions'
 import {switchDate} from '../actions/calendar'
+import ScheduleColumns from './ScheduleColumns'
+import {checkBookingForOverlap, validateAgainstOpenHours} from '../../shared/validation'
 
 class Schedular extends React.Component {
   constructor (props) {
@@ -88,11 +87,6 @@ class Schedular extends React.Component {
               <div className='col-xs-1 login-book'>
                 {this.props.user.authId && <p><input type='button' onClick={this.makeNewBooking} value='Request booking' className='setting-btn2' /></p>}
                 {!this.props.user.authId && <p><input type='button' onClick={this.askToLogin} value='Request booking' className='setting-btn2' /></p>}
-                {this.state.modal && <ModalContainer onClose={this.handleClose} className='book-container'>
-                  <ModalDialog onClose={this.handleClose} className='book-container'>
-                    <div><h3>Please login to make a booking</h3></div>
-                  </ModalDialog>
-                </ModalContainer>}
               </div>
             </div>
 

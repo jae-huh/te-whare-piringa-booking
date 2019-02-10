@@ -16,6 +16,17 @@
   ],
   "author": "EDA",
   "license": "ISC",
+  "ava": {
+    "require": "babel-register",
+    "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-0"
+    ]
+  },
   "dependencies": {
     "auth0-js": "^8.7.0",
     "body-parser": "^1.17.2",
@@ -28,17 +39,6 @@
     "mongodb": "^2.2.28",
     "nodemailer": "^4.0.1"
   },
-  "ava": {
-    "require": "babel-register",
-    "babel": "inherit"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "stage-0"
-    ]
-  },
   "devDependencies": {
     "ava": "^0.19.1",
     "babel-core": "^6.13.2",
@@ -48,6 +48,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "cheerio": "^1.0.0-rc.1",
     "dotenv": "^4.0.0",
+    "dotenv-webpack": "^1.7.0",
     "enzyme": "^2.8.2",
     "eslint": "^3.3.1",
     "eslint-config-standard": "^5.3.5",
@@ -58,11 +59,9 @@
     "nodemon": "^1.11.0",
     "prop-types": "^15.5.10",
     "react": "^15.3.0",
-    "react-addons-test-utils": "^15.6.0",
     "react-datetime": "^2.8.10",
     "react-dom": "^15.3.0",
     "react-gmaps": "^1.6.0",
-    "react-modal-dialog": "^4.0.7",
     "react-redux": "^4.4.8",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

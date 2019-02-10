@@ -1,8 +1,9 @@
-const express = require('express')
-const router = require('./api-router')
 const path = require('path')
+const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+
+const router = require('./api-router')
 
 const app = express()
 
