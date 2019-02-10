@@ -1,13 +1,14 @@
-require('dotenv').load()
 const path = require('path')
-const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: './client/index.js',
+
   output: {
-    path: path.join(__dirname, '/public'),
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
+
   module: {
     loaders: [
       {
@@ -17,14 +18,14 @@ module.exports = {
       }
     ]
   },
+
   resolve: {
     extensions: ['.js', '.jsx']
-
   },
+
   plugins: [
-    new webpack.EnvironmentPlugin({
-      CALLBACK: process.env.CALLBACK
-    })
+    new Dotenv()
   ],
+
   devtool: 'source-map'
 }

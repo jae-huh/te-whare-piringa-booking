@@ -10,17 +10,22 @@ The project was started on 15 June 2017 and "finished" on 21 June 2017".
 
 ## Setup
 
-First clone the repo down and install the node modules.
+First clone the repo down and install the node modules with `npm install`.
 
-In addition, you will need to have mongoDB installed.
+Be sure you have Docker and Docker Compose installed.
 
-In order for this to operate on your local machine you will need a .env file with the following variables:
+Rename `.env.example` to `.env` and edit it to have the correct values.
 
-MONGODB_URI=mongodb://(mongo admin user):(password)@localhost:27017/admin
-CALLBACK=http://localhost:3000/callback
-EMAIL=(working email address)
-EMAIL_PASS=(password to that email address)
+Start the MongoDB database using `docker-compose up`.
 
-There are hardcoded variables (such as those relating to Auth0) that have been coded that we have not extracted which you may need to change.
+## Todos
 
-
+1. Update all dependencies
+1. Replace `react-modal-dialog` with `react-modal`
+1. Refactor `api-router.js` into multiple route modules
+1. Fix Google Maps on the homepage
+1. Ava :arrow_right: Jest
+1. Refactor `client/actions/index.js`
+1. Update the README file
+1. Sanitise exceptions
+1. Make sure email is sent when booking is added

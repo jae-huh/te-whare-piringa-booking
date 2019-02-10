@@ -1,33 +1,31 @@
-import history from '../utils/history'
 import auth0 from 'auth0-js'
 
+import history from '../utils/history'
+
+import {authDomain, authClientId, callback} from '../../shared/vars'
 
 const localStorage = global.window.localStorage
 
-const auth0Domain = 'luke-davison.au.auth0.com'
-const auth0ClientId = 'WCPEyjdLQW37sKZfBMFYNNisB6oyrGdD'
-
 export default class Auth {
-  auth0 = new auth0.WebAuth({
-    domain: auth0Domain,
-    clientID: auth0ClientId,
-    redirectUri: process.env.CALLBACK,
-    audience: `https://${auth0Domain}/userinfo`,
-    responseType: 'token id_token',
-    scope: 'openid',
-    logo: 'images/logo2.png'
-  })
-  
+  constructor () {
+    this.login = this.login.bind(this)
+    this.logout = this.logout.bind(this)
+    this.handleAuthentication = this.handleAuthentication.bind(this)
+    this.isAuthenticated = this.isAuthenticated.bind(this)
 
-  constructor() {
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.auth0 = new auth0.WebAuth({
+      domain: authDomain,
+      clientID: authClientId,
+      redirectUri: callback,
+      audience: `https://${authDomain}/userinfo`,
+      responseType: 'token id_token',
+      scope: 'openid',
+      logo: 'images/logo2.png'
+    })
   }
 
-  login() {
-    this.auth0.authorize();
+  login () {
+    this.auth0.authorize()
   }
 
   handleAuthentication (cb) {
@@ -36,36 +34,39 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
       }
+
       if (err) {
+        // eslint-disable-next-line no-console
         console.log(err)
       }
+
       return cb()
     })
   }
 
-  setSession(authResult) {
+  setSession (authResult) {
     // Set the time that the access token will expire at
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
+    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime())
+    localStorage.setItem('access_token', authResult.accessToken)
+    localStorage.setItem('id_token', authResult.idToken)
+    localStorage.setItem('expires_at', expiresAt)
     // navigate to the home route
-    //history.replace('/home');
+    // history.replace('/home');
   }
 
-  logout() {
+  logout () {
     // Clear access token and ID token from local storage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('expires_at')
     // navigate to the home route
-    history.replace('/home');
+    history.replace('/home')
   }
 
-  isAuthenticated() {
-    // Check whether the current time is past the 
+  isAuthenticated () {
+    // Check whether the current time is past the
     // access token's expiry time
-    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'))
+    return new Date().getTime() < expiresAt
   }
 }

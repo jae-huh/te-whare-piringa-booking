@@ -1,23 +1,25 @@
 const nodemailer = require('nodemailer')
 
+const credentials = {
+  user: process.env.GMAIL_ADDRESS,
+  pass: process.env.GMAIL_PASSWORD
+}
+
 function sendNewBookingEmail (req, res, email) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASS
-    }
+    auth: credentials
   })
 
-  let subject = 'New Booking'
-  let receiver = email
-  let sender = 'user@gmail.com'
+  const subject = 'New Booking'
+  const receiver = email
+  const sender = 'user@gmail.com'
   const data = req.body
   data.startDate = data.startDate.toString().substring(0, 16)
   data.endDate = data.endDate.toString().substring(0, 16)
   data.startTime = req.body.startDate.toString().substring(16, 21)
   data.endTime = req.body.endDate.toString().substring(16, 21)
-  let mailOptions = {
+  const mailOptions = {
     from: sender,
     to: receiver,
     subject: subject,
@@ -45,21 +47,18 @@ function sendNewBookingEmail (req, res, email) {
 function confirmedBookingEmail (req, res) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASS
-    }
+    auth: credentials
   })
-  let subject = 'Booking Confirmed'
-  let receiver = req.body.emailAddress
-  let sender = 'Te Whare Piranga'
+  const subject = 'Booking Confirmed'
+  const receiver = req.body.emailAddress
+  const sender = 'Te Whare Piranga'
   const data = req.body
   data.startDate = data.startDate.toString().substring(0, 16)
   data.endDate = data.endDate.toString().substring(0, 16)
   data.startTime = req.body.startDate.toString().substring(16, 21)
   data.endTime = req.body.endDate.toString().substring(16, 21)
 
-  let mailOptions = {
+  const mailOptions = {
     from: sender,
     to: receiver,
     subject: subject,
@@ -86,21 +85,18 @@ function confirmedBookingEmail (req, res) {
 function deleteRequestedEmail (req, res, email) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASS
-    }
+    auth: credentials
   })
-  let subject = 'Delete requested'
-  let receiver = email
-  let sender = 'Te Whare Piranga'
+  const subject = 'Delete requested'
+  const receiver = email
+  const sender = 'Te Whare Piranga'
   const data = req.body
   data.startDate = data.startDate.toString().substring(0, 16)
   data.endDate = data.endDate.toString().substring(0, 16)
   data.startTime = req.body.startDate.toString().substring(16, 21)
   data.endTime = req.body.endDate.toString().substring(16, 21)
 
-  let mailOptions = {
+  const mailOptions = {
     from: sender,
     to: receiver,
     subject: subject,

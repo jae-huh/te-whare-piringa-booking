@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
-import {ModalContainer, ModalDialog} from 'react-modal-dialog'
+// import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 import {clicked, setNewBooking} from '../actions/calendar'
 
 class ScheduleColumn extends React.Component {
@@ -85,9 +85,7 @@ class ScheduleColumn extends React.Component {
     <div className={`schedule-column-container ${this.props.dayClass}`} >
       {this.getTimeSlots(new Date(moment(this.props.date)))}
       {this.state.showDetails &&
-       <ModalContainer onClose={this.handleClose}>
-          <ModalDialog onClose={this.handleClose}>
-                   <div>
+        <div>
           <table className='detailsTable'>
             <tr>
               <td><b>Name</b></td>
@@ -127,8 +125,6 @@ class ScheduleColumn extends React.Component {
             </tr>
           </table>
         </div>
-            </ModalDialog>
-      </ModalContainer>
       }
     </div>
     )
