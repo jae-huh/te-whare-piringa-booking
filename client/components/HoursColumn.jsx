@@ -14,8 +14,8 @@ function getHours () {
   const hourArray = []
   for (let i = 0; i < 16; i++) {
     for (let j = 0; j < 2; j++) {
-      let selectedDate = d.setHours(i + 6, j * 3)
-      let dateFormatted = moment(selectedDate).format('HH:mm')
+      const selectedDate = d.setHours(i + 6, j * 3)
+      const dateFormatted = moment(selectedDate).format('HH:mm')
       let divContents = ''
       let classNames = 'hour'
       if (j === 1) {
