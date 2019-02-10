@@ -1,7 +1,10 @@
 const test = require('ava')
 const moment = require('moment')
 
-const validate = require('../../server/validation')
+process.env.OPENING_HOUR = 6
+process.env.CLOSING_HOUR = 22
+
+const validate = require('../../shared/validation')
 
 const today = new Date()
 const tomorrow = new Date(moment(today).add(1, 'days'))
