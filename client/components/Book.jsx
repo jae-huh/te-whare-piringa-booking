@@ -2,13 +2,10 @@ import React from 'react'
 import moment from 'moment'
 import {connect} from 'react-redux'
 import Datetime from 'react-datetime'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 // import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 import {newBooking, validationError} from '../actions'
 import {validateBookingDetails, checkBookingForOverlap} from '../../shared/validation'
-
-injectTapEventPlugin()
 
 class Book extends React.Component {
   constructor (props) {

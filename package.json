@@ -1,80 +1,78 @@
 {
-  "name": "booking",
-  "version": "0.1.0",
-  "description": "React Redux with simple async action",
+  "name": "te-whare-piringa-booking",
+  "version": "0.2.0",
+  "description": "A community hall scheduling app",
   "main": "server/index",
+  "repository": "https://github.com/Jae-Huh/te-whare-piringa-booking",
   "scripts": {
     "dev": "nodemon --watch server & webpack --watch",
-    "test": "ava -v test/**/*.test.js",
+    "test": "jest",
     "eslint": "eslint src test",
     "start": "node server",
     "debug": "node --inspect server"
   },
-  "keywords": [
-    "react",
-    "redux"
-  ],
   "author": "EDA",
   "license": "ISC",
-  "ava": {
-    "require": "babel-register",
-    "babel": "inherit"
+  "jest": {
+    "setupFiles": [
+      "./test/client/setup-env.js"
+    ]
   },
   "babel": {
     "presets": [
-      "es2015",
-      "react",
-      "stage-0"
+      "@babel/env",
+      "@babel/react"
     ]
   },
   "dependencies": {
-    "auth0-js": "^8.7.0",
+    "auth0-js": "^9.10.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "express": "^4.15.3",
     "express-jwt": "^5.3.0",
-    "jsonwebtoken": "^7.4.1",
+    "jsonwebtoken": "^8.4.0",
     "jwks-rsa": "^1.1.1",
     "moment": "^2.18.1",
-    "mongodb": "^2.2.28",
-    "nodemailer": "^4.0.1"
+    "mongodb": "^3.1.13",
+    "nodemailer": "^5.1.1"
   },
   "devDependencies": {
-    "ava": "^0.19.1",
-    "babel-core": "^6.13.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
     "cheerio": "^1.0.0-rc.1",
-    "dotenv": "^4.0.0",
+    "dotenv": "^6.2.0",
     "dotenv-webpack": "^1.7.0",
-    "enzyme": "^2.8.2",
-    "enzyme-adapter-react-15.4": "^1.3.0",
-    "eslint": "^3.3.1",
-    "eslint-config-standard": "^5.3.5",
-    "eslint-plugin-promise": "^2.0.1",
-    "eslint-plugin-react": "^6.1.2",
-    "eslint-plugin-standard": "^2.0.0",
-    "nock": "^9.0.13",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "eslint": "^5.13.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.1.0",
+    "nock": "^10.0.6",
     "nodemon": "^1.11.0",
-    "prop-types": "^15.5.10",
-    "react": "^15.4.0",
-    "react-addons-test-utils": "^15.4.2",
+    "prop-types": "^15.7.1",
+    "react": "^16.8.1",
     "react-datetime": "^2.8.10",
-    "react-dom": "^15.4.0",
+    "react-dom": "^16.8.1",
     "react-gmaps": "^1.6.0",
-    "react-redux": "^4.4.8",
+    "react-modal": "^3.8.1",
+    "react-redux": "^6.0.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-router-hash-link": "^1.1.0",
-    "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.6.0",
+    "redux": "^4.0.1",
     "redux-thunk": "^2.1.0",
-    "superagent": "^2.2.0",
+    "superagent": "^4.1.0",
     "supertest": "^3.0.0",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5",
-    "webpack-livereload-plugin": "^0.11.0"
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-livereload-plugin": "^2.2.0"
   }
 }

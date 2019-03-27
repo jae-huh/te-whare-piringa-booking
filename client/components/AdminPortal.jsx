@@ -27,9 +27,7 @@ class AdminPortal extends React.Component {
   }
 
   settingShow () {
-    this.state.showSettings
-    ? this.setState({showSettings: false})
-    : this.setState({showSettings: true})
+    this.setState({showSettings: !this.state.showSettings})
   }
 
   handleConfirmClick (id) {
