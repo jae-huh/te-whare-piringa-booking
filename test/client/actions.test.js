@@ -1,12 +1,6 @@
-const test = require('ava')
-
 import {makeNewBooking} from '../../client/actions/calendar'
 
-test('test are running', t => {
-  t.pass()
-})
-
-test('create actions for adding a new booking', t => {
+test('create actions for adding a new booking', () => {
   const dateStart = 1497844905633
   const dateEnd = 1497844905633
   const expected = {
@@ -15,5 +9,5 @@ test('create actions for adding a new booking', t => {
     dateEnd
   }
   const actual = makeNewBooking(dateStart, dateEnd)
-  t.deepEqual(actual, expected)
+  expect(actual).toEqual(expected)
 })

@@ -3,6 +3,7 @@ const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: './client/index.js',
+  mode: 'development',
 
   output: {
     path: path.join(__dirname, 'public'),
@@ -10,7 +11,7 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         loader: 'babel-loader',
         test: /\.jsx?$/,
