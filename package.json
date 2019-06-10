@@ -6,7 +6,7 @@
   "repository": "https://github.com/Jae-Huh/te-whare-piringa-booking",
   "scripts": {
     "dev": "nodemon --watch server & webpack --watch",
-    "test": "jest",
+    "test": "jest --verbose",
     "eslint": "eslint src test",
     "start": "node server",
     "debug": "node --inspect server"
