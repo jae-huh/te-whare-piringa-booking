@@ -10,14 +10,14 @@ Be sure you have Docker and Docker Compose installed.
 
 Rename `.env.example` to `.env` and edit it to have the correct values.
 
-Start the MongoDB database using `docker-compose up`.
+Start the MongoDB database using `docker-compose up`. Add ` -d` to the end if you don't need to see the logs and want to free up a terminal window.
 
-## Built by
+After the images are downloaded (first time only) and the services are running, the Mongo Express admin interface can be found on [http://localhost:8081](http://localhost:8081) if you want to view/edit the data in the database. The username is `admin` and the password is `pass`. Create a new database called `te-whare-piringa`.
 
-* [Luke Davison](https://github.com/luke-davison)
-* [Jae Huh](https://github.com/Jae-Huh)
-* [Paul Brabet](https://github.com/paul-brabet)
-* [Jack Daffron](https://github.com/daffron)
-* [Don Smith](https://github.com/don-smith)
+If you want to add some example bookings, run `npm run seed` in your terminal from the root of the project. This will create 3 bookings from 8am to 6pm:
 
-This project was intially created as a final project while studying at Enspiral Dev Academy in Auckland. The project was started on 15 June 2017 and the initial build was "finished" on 21 June 2017.
+* An unconfirmed one for today
+* A confirmed one for tomorrow
+* A confirmed one for yesterday
+
+Run the app with `npm run dev` and it will be running on [http://localhost:3000](http://localhost:3000).

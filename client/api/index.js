@@ -4,7 +4,7 @@ const localStorage = global.window.localStorage
 const baseUrl = '/api/v1'
 
 export function login (method = 'get', endpoint, data = {}) {
-  const dataMethod = method.toLowerCase() === 'get' && 'query' || 'send'
+  const dataMethod = method.toLowerCase() === 'get' ? 'query' : 'send'
   const token = localStorage.getItem('id_token')
   const headers = {
     Accept: 'application/json'
@@ -20,4 +20,3 @@ export function login (method = 'get', endpoint, data = {}) {
 export function getAllBookings () {
   return request.get('/api/v1/getbookings')
 }
-

@@ -27,7 +27,7 @@ export function newBooking (data) {
 
 function sendEmail (data) {
   login('post', '/sendemail', data)
-  .then(f => f)
+    .then(f => f)
 }
 
 function sendConfirm (data) {
@@ -37,7 +37,7 @@ function sendConfirm (data) {
 
 function deleteEmail (data) {
   login('post', '/deleteemail', data)
-  .then(f => f)
+    .then(f => f)
 }
 
 function bookingPosted (booking) {

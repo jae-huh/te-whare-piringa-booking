@@ -98,7 +98,7 @@ function makeUserAdmin (emailAddress) {
 }
 
 function confirmBooking (objectId, authId) {
-  getDatabase()
+  return getDatabase()
     .then(db => {
       db.collection('bookings')
         .update({_id: ObjectId(objectId)}, {$set: {'confirmed': true}})
@@ -107,7 +107,7 @@ function confirmBooking (objectId, authId) {
 }
 
 function requestDelete (booking, authId) {
-  getDatabase()
+  return getDatabase()
     .then(db => {
       if (booking.confirmed) {
         return db.collection('bookings')

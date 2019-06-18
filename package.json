@@ -9,7 +9,8 @@
     "test": "jest --verbose",
     "eslint": "eslint src test",
     "start": "node server",
-    "debug": "node --inspect server"
+    "debug": "node --inspect server",
+    "seed": "node test/server/add-test-bookings"
   },
   "author": "EDA",
   "license": "ISC",

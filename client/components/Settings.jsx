@@ -35,21 +35,21 @@ class Settings extends React.Component {
   render () {
     return (
       <div className="settings-container">
-                  <h2>Settings</h2>
-                  <form onSubmit={this.handleEmail}>
-                    <strong>Enter email to recieve notifications</strong>
-                    <p>
-                      Email Address<input type="text" name="alertEmail" onChange={this.handleChange} required/>
-                    </p>
-                    <button>Change</button>
-                  </form>
-                  <form onSubmit={this.handleAdmin}>
-                    <strong>Enter users email to make admin</strong>
-                    <p>Email Address<input type="text" name="adminEmail" onChange={this.handleChange} required/></p>
-                    <button>Make Admin</button>
-                </form>
-                {this.props.adminSuccess && <h2>Success</h2>}
-              </div>
+        <h2>Settings</h2>
+        <form onSubmit={this.handleEmail}>
+          <strong>Enter email to recieve notifications</strong>
+          <p>
+            Email Address<input type="text" name="alertEmail" onChange={this.handleChange} required/>
+          </p>
+          <button>Change</button>
+        </form>
+        <form onSubmit={this.handleAdmin}>
+          <strong>Enter users email to make admin</strong>
+          <p>Email Address<input type="text" name="adminEmail" onChange={this.handleChange} required/></p>
+          <button>Make Admin</button>
+        </form>
+        {this.props.adminSuccess && <h2>Success</h2>}
+      </div>
     )
   }
 }

@@ -1,9 +1,10 @@
 import React from 'react'
+import Modal from 'react-modal'
 import {connect} from 'react-redux'
 
 import Details from './Details'
 import {confirm, deleteBooking, selectBooking, requestDelete} from '../actions/index'
-// import Setting from './Settings'
+import Setting from './Settings'
 // import {ModalContainer, ModalDialog} from 'react-modal-dialog'
 
 class AdminPortal extends React.Component {
@@ -136,19 +137,19 @@ class AdminPortal extends React.Component {
                 </p>
               </div>
               <div className="unconfirmed-list">
-              {this.props.bookings.filter(this.isInFilter).map(item => {
-                return (
-                  <div key={item._id} className="row">
-                    <div className="col-sm-12">
-                      <div className="list-of-unconfirmed" onClick={() => { this.saveBookingToStore(item) }}>
-                        {item.fullName}<hr />
-                        {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}<hr />
-                        {item.startDate.toString().substring(16, 21)} to {item.endDate.toString().substring(16, 21)}
+                {this.props.bookings.filter(this.isInFilter).map(item => {
+                  return (
+                    <div key={item._id} className="row">
+                      <div className="col-sm-12">
+                        <div className="list-of-unconfirmed" onClick={() => { this.saveBookingToStore(item) }}>
+                          {item.fullName}<hr />
+                          {item.startDate.toString().substring(0, 16)} to {item.endDate.toString().substring(0, 16)}<hr />
+                          {item.startDate.toString().substring(16, 21)} to {item.endDate.toString().substring(16, 21)}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -161,34 +162,36 @@ class AdminPortal extends React.Component {
                 </div>
               )}
               {this.props.booking.fullName && this.state.modal &&
-                <div>
-                  <h3>Details</h3>
-                  <Details />
-                  {!this.props.admin && !this.state.sure && <div className="text-center"> <button onClick={() => this.setState({sure: true})}>Request Delete</button></div>}
-                  {!this.props.admin && this.state.sure &&
-                    <div className="text-center">
-                      <p className="sure">Are you sure?</p>
-                      <button onClick={() => this.requestBookingToBeDeleted(this.props.booking)}>Yes, Request Delete</button>
-                    </div>
-                  }
-                  {this.props.admin &&
-                    <div className="modal-admin">
-                      {!this.state.sure &&
-                        <div className="text-center">
-                          {!this.props.booking.confirmed && <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>}
-                          <span className="glyphicon glyphicon-trash remove" onClick={() => this.setState({sure: true})}></span>
-                        </div>
-                      }
-                      {this.state.sure &&
-                        <div className="text-center">
-                          <p className='sure'>Are you sure you want to delete?</p>
-                          <button className="setting-button" onClick={() => { this.handleDeleteClick(this.props.booking) }}>Yes</button>
-                          <button className="setting-button" onClick={() => { this.handleClose() }} defaultValue>No</button>
-                        </div>
-                      }
-                    </div>
-                  }
-                </div>
+                <Modal isOpen={this.state.modal}>
+                  <div>
+                    <h3>Details</h3>
+                    <Details />
+                    {!this.props.admin && !this.state.sure && <div className="text-center"> <button onClick={() => this.setState({sure: true})}>Request Delete</button></div>}
+                    {!this.props.admin && this.state.sure &&
+                      <div className="text-center">
+                        <p className="sure">Are you sure?</p>
+                        <button onClick={() => this.requestBookingToBeDeleted(this.props.booking)}>Yes, Request Delete</button>
+                      </div>
+                    }
+                    {this.props.admin &&
+                      <div className="modal-admin">
+                        {!this.state.sure &&
+                          <div className="text-center">
+                            {!this.props.booking.confirmed && <span className="glyphicon glyphicon-ok confirm" onClick={() => { this.handleConfirmClick(this.props.booking._id) }}></span>}
+                            <span className="glyphicon glyphicon-trash remove" onClick={() => this.setState({sure: true})}></span>
+                          </div>
+                        }
+                        {this.state.sure &&
+                          <div className="text-center">
+                            <p className='sure'>Are you sure you want to delete?</p>
+                            <button className="setting-button" onClick={() => { this.handleDeleteClick(this.props.booking) }}>Yes</button>
+                            <button className="setting-button" onClick={this.handleClose} defaultValue>No</button>
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                </Modal>
               }
             </div>
           </div>
