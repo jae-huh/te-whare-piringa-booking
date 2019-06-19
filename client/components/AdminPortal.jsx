@@ -5,7 +5,17 @@ import {connect} from 'react-redux'
 import Details from './Details'
 import {confirm, deleteBooking, selectBooking, requestDelete} from '../actions/index'
 import Setting from './Settings'
-// import {ModalContainer, ModalDialog} from 'react-modal-dialog'
+
+const modalStyle = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}
 
 class AdminPortal extends React.Component {
   constructor (props) {
@@ -159,10 +169,18 @@ class AdminPortal extends React.Component {
               {this.props.admin && (
                 <div>
                   <button onClick={this.settingShow} className="setting-btn">Settings</button>
+                  {this.state.showSettings &&
+                    <Modal
+                      style={modalStyle}
+                      isOpen={this.state.showSettings}
+                      onRequestClose={this.handleClose}>
+                      <Setting close={this.handleClose}/>
+                    </Modal>
+                  }
                 </div>
               )}
               {this.props.booking.fullName && this.state.modal &&
-                <Modal isOpen={this.state.modal}>
+                <Modal isOpen={this.state.modal} onRequestClose={this.handleClose} style={modalStyle}>
                   <div>
                     <h3>Details</h3>
                     <Details />
