@@ -51,14 +51,14 @@ function checkEmailFormat (email) {
 
 function checkBookingForOverlap (booking, bookings) {
   bookings = bookings.filter(booking => !booking.deleteRequested)
-  const startDate1 = (new Date(booking.startDate))
-  const endDate1 = (new Date(booking.endDate)).getTime()
+  const startDate1 = new Date(booking.startDate)
+  const endDate1 = new Date(booking.endDate).getTime()
   if (bookings.find(compareHours)) return 'Your request overlaps with another booking'
   return 'ok'
 
   function compareHours (existingBooking) {
-    const startDate2 = (new Date(existingBooking.startDate)).getTime()
-    const endDate2 = (new Date(existingBooking.endDate)).getTime()
+    const startDate2 = new Date(existingBooking.startDate).getTime()
+    const endDate2 = new Date(existingBooking.endDate).getTime()
     return (endDate1 > startDate2 && (startDate1 < startDate2 || endDate1 <= endDate2)) || (startDate1 < endDate2 && (endDate1 > endDate2 || startDate1 >= startDate2))
   }
 }
