@@ -27,7 +27,6 @@ function handleAuthentication (cb) {
 }
 
 class App extends React.Component {
-
   componentDidMount () {
     handleAuthentication(this.props.checkLogin)
   }

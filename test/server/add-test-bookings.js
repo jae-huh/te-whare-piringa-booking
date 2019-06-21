@@ -1,31 +1,45 @@
 const path = require('path')
-require('dotenv').config({path: path.join(__dirname, '../..', '.env')})
+require('dotenv').config({ path: path.join(__dirname, '../..', '.env') })
 const MongoClient = require('mongodb').MongoClient
 
 const moment = require('moment')
 
-const {mongoDbUri} = require('../../shared/vars')
+const { mongoDbUri } = require('../../shared/vars')
+const { databaseName, bookingsCollectionName } = require('../../shared/config')
 
-const dbName = 'te-whare-piringa'
-const collectionName = 'bookings'
-const client = new MongoClient(mongoDbUri, {useNewUrlParser: true})
+const client = new MongoClient(mongoDbUri, { useNewUrlParser: true })
 
 const bookings = [
   { // yesterday
-    'userid': 123456,
-    'startDate': getDate(-1, 8),
-    'endDate': getDate(-1, 18),
-    'confirmed': true
+    fullName: 'Test User',
+    phoneNumber: '123456789',
+    emailAddress: 'testuser@tewharepiringa.nz',
+    startDate: getDate(-1, 8),
+    endDate: getDate(-1, 18),
+    purpose: 'For testing purposes',
+    guestCount: 12,
+    confirmed: true,
+    deleteRequested: false
   }, { // today
-    'userid': 123336,
-    'startDate': getDate(0, 8),
-    'endDate': getDate(0, 18),
-    'confirmed': false
+    fullName: 'Test User',
+    phoneNumber: '123456789',
+    emailAddress: 'testuser@tewharepiringa.nz',
+    startDate: getDate(0, 8),
+    endDate: getDate(0, 18),
+    purpose: 'For testing purposes',
+    guestCount: 9,
+    confirmed: false,
+    deleteRequested: false
   }, { // tomorrow
-    'userid': 123446,
-    'startDate': getDate(1, 8),
-    'endDate': getDate(1, 18),
-    'confirmed': true
+    fullName: 'Test User',
+    phoneNumber: '123456789',
+    emailAddress: 'testuser@tewharepiringa.nz',
+    startDate: getDate(1, 8),
+    endDate: getDate(1, 18),
+    purpose: 'For testing purposes',
+    guestCount: 28,
+    confirmed: true,
+    deleteRequested: false
   }
 ]
 
@@ -47,10 +61,10 @@ saveBookings()
 
 function saveBookings () {
   return getDatabase()
-    .then(db => db.collection(collectionName).insertMany(bookings))
+    .then(db => db.collection(bookingsCollectionName).insertMany(bookings))
 }
 
 function getDatabase () {
   return client.connect()
-    .then(conn => conn.db(dbName))
+    .then(conn => conn.db(databaseName))
 }

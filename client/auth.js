@@ -1,8 +1,8 @@
 import auth0 from 'auth0-js'
 
-import history from '../utils/history'
+import history from './utils/history'
 
-import {authDomain, authClientId, callback} from '../../shared/vars'
+import { authDomain, authClientId, callbackUrl } from '../shared/vars'
 
 const localStorage = global.window.localStorage
 
@@ -16,7 +16,7 @@ export default class Auth {
     this.auth0 = new auth0.WebAuth({
       domain: authDomain,
       clientID: authClientId,
-      redirectUri: callback,
+      redirectUri: callbackUrl,
       audience: `https://${authDomain}/userinfo`,
       responseType: 'token id_token',
       scope: 'openid',

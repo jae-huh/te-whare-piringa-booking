@@ -1,127 +1,136 @@
-const nodemailer = require('nodemailer')
+const moment = require('moment')
+const mailgun = require('mailgun-js')
 
-const credentials = {
-  user: process.env.GMAIL_ADDRESS,
-  pass: process.env.GMAIL_PASSWORD
-}
+const { mailgunApiKey } = require('../shared/vars')
+const { newRequestEmail, mailgunDomainName } = require('../shared/config')
 
-function sendNewBookingEmail (req, res, email) {
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: credentials
-  })
+function sendBookingRequest (booking, send = sendMail) {
+  const sender = booking.emailAddress
+  const receiver = newRequestEmail
+  const subject = 'Te Whare Piringa: New booking request'
 
-  const subject = 'New Booking'
-  const receiver = email
-  const sender = 'user@gmail.com'
-  const data = req.body
-  data.startDate = data.startDate.toString().substring(0, 16)
-  data.endDate = data.endDate.toString().substring(0, 16)
-  data.startTime = req.body.startDate.toString().substring(16, 21)
-  data.endTime = req.body.endDate.toString().substring(16, 21)
-  const mailOptions = {
-    from: sender,
+  const start = moment(booking.startDate).format()
+  const end = moment(booking.endDate).format()
+
+  const details = {
     to: receiver,
+    from: sender,
     subject: subject,
-    html: `<h1>New Booking from ${data.fullName}<h1>
-    <a href="http://192.168.20.135:3000/admin"><h2>Click here to confirm<h2></a>
-    <h3>Full Details</h3>
-    Email: ${data.emailAddress}<br>
-    Phone: ${data.phoneNumber}<br>
-    Start: ${data.startDate} &nbsp;${data.startTime}<br>
-    End: ${data.endDate} &nbsp; ${data.endTime}<br>
-    Purpose: ${data.purpose}<br>
-    Number of Guests: ${data.guestNumber}
+    html: `
+    <h1>New booking request from ${booking.fullName}<h1>
+    <h2>Booking Details</h2>
+    Email: ${booking.emailAddress}<br>
+    Phone: ${booking.phoneNumber}<br>
+    Start: ${start}<br>
+    End: ${end}<br>
+    Purpose: ${booking.purpose}<br>
+    Number of Guests: ${booking.guestCount}
+    <p><a href="https://tewharepiringa.nz/admin">Click here to confirm</a></p>
     `
   }
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      res.json({message: error})
-    } else {
-      res.json({message: info.response})
-    }
-  })
+  send(details)
 }
 
-function confirmedBookingEmail (req, res) {
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: credentials
-  })
-  const subject = 'Booking Confirmed'
-  const receiver = req.body.emailAddress
-  const sender = 'Te Whare Piranga'
-  const data = req.body
-  data.startDate = data.startDate.toString().substring(0, 16)
-  data.endDate = data.endDate.toString().substring(0, 16)
-  data.startTime = req.body.startDate.toString().substring(16, 21)
-  data.endTime = req.body.endDate.toString().substring(16, 21)
+function sendBookingConfirmation (booking, send = sendMail) {
+  const sender = newRequestEmail
+  const receiver = booking.emailAddress
+  const subject = 'Te Whare Piringa: Booking confirmation'
 
-  const mailOptions = {
-    from: sender,
+  const start = moment(booking.startDate).format()
+  const end = moment(booking.endDate).format()
+
+  const email = {
     to: receiver,
+    from: sender,
     subject: subject,
-    html: `<h1>Booking Confirmed, ${data.fullName}<h1>
-    <h3>Full Details</h3>
-    Email: ${data.emailAddress}<br>
-    Phone: ${data.phoneNumber}<br>
-    Start: ${data.startDate}  ${data.startTime}<br>
-    End: ${data.endDate} ${data.endTime}<br>
-    Purpose: ${data.purpose}<br>
-    Number of Guests: ${data.guestNumber}
+    html: `
+    <h1>Your booking request has been confirmed<h1>
+    <h2>Booking Details</h2>
+    Email: ${booking.emailAddress}<br>
+    Phone: ${booking.phoneNumber}<br>
+    Start: ${start}<br>
+    End: ${end}<br>
+    Purpose: ${booking.purpose}<br>
+    Number of Guests: ${booking.guestCount}
     `
   }
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      res.json({message: error})
-    } else {
-      res.json({message: info.response})
-    }
-  })
+  send(email)
 }
 
-function deleteRequestedEmail (req, res, email) {
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: credentials
-  })
-  const subject = 'Delete requested'
-  const receiver = email
-  const sender = 'Te Whare Piranga'
-  const data = req.body
-  data.startDate = data.startDate.toString().substring(0, 16)
-  data.endDate = data.endDate.toString().substring(0, 16)
-  data.startTime = req.body.startDate.toString().substring(16, 21)
-  data.endTime = req.body.endDate.toString().substring(16, 21)
+function sendDeletionRequest (booking, send = sendMail) {
+  const sender = booking.emailAddress
+  const receiver = newRequestEmail
+  const subject = 'Te Whare Piringa: Request to delete booking'
 
-  const mailOptions = {
-    from: sender,
+  const start = moment(booking.startDate).format()
+  const end = moment(booking.endDate).format()
+
+  const email = {
     to: receiver,
+    from: sender,
     subject: subject,
-    html: `<h1>Delete Requested for ${data.fullName}<h1>
-    <h3>Full Details</h3>
-    Email: ${data.emailAddress}<br>
-    Phone: ${data.phoneNumber}<br>
-    Start: ${data.startDate}  ${data.startTime}<br>
-    End: ${data.endDate} ${data.endTime}<br>
-    Purpose: ${data.purpose}<br>
-    Number of Guests: ${data.guestNumber}
+    html: `
+    <h1>Request to delete booking from ${booking.fullName}<h1>
+    <h2>Booking Details</h2>
+    Email: ${booking.emailAddress}<br>
+    Phone: ${booking.phoneNumber}<br>
+    Start: ${start}<br>
+    End: ${end}<br>
+    Purpose: ${booking.purpose}<br>
+    Number of Guests: ${booking.guestCount}
+    <p><a href="https://tewharepiringa.nz/admin">Click here to confirm</a></p>
     `
   }
 
-  transporter.sendMail(mailOptions, (error, info) => {
+  send(email)
+}
+
+function sendDeletionConfirmation (booking, send = sendMail) {
+  const sender = newRequestEmail
+  const receiver = booking.emailAddress
+  const subject = 'Te Whare Piringa: Booking deleted'
+
+  const start = moment(booking.startDate).format()
+  const end = moment(booking.endDate).format()
+
+  const email = {
+    to: receiver,
+    from: sender,
+    subject: subject,
+    html: `
+    <h1>Your booking request has been deleted<h1>
+    <h2>Booking Details</h2>
+    Email: ${booking.emailAddress}<br>
+    Phone: ${booking.phoneNumber}<br>
+    Start: ${start}<br>
+    End: ${end}<br>
+    Purpose: ${booking.purpose}<br>
+    Number of Guests: ${booking.guestCount}
+    `
+  }
+
+  send(email)
+}
+
+function sendMail (details) {
+  const mg = mailgun({
+    apiKey: mailgunApiKey,
+    domain: mailgunDomainName
+  })
+
+  mg.messages().send(details, (error, body) => {
     if (error) {
-      res.json({message: error})
-    } else {
-      res.json({message: info.response})
+      // eslint-disable-next-line no-console
+      console.error(error)
     }
   })
 }
 
 module.exports = {
-  sendNewBookingEmail,
-  confirmedBookingEmail,
-  deleteRequestedEmail
+  sendBookingRequest,
+  sendBookingConfirmation,
+  sendDeletionRequest,
+  sendDeletionConfirmation
 }

@@ -1,7 +1,7 @@
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient
 
-const {mongoDbUri} = require('../shared/vars')
+const { mongoDbUri } = require('../shared/vars')
 const validate = require('../shared/validation')
 
 function getAllBookings () {
@@ -10,13 +10,14 @@ function getAllBookings () {
 }
 
 function getAnonymousBookings () {
+  // TODO: optimise this function - no need to get them all first - just query
   return getAllBookings()
     .then(bookings => bookings.map(booking => removeDetails(booking)))
 }
 
-function removeDetails ({startDate, endDate, confirmed}) {
+function removeDetails ({ startDate, endDate, confirmed }) {
   // remove all booking properties except startDate, endDate and confirmed
-  return {startDate, endDate, confirmed}
+  return { startDate, endDate, confirmed }
 }
 
 function getUserBookings (authId) {
@@ -61,7 +62,7 @@ function saveBooking (booking, authId) {
       db.collection('bookings').save(booking)
         .then(() => {
           return getUserBookings(authId)
-            .then(bookings => ({booking, bookings}))
+            .then(bookings => ({ booking, bookings }))
         })
     })
 }
@@ -94,14 +95,17 @@ function getUserDetails (authId) {
 
 function makeUserAdmin (emailAddress) {
   return getDatabase()
-    .then(db => db.collection('users').update({emailAddress}, {$set: {'admin': true}}))
+    .then(db => db.collection('users').update(
+      { emailAddress },
+      { $set: { 'admin': true } }
+    ))
 }
 
 function confirmBooking (objectId, authId) {
   return getDatabase()
     .then(db => {
       db.collection('bookings')
-        .update({_id: ObjectId(objectId)}, {$set: {'confirmed': true}})
+        .update({ id: ObjectId(objectId) }, { $set: { 'confirmed': true } })
         .then(() => getUserBookings(authId))
     })
 }
@@ -111,41 +115,26 @@ function requestDelete (booking, authId) {
     .then(db => {
       if (booking.confirmed) {
         return db.collection('bookings')
-          .update({_id: ObjectId(booking._id)}, {$set: {'deleteRequested': true}})
+          .update(
+            { id: ObjectId(booking._id) },
+            { $set: { 'deleteRequested': true } }
+          )
           .then(result => getUserBookings(authId)
-            .then(bookings => ({result, bookings, sendEmail: true}))
+            .then(bookings => ({ result, bookings, sendEmail: true }))
           )
       } else {
         return deleteBooking(booking, authId)
-          .then(result => ({result, booking}))
+          .then(result => ({ result, booking }))
       }
     })
 }
 
 function deleteBooking (booking, authId) {
   return getDatabase()
-    .then(db => db.collection('bookings').remove({_id: ObjectId(booking._id)}))
+    .then(db => db.collection('bookings').remove({ id: ObjectId(booking._id) }))
     .then(result => getUserBookings(authId)
-      .then(bookings => ({result, bookings}))
+      .then(bookings => ({ result, bookings }))
     )
-}
-
-function newAlertEmail (email) {
-  return getDatabase()
-    .then(db => db.collection('email').save(email))
-}
-
-function editAlertEmail (email) {
-  return getDatabase()
-    .then(db => {
-      return db.collection('email').drop()
-        .then(() => db.collection('email').save(email))
-    })
-}
-
-function getAlertEmail () {
-  return getDatabase()
-    .then(db => db.collection('email').find().toArray())
 }
 
 module.exports = {
@@ -158,8 +147,5 @@ module.exports = {
   getUserDetails,
   deleteBooking,
   makeUserAdmin,
-  requestDelete,
-  newAlertEmail,
-  editAlertEmail,
-  getAlertEmail
+  requestDelete
 }

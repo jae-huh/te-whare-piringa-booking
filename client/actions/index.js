@@ -20,25 +20,25 @@ export function newBooking (data) {
         dispatch(bookingPosted(res.body.booking))
         dispatch(receiveBookings(res.body.bookings))
         dispatch(receivedData())
-        sendEmail(res.body.booking)
+        // sendEmail(res.body.booking)
       })
   }
 }
 
-function sendEmail (data) {
-  login('post', '/sendemail', data)
-    .then(f => f)
-}
+// function sendEmail (data) {
+//   login('post', '/sendemail', data)
+//     .then(f => f)
+// }
 
-function sendConfirm (data) {
-  login('post', '/sendconfirm/', data)
-    .then(f => f)
-}
+// function sendConfirm (data) {
+//   login('post', '/sendconfirm/', data)
+//     .then(f => f)
+// }
 
-function deleteEmail (data) {
-  login('post', '/deleteemail', data)
-    .then(f => f)
-}
+// function deleteEmail (data) {
+//   login('post', '/deleteemail', data)
+//     .then(f => f)
+// }
 
 function bookingPosted (booking) {
   booking.startDate = new Date(booking.startDate)
@@ -85,17 +85,17 @@ export function confirm (id) {
   return dispatch => {
     dispatch(gettingData())
     login('put', `/admin/confirm/${id}`)
-    .then(res => {
-      dispatch(receivedData())
-      if (res.body.result) {
-        res.body.bookings.find(item => {
-          if (item._id === id) {
-            dispatch(sendConfirm(item))
-          }
-          dispatch(receiveBookings(res.body.bookings))
-        })
-      }
-    })
+      .then(res => {
+        dispatch(receivedData())
+        if (res.body.result) {
+          res.body.bookings.find(item => {
+            // if (item._id === id) {
+            //   dispatch(sendConfirm(item))
+            // }
+            dispatch(receiveBookings(res.body.bookings))
+          })
+        }
+      })
   }
 }
 
@@ -103,12 +103,12 @@ export function deleteBooking (booking) {
   return dispatch => {
     dispatch(gettingData())
     login('delete', '/admin/delete/', booking)
-    .then(res => {
-      dispatch(receivedData())
-      if (res.body.result) {
-        return dispatch(receiveBookings(res.body.bookings))
-      }
-    })
+      .then(res => {
+        dispatch(receivedData())
+        if (res.body.result) {
+          return dispatch(receiveBookings(res.body.bookings))
+        }
+      })
   }
 }
 
@@ -116,10 +116,10 @@ export function makeAdmin (email) {
   return dispatch => {
     dispatch(gettingData())
     login('put', `/admin/makeadmin/${email}`)
-    .then(res => {
-      dispatch(receivedData())
-      dispatch(adminSuccess(res))
-    })
+      .then(res => {
+        dispatch(receivedData())
+        dispatch(adminSuccess(res))
+      })
   }
 }
 
@@ -141,15 +141,15 @@ export function requestDelete (booking) {
   return dispatch => {
     dispatch(gettingData())
     login('put', '/user/requestdelete/', booking)
-    .then(res => {
-      dispatch(receivedData())
-      if (res.body.sendEmail) {
-        deleteEmail(booking)
-      }
-      if (res.body.bookings) {
-        return dispatch(receiveBookings(res.body.bookings))
-      }
-    })
+      .then(res => {
+        dispatch(receivedData())
+        // if (res.body.sendEmail) {
+        //   deleteEmail(booking)
+        // }
+        if (res.body.bookings) {
+          return dispatch(receiveBookings(res.body.bookings))
+        }
+      })
   }
 }
 
@@ -157,10 +157,10 @@ export function emailAlertChange (email) {
   return dispatch => {
     dispatch(gettingData())
     login('put', '/admin/notificationemail', email)
-    .then(res => {
-      dispatch(receivedData())
-      return dispatch(emailChanged(res))
-    })
+      .then(res => {
+        dispatch(receivedData())
+        return dispatch(emailChanged(res))
+      })
   }
 }
 

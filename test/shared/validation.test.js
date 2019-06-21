@@ -6,7 +6,7 @@ process.env.CLOSING_HOUR = 22
 const validate = require('../../shared/validation')
 
 const today = new Date()
-const tomorrow = new Date(moment(today).add(1, 'days'))
+const tomorrow = moment(today).add(1, 'days').toDate()
 
 const exampleBooking = {
   fullName: 'Luke Warmwater',
@@ -325,7 +325,7 @@ test('message returned if booking overlaps all of another booking', () => {
 test('error message returned for a booking that starts before 6am', () => {
   const booking = Object.create(exampleBooking)
   booking.startDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 2)
-  const expected = 'You cannot make a booking that starts that early'
+  const expected = 'You may not make a booking that starts that early'
   const actual = validate.validateAgainstOpenHours(booking)
   expect(actual).toBe(expected)
 })
@@ -333,7 +333,7 @@ test('error message returned for a booking that starts before 6am', () => {
 test('error message returned for a booking that starts after 10pm', () => {
   const booking = Object.create(exampleBooking)
   booking.startDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), -1)
-  const expected = 'You cannot make a booking that starts that late'
+  const expected = 'You may not make a booking that starts that late'
   const actual = validate.validateAgainstOpenHours(booking)
   expect(actual).toBe(expected)
 })
@@ -341,7 +341,7 @@ test('error message returned for a booking that starts after 10pm', () => {
 test('error message returned for a booking that ends before 6am', () => {
   const booking = Object.create(exampleBooking)
   booking.endDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate() + 1, 2)
-  const expected = 'You cannot make a booking that ends that early'
+  const expected = 'You may not make a booking that ends that early'
   const actual = validate.validateAgainstOpenHours(booking)
   expect(actual).toBe(expected)
 })
@@ -349,7 +349,7 @@ test('error message returned for a booking that ends before 6am', () => {
 test('error message returned for a booking that ends after 10pm', () => {
   const booking = Object.create(exampleBooking)
   booking.endDate = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 23)
-  const expected = 'You cannot make a booking that ends that late'
+  const expected = 'You may not make a booking that ends that late'
   const actual = validate.validateAgainstOpenHours(booking)
   expect(actual).toBe(expected)
 })

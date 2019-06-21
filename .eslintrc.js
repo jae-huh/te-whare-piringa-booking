@@ -5,8 +5,9 @@ module.exports = {
     'jest': true
   },
   'extends': [
-    'standard',
-    'plugin:react/recommended'
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'standard'
   ],
   'plugins': [
     'standard',
@@ -14,10 +15,11 @@ module.exports = {
     'react'
   ],
   'rules': {
-    'react/prop-types': 'off',
-    'object-curly-spacing': ['error', 'never'],
-    'arrow-parens': ['error', 'as-needed'],
-    'no-console': 'error',
-    'no-warning-comments': 'warn'
+    'eol-last': ['error', 'always'],
+    'no-multiple-empty-lines': [
+      'error', { 'max': 1, 'maxEOF': 0, 'maxBOF': 0 }
+    ],
+    'object-curly-spacing': [2, 'always'],
+    'react/prop-types': 'off'
   }
 }

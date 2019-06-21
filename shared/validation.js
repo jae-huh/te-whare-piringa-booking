@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-const {openingHour, closingHour} = require('./vars')
+const { openingHour, closingHour } = require('./config')
 
 function validateBookingDetails (booking) {
   if (!booking) return 'No booking details found'
@@ -25,12 +25,24 @@ function validateBookingDetails (booking) {
 }
 
 function validateAgainstOpenHours (booking) {
-  const startDate = new Date(booking.startDate)
-  const endDate = new Date(booking.endDate)
-  if (startDate.getHours() + startDate.getMinutes() / 60 < openingHour) return 'You cannot make a booking that starts that early'
-  if (startDate.getHours() + startDate.getMinutes() / 60 >= closingHour) return 'You cannot make a booking that starts that late'
-  if (endDate.getHours() + endDate.getMinutes() / 60 <= openingHour) return 'You cannot make a booking that ends that early'
-  if (endDate.getHours() + endDate.getMinutes() / 60 > closingHour) return 'You cannot make a booking that ends that late'
+  const { startDate, endDate } = booking
+
+  if (startDate.getHours() + startDate.getMinutes() / 60 < openingHour) {
+    return 'You may not make a booking that starts that early'
+  }
+
+  if (startDate.getHours() + startDate.getMinutes() / 60 >= closingHour) {
+    return 'You may not make a booking that starts that late'
+  }
+
+  if (endDate.getHours() + endDate.getMinutes() / 60 <= openingHour) {
+    return 'You may not make a booking that ends that early'
+  }
+
+  if (endDate.getHours() + endDate.getMinutes() / 60 > closingHour) {
+    return 'You may not make a booking that ends that late'
+  }
+
   return 'ok'
 }
 

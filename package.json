@@ -9,7 +9,7 @@
     "test": "jest --verbose",
     "eslint": "eslint src test",
     "start": "node server",
-    "debug": "node --inspect server",
+    "initdb": "node test/server/initdb",
     "seed": "node test/server/add-test-bookings"
   },
   "author": "EDA",
@@ -33,6 +33,7 @@
     "express-jwt": "^5.3.0",
     "jsonwebtoken": "^8.4.0",
     "jwks-rsa": "^1.1.1",
+    "mailgun-js": "^0.22.0",
     "moment": "^2.18.1",
     "mongodb": "^3.1.13",
     "nodemailer": "^5.1.1"

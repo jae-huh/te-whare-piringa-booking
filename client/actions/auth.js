@@ -108,4 +108,3 @@ function loggedOut () {
     type: 'LOGGED_OUT'
   }
 }
-
